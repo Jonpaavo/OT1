@@ -15,6 +15,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.show();
         System.out.println("Terve");
+        System.out.println("Toimiiko");
+
     }
 
 
