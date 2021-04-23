@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Tokanaytto">
+   <children>
+      <Pane layoutY="-3.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <SplitPane dividerPositions="0.29797979797979796" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="225.0">
+                     <children>
+                        <CheckBox layoutX="14.0" layoutY="49.0" mnemonicParsing="false" text="Porosafari" />
+                        <Label layoutX="38.0" layoutY="14.0" text="Valitse Lisäpalvelut" />
+                        <CheckBox layoutX="14.0" layoutY="75.0" mnemonicParsing="false" text="Hevosajelu" />
+                        <CheckBox layoutX="14.0" layoutY="100.0" mnemonicParsing="false" text="Koiravaljakkoajelu" />
+                        <CheckBox layoutX="14.0" layoutY="129.0" mnemonicParsing="false" text="Vesiskootteriajelu" />
+                        <CheckBox layoutX="15.0" layoutY="154.0" mnemonicParsing="false" text="Airsoft" />
+                        <Button layoutX="12.0" layoutY="358.0" mnemonicParsing="false" text="Takaisin" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="267.0" prefWidth="263.0">
+                     <children>
+                        <Label layoutX="145.0" layoutY="14.0" text="Syötä asiakastiedot" />
+                        <Label layoutX="46.0" layoutY="58.0" text="Etunimi *" />
+                        <TextField layoutX="36.0" layoutY="75.0" />
+                        <TextField layoutX="36.0" layoutY="124.0" />
+                        <TextField layoutX="36.0" layoutY="173.0" />
+                        <TextField layoutX="36.0" layoutY="226.0" />
+                        <TextField layoutX="222.0" layoutY="75.0" />
+                        <TextField layoutX="222.0" layoutY="124.0" />
+                        <TextField layoutX="222.0" layoutY="173.0" />
+                        <TextField layoutX="222.0" layoutY="226.0" />
+                        <Label layoutX="36.0" layoutY="107.0" text="Postinumero *" />
+                        <Label layoutX="32.0" layoutY="155.0" text="Sähköposti *" />
+                        <Label layoutX="36.0" layoutY="211.0" text="Henkilötunnus *" />
+                        <Label layoutX="222.0" layoutY="58.0" text="Sukunimi *" />
+                        <Label layoutX="222.0" layoutY="107.0" text="Kaupunki *" />
+                        <Label layoutX="222.0" layoutY="155.0" text="Katuosoite *" />
+                        <Label layoutX="222.0" layoutY="211.0" text="Puhelinnumero *" />
+                        <Button layoutX="329.0" layoutY="351.0" mnemonicParsing="false" text="Seuraava" />
+                        <AnchorPane prefHeight="400.0" prefWidth="600.0">
+
+</AnchorPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
