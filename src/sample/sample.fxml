@@ -1,76 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
-
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-  <children>
-      <Pane prefHeight="0.0" prefWidth="460.0" />
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-            <Button fx:id="button" layoutX="546.0" layoutY="346.0" mnemonicParsing="false" onAction="#button" text="Seuraava" />
-            <Label layoutX="67.0" layoutY="78.0" text="Toimialue" />
-            <Label layoutX="67.0" layoutY="146.0" text="Tulopäivä" />
-            <Label layoutX="67.0" layoutY="213.0" text="Lähtöpäivä" />
-            <Label layoutX="67.0" layoutY="286.0" text="Henkilömäärä" />
-            <Label layoutX="67.0" layoutY="28.0" text="Mökkihaku">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="381.0" layoutY="28.0" text="Hakusi tulokset">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <CheckBox layoutX="381.0" layoutY="87.0" mnemonicParsing="false" text="A 1" />
-            <CheckBox layoutX="381.0" layoutY="120.0" mnemonicParsing="false" text="A 2" />
-            <CheckBox layoutX="381.0" layoutY="155.0" mnemonicParsing="false" text="A 3" />
-            <CheckBox layoutX="381.0" layoutY="192.0" mnemonicParsing="false" text="A 4" />
-            <DatePicker layoutX="68.0" layoutY="160.0" />
-            <DatePicker layoutX="68.0" layoutY="230.0" />
-            <ChoiceBox fx:id="toimialue" layoutX="67.0" layoutY="96.0" prefWidth="150.0" />
-            <ChoiceBox layoutX="67.0" layoutY="303.0" prefWidth="150.0" />
-      </children>
-    </AnchorPane>
-  </children>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Mökin varaus">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <GridPane layoutX="24.0" prefHeight="349.0" prefWidth="558.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ComboBox fx:id="cboxToimintaalue" prefWidth="150.0" GridPane.rowIndex="2" />
+                                    <Label text="Toiminta-alue" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cboxHenkilomaara" prefWidth="150.0" GridPane.rowIndex="8" />
+                                    <DatePicker GridPane.rowIndex="4" />
+                                    <DatePicker GridPane.rowIndex="6" />
+                                    <Label text="Tulopäivä" GridPane.rowIndex="3" />
+                                    <Label text="Lähtöpäivä" GridPane.rowIndex="5" />
+                                    <Label text="Henkilömäärä" GridPane.rowIndex="7" />
+                                    <Label text="Mökin varaus" />
+                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Button mnemonicParsing="false" onAction="#btlisaa" text="Lisää" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Mökkien hallinta">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Palveluiden hallita">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Asiakashallinta">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Laskujen hallinta">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Raportointi">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
