@@ -81,7 +81,7 @@
                               <Label layoutX="19.0" layoutY="104.0" text="Katuosoite" />
                               <Label layoutX="210.0" layoutY="157.0" text="Kuvaus" />
                               <TextField layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
-                              <TextField layoutX="18.0" layoutY="71.0" />
+                              <TextField fx:id="tftoimintaalue" layoutX="18.0" layoutY="71.0" />
                               <TextField layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
                               <TextField layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
                               <Label layoutX="19.0" layoutY="157.0" text="Henkilömäärä" />
@@ -94,7 +94,7 @@
                               <TextField layoutX="207.0" layoutY="223.0" onInputMethodTextChanged="#alv" />
                               <TextArea layoutX="18.0" layoutY="275.0" onInputMethodTextChanged="#varustelu" prefHeight="57.0" prefWidth="340.0" />
                               <Button layoutX="409.0" layoutY="317.0" mnemonicParsing="false" text="Edellinen" />
-                              <Button layoutX="510.0" layoutY="317.0" mnemonicParsing="false" text="Tallenna" />
+                              <Button layoutX="510.0" layoutY="317.0" mnemonicParsing="false" onAction="#btTallenna" text="Tallenna" />
                            </children>
                         </Pane>
                      </children></AnchorPane>
