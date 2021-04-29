@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -53,7 +53,7 @@
                                     <Label text="Lähtöpäivä" GridPane.rowIndex="5" />
                                     <Label text="Henkilömäärä" GridPane.rowIndex="7" />
                                     <Label text="Mökin varaus" />
-                                    <Button mnemonicParsing="false" onAction="#btlisaa" text="Lisää" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <Button mnemonicParsing="false" onAction="#Btlisaa" text="Lisää" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                     <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label text="Asiakas" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -111,7 +111,7 @@
                               <TextField layoutX="207.0" layoutY="223.0" onInputMethodTextChanged="#alv" />
                               <TextArea layoutX="18.0" layoutY="275.0" onInputMethodTextChanged="#varustelu" prefHeight="57.0" prefWidth="340.0" />
                               <Button layoutX="409.0" layoutY="317.0" mnemonicParsing="false" text="Edellinen" />
-                              <Button layoutX="510.0" layoutY="317.0" mnemonicParsing="false" onAction="#btTallenna" text="Tallenna" />
+                              <Button layoutX="510.0" layoutY="317.0" mnemonicParsing="false" onAction="#BtTallenna" text="Tallenna" />
                            </children>
                         </Pane>
                      </children></AnchorPane>

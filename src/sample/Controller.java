@@ -33,13 +33,13 @@ public class Controller {
         cboxHenkilomaara.setItems(henkilomaaralista);
     }
 
-    public void btlisaa(){
+    public void Btlisaa(){
         System.out.println(cboxToimintaalue.getSelectionModel().getSelectedItem());
         System.out.println(cboxHenkilomaara.getSelectionModel().getSelectedItem());
 
     }
 
-    public void btTallenna(){
+    public void BtTallenna(){
         System.out.println(tftoimintaalue.getCharacters());
     }
 
