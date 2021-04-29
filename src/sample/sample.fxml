@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -12,7 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -63,7 +67,38 @@
           </Tab>
           <Tab text="Mökkien hallinta">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="361.0" prefWidth="600.0">
+                           <children>
+                              <Label layoutX="18.0" layoutY="14.0" text="Lisää mökki">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="19.0" layoutY="54.0" text="Toiminta-alue" />
+                              <Label layoutX="208.0" layoutY="104.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
+                              <Label layoutX="208.0" layoutY="54.0" text="Mökin nimi" />
+                              <Label layoutX="19.0" layoutY="104.0" text="Katuosoite" />
+                              <Label layoutX="210.0" layoutY="157.0" text="Kuvaus" />
+                              <TextField layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
+                              <TextField layoutX="18.0" layoutY="71.0" />
+                              <TextField layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
+                              <TextField layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
+                              <Label layoutX="19.0" layoutY="157.0" text="Henkilömäärä" />
+                              <Label layoutX="18.0" layoutY="258.0" text="Varustelu" />
+                              <Label layoutX="19.0" layoutY="206.0" text="Hinta" />
+                              <TextField layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
+                              <TextField layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
+                              <TextField layoutX="18.0" layoutY="223.0" onInputMethodTextChanged="#hinta" />
+                              <Label layoutX="208.0" layoutY="206.0" text="ALV" />
+                              <TextField layoutX="207.0" layoutY="223.0" onInputMethodTextChanged="#alv" />
+                              <TextArea layoutX="18.0" layoutY="275.0" onInputMethodTextChanged="#varustelu" prefHeight="57.0" prefWidth="340.0" />
+                              <Button layoutX="409.0" layoutY="317.0" mnemonicParsing="false" onAction="#klikedellinen" text="Edellinen" />
+                              <Button layoutX="510.0" layoutY="317.0" mnemonicParsing="false" onAction="#kliktallennamokki" text="Tallenna" />
+                           </children>
+                        </Pane>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Palveluiden hallita">
