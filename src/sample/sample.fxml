@@ -47,8 +47,8 @@
                                     <ComboBox fx:id="cboxToimintaalue" prefWidth="150.0" GridPane.rowIndex="2" />
                                     <Label text="Toiminta-alue" GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cboxHenkilomaara" prefWidth="150.0" GridPane.rowIndex="8" />
-                                    <DatePicker GridPane.rowIndex="4" />
-                                    <DatePicker GridPane.rowIndex="6" />
+                                    <DatePicker fx:id="dptulopaiva" GridPane.rowIndex="4" />
+                                    <DatePicker fx:id="dplahtopaiva" GridPane.rowIndex="6" />
                                     <Label text="Tulopäivä" GridPane.rowIndex="3" />
                                     <Label text="Lähtöpäivä" GridPane.rowIndex="5" />
                                     <Label text="Henkilömäärä" GridPane.rowIndex="7" />
@@ -58,10 +58,10 @@
                                     <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label text="Mökki" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Label text="Palvelut" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <ComboBox fx:id="cboxPalvelut" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <TextField layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
+                                          <TextField fx:id="tfAsiakas" layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
                                        </children>
                                     </Pane>
                                  </children>
