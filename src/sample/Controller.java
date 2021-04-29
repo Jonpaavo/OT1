@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.InputMethodEvent;
+
 import java.util.*;
 
 public class Controller {
@@ -36,4 +38,27 @@ public class Controller {
     }
 
 
+    public void mokkinimi(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void osoite(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void postinro(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void hlomaara(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void kuvaus(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void hinta(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void alv(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void varustelu(InputMethodEvent inputMethodEvent) {
+    }
 }
