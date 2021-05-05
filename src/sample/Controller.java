@@ -1,15 +1,21 @@
 package sample;
 
+
+import DAO.MokkiDAO;
+import DomainOliot.DomainOlio;
+import DomainOliot.Mokki;
+import Logiikka.Mokkienhallinta;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.sql.SQLException;
+import java.util.List;
 
 public class Controller {
 
@@ -29,16 +35,33 @@ public class Controller {
     public ObservableList<String>toimintaaluelista = FXCollections.observableArrayList("Tahko", "Ruka", "Ylläs", "Himos", "Levi", "Koli", "Vuokatti", "Pallas");
     public ObservableList<String>henkilomaaralista = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","yli 10");
     public ObservableList<String>palvelulista = FXCollections.observableArrayList("Porosafari","Koiravaljakkoajelu","Hevosajelu", "Vesiskootteriajelu","Seikkailupalvelu","Airsoft");
-    public ObservableList<String>tahkomokitlista = FXCollections.observableArrayList("Tahko 1", "Tahko 2", "Tahko 3");
-    public ObservableList<String>rukamokitlista = FXCollections.observableArrayList("Ruka 1", "Ruka 2", "Ruka 3");
-    public ObservableList<String>yllasmokitlista = FXCollections.observableArrayList("Ylläs 1", "Ylläs 2", "Ylläs 3");
-    public ObservableList<String>himosmokitlista = FXCollections.observableArrayList("Himos 1", "Himos 2", "Himos 3");
-    public ObservableList<String>levimokitlista = FXCollections.observableArrayList("Levi 1", "Levi 2", "Levi 3");
-    public ObservableList<String>kolimokitlista = FXCollections.observableArrayList("Koli 1", "Koli 2", "Koli 3");
-    public ObservableList<String>vuokattimokitlista = FXCollections.observableArrayList("Vuokatti 1", "Vuokatti 2", "Vuokatti 3");
-    public ObservableList<String>pallasmokitlista = FXCollections.observableArrayList("Pallas 1", "Pallas 2", "Pallas 3");
-
-
+    public ObservableList<String>tahkomokitlista = FXCollections.observableArrayList("Tahko 1", "Tahko 2", "Tahko 3", "Tahko 4", "Tahko 5");
+    public ObservableList<String>rukamokitlista = FXCollections.observableArrayList("Ruka 1", "Ruka 2", "Ruka 3", "Ruka 4", "Ruka 5");
+    public ObservableList<String>yllasmokitlista = FXCollections.observableArrayList("Ylläs 1", "Ylläs 2", "Ylläs 3", "Ylläs 4", "Ylläs 5");
+    public ObservableList<String>himosmokitlista = FXCollections.observableArrayList("Himos 1", "Himos 2", "Himos 3", "Himos 4", "Himos 5");
+    public ObservableList<String>levimokitlista = FXCollections.observableArrayList("Levi 1", "Levi 2", "Levi 3", "Levi 4", "Levi 5");
+    public ObservableList<String>kolimokitlista = FXCollections.observableArrayList("Koli 1", "Koli 2", "Koli 3", "Koli 4", "Koli 5");
+    public ObservableList<String>vuokattimokitlista = FXCollections.observableArrayList("Vuokatti 1", "Vuokatti 2", "Vuokatti 3", "Vuokatti 4", "Vuokatti 5");
+    public ObservableList<String>pallasmokitlista = FXCollections.observableArrayList("Pallas 1", "Pallas 2", "Pallas 3", "Pallas 4", "Pallas 5");
+// MÖKKIENHALLINTA
+    public TableColumn CmokkienhallintaNimi;
+    public TableColumn CmokkienhallintaOsoite;
+    public TableColumn CmokkienhallintaKuvaus;
+    public TableColumn CmokkienhallintaHlomaara;
+    public TableColumn CmokkienhallintaVarustelu;
+    public TableColumn CmokkienhallintaPostinro;
+    public TableColumn CmokkienhallintaHinta;
+    public TableColumn CmokkienhallintaAlv;
+    public TableColumn CmokkienhallintaID;
+    public TableView tbvMokkienhallintaMokit;
+    public TextField txtfMokkienhallintaMokkinimi;
+    public TextField txtfMokkienhallintaKatuosoite;
+    public TextField txtfMokkienhallintaKuvaus;
+    public TextField txtfMokkienhallintaHlomaara;
+    public TextField txtfMokkienhallintaVarustelu;
+    public TextField txtfMokkienhallintaPostinumero;
+    public TextField txtfMokkienhallintaHinta;
+    public TextField txtfMokkienhallintaAlv;
 
     public void initialize() {
         NaytaToimintaalue();
@@ -104,9 +127,97 @@ public class Controller {
 
     }
 
-    public void BtTallenna(){
-        System.out.println(tftoimintaalue.getCharacters());
+
+    public void LataaTaulu() {
+        tbvMokkienhallintaMokit.getItems().clear();
+        List<Mokki> mokit;
+        Mokkienhallinta mokkienhallinta = new Mokkienhallinta();
+        mokit = mokkienhallinta.listaaMokit(HaeToimintaAlueid());
+        ObservableList<Mokki> taulunmokit = FXCollections.observableArrayList(mokit);
+
+        CmokkienhallintaNimi.setCellValueFactory(
+                new PropertyValueFactory<Mokki, String>("mokkiNimi"));
+        CmokkienhallintaPostinro.setCellValueFactory(
+                new PropertyValueFactory<Mokki, String>("postinro"));
+        CmokkienhallintaOsoite.setCellValueFactory(
+                new PropertyValueFactory<Mokki, String>("katuosoite"));
+        CmokkienhallintaKuvaus.setCellValueFactory(
+                new PropertyValueFactory<Mokki, String>("kuvaus"));
+        CmokkienhallintaHlomaara.setCellValueFactory(
+                new PropertyValueFactory<Mokki, Integer>("henkilomaara"));
+        CmokkienhallintaVarustelu.setCellValueFactory(
+                new PropertyValueFactory<Mokki, String>("varustelu"));
+        CmokkienhallintaHinta.setCellValueFactory(
+                new PropertyValueFactory<Mokki, Integer>("hinta"));
+        CmokkienhallintaAlv.setCellValueFactory(
+                new PropertyValueFactory<Mokki, Double>("alv"));
+        CmokkienhallintaID.setCellValueFactory(
+                new PropertyValueFactory<DomainOlio, Integer>("id"));
+
+        tbvMokkienhallintaMokit.setItems(taulunmokit);
+
+        //Poistaa painikkeet käytöstä, jos taulu näyttää kaikki mökit
+        boolean isDisabled = true;
+        isDisabled = cboxToimintaalue2.getValue().toString().equals("KAIKKI");
+        //LukitsePainikkeet(isDisabled);
     }
+    /**
+     * Lisätään mökille toiminta-alue
+     *
+     * @return
+     */
+    public int HaeToimintaAlueid() {
+        int toimintaAlueId;
+        String toimintaAlueNimi = cboxToimintaalue2.getValue().toString();
+
+        if (toimintaAlueNimi.equals("TAHKO"))
+            toimintaAlueId = 1;
+        else if (toimintaAlueNimi.equals("RUKA"))
+            toimintaAlueId = 2;
+        else if (toimintaAlueNimi.equals("YLLÄS"))
+            toimintaAlueId = 3;
+        else if (toimintaAlueNimi.equals("HIMOS"))
+            toimintaAlueId = 4;
+        else if (toimintaAlueNimi.equals("LEVI"))
+            toimintaAlueId = 5;
+        else if (toimintaAlueNimi.equals("KOLI"))
+            toimintaAlueId = 6;
+        else if (toimintaAlueNimi.equals("VUOKATTI"))
+            toimintaAlueId = 7;
+        else if (toimintaAlueNimi.equals("PALLAS"))
+            toimintaAlueId = 8;
+        else
+            toimintaAlueId = 0;
+
+        return toimintaAlueId;
+    }
+
+    /**
+     * Mökkienhallinta-välilehden Tallenna-painikkeen toiminnallisuus
+     *
+     * @throws SQLException
+     */
+
+
+    public void LisaaMokki() throws SQLException {
+        String nimi = txtfMokkienhallintaMokkinimi.getText();
+        String osoite = txtfMokkienhallintaKatuosoite.getText();
+        String kuvaus = txtfMokkienhallintaKuvaus.getText();
+        int hmaara = Integer.parseInt(txtfMokkienhallintaHlomaara.getText());
+        String varustelu = txtfMokkienhallintaVarustelu.getText();
+        String postinumero = txtfMokkienhallintaPostinumero.getText();
+        double hinta = Double.parseDouble(txtfMokkienhallintaHinta.getText());
+        double alv = Double.parseDouble(txtfMokkienhallintaAlv.getText());
+
+        Mokki mokki = new Mokki(0, HaeToimintaAlueid(), postinumero, nimi,
+                osoite, kuvaus, hmaara, varustelu, hinta,alv);
+
+        MokkiDAO dao = new MokkiDAO();
+        dao.luo(mokki);
+        LataaTaulu();
+
+    }
+
 
 
     public void mokkinimi(InputMethodEvent inputMethodEvent) {
@@ -131,5 +242,11 @@ public class Controller {
     }
 
     public void varustelu(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void tallennaPalvelu(ActionEvent actionEvent) {
+    }
+
+    public void tallennaAsiakas(ActionEvent actionEvent) {
     }
 }
