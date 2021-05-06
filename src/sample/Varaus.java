@@ -13,6 +13,7 @@ public class Varaus {
         this.lahtopaiva = lahtopaiva;
         this.henkilomaara = henkilomaara;
         this.asiakas = asiakas;
+        this.palvelut = palvelut;
         this.mokki = mokki;
     }
     public String getToimintaalue() {
