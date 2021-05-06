@@ -65,7 +65,7 @@
                                           <TextField fx:id="tfAsiakas" layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
                                        </children>
                                     </Pane>
-                                    <Text fx:id="txtVarausVaroitus" stroke="#ff0303" strokeType="OUTSIDE" strokeWidth="0.0" text="Täytä kaikki kentät!" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                    <Text fx:id="txtVarausVaroitus" fill="#f00707" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" text="Täytä kaikki kentät!" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <font>
                                           <Font name="System Bold" size="17.0" />
                                        </font>
