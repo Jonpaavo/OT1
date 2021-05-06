@@ -13,9 +13,9 @@ abstract class DomainOlioDAO {
 
     //Sisältää tietokantayhteyden muodostamiseen vaadittavat tiedot
     final static ResourceBundle tkResurssit = ResourceBundle.getBundle("TietokantaResurssit");
-    final static ResourceBundle sqlLauseet = ResourceBundle.getBundle("SQLauseet");
+    final static ResourceBundle sqlLauseet = ResourceBundle.getBundle("SQLlauseet");
 
     Connection getYhteys() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306?user=root&password=Salainen123!");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mvj?user=root&password=3n2l4v3d");
     }
 }

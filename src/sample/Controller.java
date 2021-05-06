@@ -20,6 +20,8 @@ import java.util.List;
 public class Controller {
 
     // Luodaan tarvittavat elementit ja listat
+
+    // MÖKIN VARAUS
     public ComboBox cboxToimintaalue;
     public ComboBox cboxHenkilomaara;
     public ComboBox cboxPalvelut;
@@ -62,6 +64,21 @@ public class Controller {
     public TextField txtfMokkienhallintaPostinumero;
     public TextField txtfMokkienhallintaHinta;
     public TextField txtfMokkienhallintaAlv;
+    // ASIAKASHALLINTA
+    public TextField tfEtunimi;
+    public TextField tfSukunimi;
+    public TextField tfLahiosoite;
+    public TextField tfPostinro;
+    public TextField tfEmail;
+    public TextField tfPuhelinnro;
+    public TableView tbvAsiakas;
+    public TableColumn tbcEtunimi;
+    public TableColumn tbcSukunimi;
+    public TableColumn tbcLahiosoite;
+    public TableColumn tbcPostinro;
+    public TableColumn tbcEmail;
+
+
 
     public void initialize() {
         NaytaToimintaalue();
@@ -70,6 +87,8 @@ public class Controller {
         NaytaHenkilomaara();
         NaytaPalvelut();
         NaytaMokki();
+
+
     }
     // Näyttää toiminta-alueet Palveluiden Hallinta - välilehdellä
     public void NaytaToimintaalue3() {
@@ -120,10 +139,17 @@ public class Controller {
     public void NaytaPalvelut(){
         cboxPalvelut.setItems(palvelulista);
     }
+
     // tulostaa näytöllä valitut tiedot väliaikaisesti, nää laitetaan aikanaan menemään tietokantaan
     public void Btlisaa(){
 
         System.out.println(cboxToimintaalue.getSelectionModel().getSelectedItem());
+        System.out.println(dplahtopaiva.getValue());
+        System.out.println(dptulopaiva.getValue());
+        System.out.println(cboxHenkilomaara.getSelectionModel().getSelectedItem());
+        System.out.println(tfAsiakas.getCharacters());
+        System.out.println(cboxMokki.getSelectionModel().getSelectedItem());
+        System.out.println(cboxPalvelut.getSelectionModel().getSelectedItem());
 
     }
 
