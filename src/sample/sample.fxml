@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
@@ -57,23 +58,29 @@
                                     <Label text="Asiakas" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cboxMokki" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label text="Mökki" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label text="Palvelut" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="Palvelut (ei pakollinen)" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <ComboBox fx:id="cboxPalvelut" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
                                           <TextField fx:id="tfAsiakas" layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
                                        </children>
                                     </Pane>
+                                    <Text fx:id="txtVarausVaroitus" fill="#f00707" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" text="Täytä kaikki kentät!" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="17.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </GridPane>
-                              <TableView fx:id="tvTableView" layoutX="500.0" layoutY="14.0" prefHeight="335.0" prefWidth="589.0">
+                              <TableView fx:id="tvTableView" layoutX="468.0" layoutY="14.0" prefHeight="335.0" prefWidth="632.0">
                                 <columns>
-                                  <TableColumn fx:id="tcToimintaalue" prefWidth="122.0" text="Toiminta-alue" />
-                                  <TableColumn fx:id="tcTulopaiva" prefWidth="70.0" text="Tulopäivä" />
-                                    <TableColumn fx:id="tcLahtopaiva" text="Lähtöpäivä" />
-                                    <TableColumn fx:id="tcHenkilomaara" prefWidth="81.0" text="Henkilömäärä" />
-                                    <TableColumn fx:id="tcMokki" prefWidth="85.0" text="Mökki" />
-                                    <TableColumn fx:id="tcPalvelut" text="Palvelut" />
+                                  <TableColumn fx:id="tcToimintaalue" prefWidth="87.99996948242188" text="Toiminta-alue" />
+                                  <TableColumn fx:id="tcTulopaiva" prefWidth="79.33331298828125" text="Tulopäivä" />
+                                    <TableColumn fx:id="tcLahtopaiva" prefWidth="80.00006103515625" text="Lähtöpäivä" />
+                                    <TableColumn fx:id="tcHenkilomaara" prefWidth="106.6666259765625" text="Henkilömäärä" />
+                                    <TableColumn fx:id="tcAsiakas" prefWidth="100.0" text="Asiakas" />
+                                    <TableColumn fx:id="tcPalvelut" prefWidth="88.6666259765625" text="Palvelut" />
+                                    <TableColumn fx:id="tcMokki" prefWidth="86.666748046875" text="Mökki" />
                                 </columns>
                               </TableView>
                            </children>

@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.text.Text;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,11 +30,8 @@ public class Controller {
     public ComboBox cboxToimintaalue2;
     public ComboBox cboxToimintaalue3;
     public TextField tfAsiakas;
-    public TextField tftoimintaalue;
     public DatePicker dptulopaiva;
     public DatePicker dplahtopaiva;
-    public TableView tvTableview;
-    public TableColumn tcToimintaalue;
     public ObservableList<String>toimintaaluelista = FXCollections.observableArrayList("Tahko", "Ruka", "Ylläs", "Himos", "Levi", "Koli", "Vuokatti", "Pallas");
     public ObservableList<String>henkilomaaralista = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","yli 10");
     public ObservableList<String>palvelulista = FXCollections.observableArrayList("Porosafari","Koiravaljakkoajelu","Hevosajelu", "Vesiskootteriajelu","Seikkailupalvelu","Airsoft");
@@ -45,7 +43,86 @@ public class Controller {
     public ObservableList<String>kolimokitlista = FXCollections.observableArrayList("Koli 1", "Koli 2", "Koli 3", "Koli 4", "Koli 5");
     public ObservableList<String>vuokattimokitlista = FXCollections.observableArrayList("Vuokatti 1", "Vuokatti 2", "Vuokatti 3", "Vuokatti 4", "Vuokatti 5");
     public ObservableList<String>pallasmokitlista = FXCollections.observableArrayList("Pallas 1", "Pallas 2", "Pallas 3", "Pallas 4", "Pallas 5");
-// MÖKKIENHALLINTA
+    public Text txtVarausVaroitus;
+
+    // Antaa valittavaksi mökit siltä toimialueelta, joka näytöllä on valittuna
+    public void NaytaMokki() {
+        cboxToimintaalue.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object vanhaArvo, Object uusiArvo) {
+                if (uusiArvo.toString() == "Tahko") {
+                    cboxMokki.setItems(tahkomokitlista);
+                } else if (uusiArvo.toString() == "Ruka") {
+                    cboxMokki.setItems(rukamokitlista);
+                } else if (uusiArvo.toString() == "Ylläs") {
+                    cboxMokki.setItems(yllasmokitlista);
+                } else if (uusiArvo.toString() == "Himos") {
+                    cboxMokki.setItems(himosmokitlista);
+                } else if (uusiArvo.toString() == "Levi") {
+                    cboxMokki.setItems(levimokitlista);
+                } else if (uusiArvo.toString() == "Koli") {
+                    cboxMokki.setItems(kolimokitlista);
+                } else if (uusiArvo.toString() == "Vuokatti") {
+                    cboxMokki.setItems(vuokattimokitlista);
+                } else if (uusiArvo.toString() == "Pallas") {
+                    cboxMokki.setItems(pallasmokitlista);
+                }
+            }
+        });
+    }
+
+    // Laittaa Varausnäytön varoitustekstin näkymättömäksi
+    public void Varoitus() {
+        txtVarausVaroitus.setVisible(false);
+    }
+
+    //MÖKINVARAUS TABLE
+    public TableView <Varaus> tvTableView;
+    public TableColumn<Varaus, String> tcToimintaalue;
+    public TableColumn<Varaus, String> tcTulopaiva;
+    public  TableColumn<Varaus, String> tcLahtopaiva;
+    public  TableColumn<Varaus, Integer> tcHenkilomaara;
+    public  TableColumn<Varaus, String> tcAsiakas;
+    public  TableColumn<Varaus, String> tcPalvelut;
+    public  TableColumn<Varaus, String> tcMokki;
+
+    //lista johon menee kaikki Varaus-oliot
+    ObservableList<Varaus> tilausLista = FXCollections.observableArrayList();
+
+    // Lisää varauksen tiedot varausnäytön tauluun
+    public void Btlisaa(){
+
+        // näyttää virhetekstin jos käyttäjä unohtaa täyttää kaikki pakolliset kentät
+        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || tfAsiakas.getCharacters().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null ) {
+            txtVarausVaroitus.setVisible(true);
+        } else {
+            txtVarausVaroitus.setVisible(false);
+            //tehdään muuttujat näytöllä olevista objekteista
+            String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
+            String tulopaiva = dptulopaiva.getValue().toString();
+            String lahtopaiva = dplahtopaiva.getValue().toString();
+            Object hlomaara = cboxHenkilomaara.getSelectionModel().getSelectedItem();
+            String asiakas = tfAsiakas.getCharacters().toString();
+            Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
+            Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+
+            tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
+            tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
+            tcLahtopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("lahtopaiva"));
+            tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, Integer>("henkilomaara"));
+            tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
+            tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
+            tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
+
+            // Lisätään tilausListan Itemit tableViewiin
+            tvTableView.setItems(tilausLista);
+
+            // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
+            tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki));
+        }
+    }
+
+    // MÖKKIENHALLINTA
     public TableColumn CmokkienhallintaNimi;
     public TableColumn CmokkienhallintaOsoite;
     public TableColumn CmokkienhallintaKuvaus;
@@ -79,7 +156,6 @@ public class Controller {
     public TableColumn tbcEmail;
 
 
-
     public void initialize() {
         NaytaToimintaalue();
         NaytaToimintaalue2();
@@ -87,6 +163,8 @@ public class Controller {
         NaytaHenkilomaara();
         NaytaPalvelut();
         NaytaMokki();
+        Varoitus();
+
 
 
     }
@@ -100,31 +178,7 @@ public class Controller {
         cboxToimintaalue2.setItems(toimintaaluelista);
     }
 
-    // Antaa valittavaksi mökit siltä toimialueelta, joka näytöllä on valittuna
-    public void NaytaMokki() {
-        cboxToimintaalue.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object vanhaArvo, Object uusiArvo) {
-                if (uusiArvo.toString() == "Tahko") {
-                    cboxMokki.setItems(tahkomokitlista);
-                } else if (uusiArvo.toString() == "Ruka") {
-                    cboxMokki.setItems(rukamokitlista);
-                } else if (uusiArvo.toString() == "Ylläs") {
-                    cboxMokki.setItems(yllasmokitlista);
-                } else if (uusiArvo.toString() == "Himos") {
-                    cboxMokki.setItems(himosmokitlista);
-                } else if (uusiArvo.toString() == "Levi") {
-                    cboxMokki.setItems(levimokitlista);
-                } else if (uusiArvo.toString() == "Koli") {
-                    cboxMokki.setItems(kolimokitlista);
-                } else if (uusiArvo.toString() == "Vuokatti") {
-                    cboxMokki.setItems(vuokattimokitlista);
-                } else if (uusiArvo.toString() == "Pallas") {
-                    cboxMokki.setItems(pallasmokitlista);
-                }
-            }
-        });
-    }
+
 
     // Lisätään toiminta-alueet comboboxiin
     public void NaytaToimintaalue() {
@@ -140,18 +194,7 @@ public class Controller {
         cboxPalvelut.setItems(palvelulista);
     }
 
-    // tulostaa näytöllä valitut tiedot väliaikaisesti, nää laitetaan aikanaan menemään tietokantaan
-    public void Btlisaa(){
 
-        System.out.println(cboxToimintaalue.getSelectionModel().getSelectedItem());
-        System.out.println(dplahtopaiva.getValue());
-        System.out.println(dptulopaiva.getValue());
-        System.out.println(cboxHenkilomaara.getSelectionModel().getSelectedItem());
-        System.out.println(tfAsiakas.getCharacters());
-        System.out.println(cboxMokki.getSelectionModel().getSelectedItem());
-        System.out.println(cboxPalvelut.getSelectionModel().getSelectedItem());
-
-    }
 
 
     public void LataaTaulu() {
