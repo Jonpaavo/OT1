@@ -1,0 +1,16 @@
+mokkiLuo=INSERT INTO mokki(toimintaalue_id, postinro, mokkinimi, katuosoite, kuvaus, henkilomaara, varustelu, hinta)\
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+mokkiLue=SELECT * FROM mokki WHERE mokki_id = ?
+mokkiLueNimella=SELECT * FROM mokki WHERE mokkinimi = ?
+mokkiPaivita=UPDATE mokki SET toimintaalue_id = ?, postinro = ?, mokkinimi = ?, katuosoite = ?, kuvaus = ?, \
+  henkilomaara = ?, varustelu = ?, hinta = ? WHERE mokki_id = ?
+mokkiPoista=DELETE FROM mokki WHERE mokki_id = ?
+mokkiListaa=SELECT * FROM mokki
+mokkiListaaTahko=SELECT * FROM mokki WHERE toimintaalue_id = 1
+mokkiListaaRuka=SELECT * FROM mokki WHERE toimintaalue_id = 2
+mokkiListaaYllas=SELECT * FROM mokki WHERE toimintaalue_id = 3
+mokkiListaaHimos=SELECT * FROM mokki WHERE toimintaalue_id = 4
+mokkiListaaLevi=SELECT * FROM mokki WHERE toimintaalue_id = 5
+mokkiListaaKoli=SELECT * FROM mokki WHERE toimintaalue_id = 6
+mokkiListaaVuokatti=SELECT * FROM mokki WHERE toimintaalue_id = 7
+mokkiListaaPallas=SELECT * FROM mokki WHERE toimintaalue_id = 8
