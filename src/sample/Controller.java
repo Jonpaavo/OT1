@@ -94,7 +94,7 @@ public class Controller {
 
         // näyttää virhetekstin jos käyttäjä unohtaa täyttää kaikki pakolliset kentät
         if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || tfAsiakas.getCharacters().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null ) {
-            txtVarausVaroitus.setVisible(true);;
+            txtVarausVaroitus.setVisible(true);
         } else {
             txtVarausVaroitus.setVisible(false);
             //tehdään muuttujat näytöllä olevista objekteista
@@ -119,18 +119,7 @@ public class Controller {
 
             // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
             tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki));
-
-            System.out.println(toimintaalue);
-            System.out.println(tulopaiva);
-            System.out.println(lahtopaiva);
-            System.out.println(hlomaara);
-            System.out.println(asiakas);
-            System.out.println(mokki);
-            System.out.println(palvelut);
-            System.out.println(cboxPalvelut.getSelectionModel().getSelectedItem());
         }
-
-
     }
 
     // MÖKKIENHALLINTA
