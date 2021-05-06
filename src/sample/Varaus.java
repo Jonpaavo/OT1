@@ -3,10 +3,10 @@ package sample;
 import java.util.Date;
 
 public class Varaus {
-    String toimintaalue, asiakas, mokki, palvelut, tulopaiva, lahtopaiva;
-    int henkilomaara;
+    String toimintaalue, asiakas, tulopaiva, lahtopaiva;
+    Object henkilomaara, mokki, palvelut;
 
-    public Varaus(String toimintaalue, String tulopaiva, String lahtopaiva, int henkilomaara, String asiakas ,String palvelut, String mokki) {
+    public Varaus(String toimintaalue, String tulopaiva, String lahtopaiva, Object henkilomaara, String asiakas ,Object palvelut, Object mokki) {
 
         this.toimintaalue = toimintaalue;
         this.tulopaiva = tulopaiva;
@@ -31,7 +31,7 @@ public class Varaus {
         this.asiakas = asiakas;
     }
 
-    public String getMokki() {
+    public Object getMokki() {
         return mokki;
     }
 
@@ -39,7 +39,7 @@ public class Varaus {
         this.mokki = mokki;
     }
 
-    public String getPalvelut() {
+    public Object getPalvelut() {
         return palvelut;
     }
 
@@ -63,7 +63,7 @@ public class Varaus {
         this.lahtopaiva = lahtopaiva;
     }
 
-    public int getHenkilomaara() {
+    public Object getHenkilomaara() {
         return henkilomaara;
     }
 

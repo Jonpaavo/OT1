@@ -64,9 +64,6 @@ public class Controller {
 
     public  TableColumn<Varaus, String> tcMokki;
 
-    ObservableList<Varaus> tilausLista = FXCollections.observableArrayList(
-            new Varaus("Tahko", "2020-02-10", "2020-03-10", 4, "Serverin Fuksit", "Poroajelu", "Tahko 1")
-    );
 
     public void LataaTilausTaulu() {
 
@@ -79,6 +76,31 @@ public class Controller {
         tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
 
         tvTableView.setItems(tilausLista);
+    }
+    //lista johon menee kaikki Varaus-oliot
+    ObservableList<Varaus> tilausLista = FXCollections.observableArrayList();
+    // Lisää varauksen tiedot varausnäytön tauluun
+    public void Btlisaa(){
+        String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
+        String tulopaiva = dptulopaiva.getValue().toString();
+        String lahtopaiva = dplahtopaiva.getValue().toString();
+        Object hlomaara = cboxHenkilomaara.getSelectionModel().getSelectedItem();
+        String asiakas = tfAsiakas.getCharacters().toString();
+        Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
+        Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+
+
+        tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, mokki, palvelut));
+
+        System.out.println(toimintaalue);
+        System.out.println(tulopaiva);
+        System.out.println(lahtopaiva);
+        System.out.println(hlomaara);
+        System.out.println(asiakas);
+        System.out.println(mokki);
+        System.out.println(palvelut);
+
+
     }
 
     // MÖKKIENHALLINTA
@@ -176,18 +198,7 @@ public class Controller {
         cboxPalvelut.setItems(palvelulista);
     }
 
-    // tulostaa näytöllä valitut tiedot väliaikaisesti, nää laitetaan aikanaan menemään tietokantaan
-    public void Btlisaa(){
 
-        System.out.println(cboxToimintaalue.getSelectionModel().getSelectedItem());
-        System.out.println(dplahtopaiva.getValue());
-        System.out.println(dptulopaiva.getValue());
-        System.out.println(cboxHenkilomaara.getSelectionModel().getSelectedItem());
-        System.out.println(tfAsiakas.getCharacters());
-        System.out.println(cboxMokki.getSelectionModel().getSelectedItem());
-        System.out.println(cboxPalvelut.getSelectionModel().getSelectedItem());
-
-    }
 
 
     public void LataaTaulu() {
