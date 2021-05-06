@@ -10,11 +10,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class Controller {
@@ -32,8 +34,6 @@ public class Controller {
     public TextField tftoimintaalue;
     public DatePicker dptulopaiva;
     public DatePicker dplahtopaiva;
-    public TableView tvTableview;
-    public TableColumn tcToimintaalue;
     public ObservableList<String>toimintaaluelista = FXCollections.observableArrayList("Tahko", "Ruka", "Ylläs", "Himos", "Levi", "Koli", "Vuokatti", "Pallas");
     public ObservableList<String>henkilomaaralista = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","yli 10");
     public ObservableList<String>palvelulista = FXCollections.observableArrayList("Porosafari","Koiravaljakkoajelu","Hevosajelu", "Vesiskootteriajelu","Seikkailupalvelu","Airsoft");
@@ -45,7 +45,43 @@ public class Controller {
     public ObservableList<String>kolimokitlista = FXCollections.observableArrayList("Koli 1", "Koli 2", "Koli 3", "Koli 4", "Koli 5");
     public ObservableList<String>vuokattimokitlista = FXCollections.observableArrayList("Vuokatti 1", "Vuokatti 2", "Vuokatti 3", "Vuokatti 4", "Vuokatti 5");
     public ObservableList<String>pallasmokitlista = FXCollections.observableArrayList("Pallas 1", "Pallas 2", "Pallas 3", "Pallas 4", "Pallas 5");
-// MÖKKIENHALLINTA
+
+    //MÖKINVARAUS TABLE
+    @FXML
+    public TableView <Varaus> tvTableView;
+    @FXML
+    public TableColumn<Varaus, String> tcToimintaalue;
+
+    public TableColumn<Varaus, String> tcTulopaiva;
+
+    public  TableColumn<Varaus, String> tcLahtopaiva;
+
+    public  TableColumn<Varaus, Integer> tcHenkilomaara;
+
+    public  TableColumn<Varaus, String> tcAsiakas;
+
+    public  TableColumn<Varaus, String> tcPalvelut;
+
+    public  TableColumn<Varaus, String> tcMokki;
+
+    ObservableList<Varaus> tilausLista = FXCollections.observableArrayList(
+            new Varaus("Tahko", "2020-02-10", "2020-03-10", 4, "Serverin Fuksit", "Poroajelu", "Tahko 1")
+    );
+
+    public void LataaTilausTaulu() {
+
+        tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
+        tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
+        tcLahtopaiva.setCellValueFactory(new PropertyValueFactory<Varaus,String>("lahtopaiva"));
+        tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, Integer>("henkilomaara"));
+        tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
+        tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
+        tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
+
+        tvTableView.setItems(tilausLista);
+    }
+
+    // MÖKKIENHALLINTA
     public TableColumn CmokkienhallintaNimi;
     public TableColumn CmokkienhallintaOsoite;
     public TableColumn CmokkienhallintaKuvaus;
@@ -79,7 +115,6 @@ public class Controller {
     public TableColumn tbcEmail;
 
 
-
     public void initialize() {
         NaytaToimintaalue();
         NaytaToimintaalue2();
@@ -87,6 +122,7 @@ public class Controller {
         NaytaHenkilomaara();
         NaytaPalvelut();
         NaytaMokki();
+        LataaTilausTaulu();
 
 
     }

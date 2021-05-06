@@ -66,14 +66,15 @@
                                     </Pane>
                                  </children>
                               </GridPane>
-                              <TableView fx:id="tvTableView" layoutX="500.0" layoutY="14.0" prefHeight="335.0" prefWidth="589.0">
+                              <TableView fx:id="tvTableView" layoutX="468.0" layoutY="14.0" prefHeight="335.0" prefWidth="632.0">
                                 <columns>
-                                  <TableColumn fx:id="tcToimintaalue" prefWidth="122.0" text="Toiminta-alue" />
-                                  <TableColumn fx:id="tcTulopaiva" prefWidth="70.0" text="Tulopäivä" />
-                                    <TableColumn fx:id="tcLahtopaiva" text="Lähtöpäivä" />
-                                    <TableColumn fx:id="tcHenkilomaara" prefWidth="81.0" text="Henkilömäärä" />
-                                    <TableColumn fx:id="tcMokki" prefWidth="85.0" text="Mökki" />
-                                    <TableColumn fx:id="tcPalvelut" text="Palvelut" />
+                                  <TableColumn fx:id="tcToimintaalue" prefWidth="87.99996948242188" text="Toiminta-alue" />
+                                  <TableColumn fx:id="tcTulopaiva" prefWidth="79.33331298828125" text="Tulopäivä" />
+                                    <TableColumn fx:id="tcLahtopaiva" prefWidth="80.00006103515625" text="Lähtöpäivä" />
+                                    <TableColumn fx:id="tcHenkilomaara" prefWidth="106.6666259765625" text="Henkilömäärä" />
+                                    <TableColumn fx:id="tcAsiakas" prefWidth="100.0" text="Asiakas" />
+                                    <TableColumn fx:id="tcPalvelut" prefWidth="88.6666259765625" text="Palvelut" />
+                                    <TableColumn fx:id="tcMokki" prefWidth="86.666748046875" text="Mökki" />
                                 </columns>
                               </TableView>
                            </children>
