@@ -16,6 +16,6 @@ abstract class DomainOlioDAO {
     final static ResourceBundle sqlLauseet = ResourceBundle.getBundle("SQLlauseet");
 
     Connection getYhteys() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mvj?user=root&password=3n2l4v3d");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mvj?user=root&password=");
     }
 }
