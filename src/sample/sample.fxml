@@ -195,23 +195,23 @@
                                     <Label layoutX="208.0" layoutY="54.0" text="Sukunimi" />
                                     <Label layoutX="19.0" layoutY="104.0" text="Lähiosoite" />
                                     <Label layoutX="210.0" layoutY="157.0" text="Puhelinnumero" />
-                                    <TextField layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
-                                    <TextField fx:id="tftoimintaalue2" layoutX="18.0" layoutY="71.0" />
-                                    <TextField layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
-                                    <TextField layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
+                                    <TextField fx:id="tfSukunimi" layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
+                                    <TextField fx:id="tfEtunimi" layoutX="18.0" layoutY="71.0" />
+                                    <TextField fx:id="tfLahiosoite" layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
+                                    <TextField fx:id="tfPostinro" layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
                                     <Label layoutX="19.0" layoutY="157.0" text="Sähköposti" />
-                                    <TextField layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
-                                    <TextField layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
+                                    <TextField fx:id="tfEmail" layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
+                                    <TextField fx:id="tfPuhelinnro" layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
                                     <Button layoutX="341.0" layoutY="351.0" mnemonicParsing="false" text="Edellinen" />
-                                    <Button fx:id="BtTallennaAsiakas" layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#tallennaAsiakas" text="Tallenna" />
-                                    <TableView layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
+                                    <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#BtTallennaAsiakas" text="Tallenna" />
+                                    <TableView fx:id="tbvAsiakas" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="etunimi" />
-                                          <TableColumn prefWidth="75.0" text="sukunimi" />
-                                          <TableColumn prefWidth="75.0" text="lähiosoite" />
-                                          <TableColumn prefWidth="75.0" text="postinro" />
-                                          <TableColumn prefWidth="75.0" text="email" />
-                                          <TableColumn prefWidth="75.0" text="puhelinnro" />
+                                          <TableColumn fx:id="tbcEtunimi" prefWidth="75.0" text="etunimi" />
+                                          <TableColumn fx:id="tbcSukunimi" prefWidth="75.0" text="sukunimi" />
+                                          <TableColumn fx:id="tbcLahiosoite" prefWidth="75.0" text="lähiosoite" />
+                                          <TableColumn fx:id="tbcPostinro" prefWidth="75.0" text="postinro" />
+                                          <TableColumn fx:id="tbcEmail" prefWidth="75.0" text="email" />
+                                          <TableColumn fx:id="tbcPuhelinnro" prefWidth="75.0" text="puhelinnro" />
                                        </columns>
                                     </TableView>
                                  </children>

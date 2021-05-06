@@ -15,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.text.Text;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -141,7 +143,7 @@ public class Controller {
     public TextField txtfMokkienhallintaPostinumero;
     public TextField txtfMokkienhallintaHinta;
     public TextField txtfMokkienhallintaAlv;
-    // ASIAKASHALLINTA
+    // ASIAKASHALLINTA alustus
     public TextField tfEtunimi;
     public TextField tfSukunimi;
     public TextField tfLahiosoite;
@@ -154,6 +156,62 @@ public class Controller {
     public TableColumn tbcLahiosoite;
     public TableColumn tbcPostinro;
     public TableColumn tbcEmail;
+    public TableColumn tbcPuhelinnro;
+
+    // ASIAKASHALLINTA SQL
+    // Asiakastaulu
+
+    // Tämä lähinnä testin vuoksi -> vaaditaan kuitenkin yhteyden muodostamiseen
+    public void PaivitaAsiakas() {
+
+        try {
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String query = "UPDATE asiakas SET postinro = ?, etunimi= ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?";
+
+            PreparedStatement pst = connectDB.prepareStatement(query);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+
+    //Asiakkaiden lisääminen sql asiakas tauluun
+    public void BtTallennaAsiakas() {
+
+        try {
+
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause asiakkaiden luomiselle
+            String query = "insert into asiakas (postinro,etunimi,sukunimi,lahiosoite,email,puhelinnro)values(?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqlasiakas = connectDB.prepareStatement(query);
+
+            //Noudetaan tiedot textfieldistä
+            sqlasiakas.setString(1,tfPostinro.getText());
+            sqlasiakas.setString(2,tfEtunimi.getText());
+            sqlasiakas.setString(3,tfSukunimi.getText());
+            sqlasiakas.setString(4,tfLahiosoite.getText());
+            sqlasiakas.setString(5,tfEmail.getText());
+            sqlasiakas.setString(6,tfPuhelinnro.getText());
+
+            //Suoritetaan SQL komennot
+            sqlasiakas.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaAsiakas();
+
+        } catch(Exception e) {
+
+        }
+    }
+
 
 
     public void initialize() {
