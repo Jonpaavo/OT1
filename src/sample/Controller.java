@@ -17,6 +17,10 @@ public class Controller {
 
     // Luodaan tarvittavat elementit ja listat
 
+    //LASKUJEN HALLINTA
+    public TextField tfSposti;
+
+
     // MÖKIN VARAUS
     public ComboBox cboxToimintaalue;
     public ComboBox cboxHenkilomaara;
@@ -49,6 +53,7 @@ public class Controller {
     public  TableColumn<Varaus, String> tcAsiakas;
     public  TableColumn<Varaus, String> tcPalvelut;
     public  TableColumn<Varaus, String> tcMokki;
+    public TableColumn <Varaus, String> tcSposti;
     // MÖKKIENHALLINTA
     //Mökkienhallinta table
     public TableColumn <Mokki, String> CmokkienhallintaNimi;
@@ -60,6 +65,7 @@ public class Controller {
     public TableColumn <Mokki, Double> CmokkienhallintaHinta;
     public TableColumn <Mokki, Double> CmokkienhallintaAlv;
     public TableColumn <Mokki, Integer>CmokkienhallintaID;
+
     public TableView tbvMokkienhallintaMokit;
 
     public TextField txtfMokkienhallintaMokkinimi;
@@ -86,6 +92,8 @@ public class Controller {
     public TableColumn tbcPostinro;
     public TableColumn tbcEmail;
     public TableColumn tbcPuhelinnro;
+
+
 
     // Näyttää toiminta-alueet Palveluiden Hallinta - välilehdellä
     public void NaytaToimintaalue3() {
@@ -203,6 +211,7 @@ public class Controller {
             String asiakas = tfAsiakas.getCharacters().toString();
             Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
             Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+            String sposti = tfSposti.getCharacters().toString();
 
             tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
             tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
@@ -211,12 +220,13 @@ public class Controller {
             tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
             tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
             tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
+            tcSposti.setCellValueFactory(new PropertyValueFactory<Varaus, String>("sposti"));
 
             // Lisätään tilausListan Itemit tableViewiin
             tvTableView.setItems(tilausLista);
 
             // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
-            tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki));
+            tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
         }
     }
 

@@ -3,10 +3,14 @@ package sample;
 import java.util.Date;
 
 public class Varaus {
-    String toimintaalue, asiakas, tulopaiva, lahtopaiva;
+    String toimintaalue;
+    String asiakas;
+    String tulopaiva;
+    String lahtopaiva;
+    String sposti;
     Object henkilomaara, mokki, palvelut;
 
-    public Varaus(String toimintaalue, String tulopaiva, String lahtopaiva, Object henkilomaara, String asiakas ,Object palvelut, Object mokki) {
+    public Varaus(String toimintaalue, String tulopaiva, String lahtopaiva, Object henkilomaara, String asiakas ,Object palvelut, Object mokki, String sposti) {
 
         this.toimintaalue = toimintaalue;
         this.tulopaiva = tulopaiva;
@@ -15,6 +19,7 @@ public class Varaus {
         this.asiakas = asiakas;
         this.palvelut = palvelut;
         this.mokki = mokki;
+        this.sposti = sposti;
     }
     public String getToimintaalue() {
         return toimintaalue;
@@ -71,6 +76,27 @@ public class Varaus {
     public void setHenkilomaara(int henkilomaara) {
         this.henkilomaara = henkilomaara;
     }
+
+    public String getSposti() {
+        return sposti;
+    }
+
+    public void setSposti(String sposti) {
+        this.sposti = sposti;
+    }
+
+    public void setHenkilomaara(Object henkilomaara) {
+        this.henkilomaara = henkilomaara;
+    }
+
+    public void setMokki(Object mokki) {
+        this.mokki = mokki;
+    }
+
+    public void setPalvelut(Object palvelut) {
+        this.palvelut = palvelut;
+    }
+
 
 
 }
