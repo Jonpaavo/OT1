@@ -17,18 +17,7 @@ public class Controller {
 
     // Luodaan tarvittavat elementit ja listat
 
-    //LASKUJEN HALLINTA
-    //Laskujenhallinta table
-    public TextField tfSposti;
-    public TableView <Lasku> tvLasku;
-    public TableColumn<Lasku, String> tcToimintaalue_Lasku;
-    public TableColumn<Lasku, String> tcTulopaiva_Lasku;
-    public TableColumn<Lasku, String> tcLahtopaiva_Lasku;
-    public TableColumn<Lasku, Integer> tcHlomaara_Lasku;
-    public TableColumn<Lasku, String> tcAsiakas_Lasku;
-    public TableColumn<Lasku, String> tcPalvelut_Lasku;
-    public TableColumn<Lasku, String> tcMokki_Lasku;
-    public TableColumn<Lasku, String> tcSposti_Lasku;
+
 
 
     // MÖKIN VARAUS
@@ -380,4 +369,35 @@ public class Controller {
         }
     }
 
+    /**
+     * Laskunhallintanäkymä
+     */
+
+    //LASKUJEN HALLINTA
+    public TextArea txtAreaLaskutiedot_Lasku;
+    public Button btLahetaLasku;
+
+    //Laskujenhallinta table
+    public TextField tfSposti;
+    public TableView <Lasku> tvLasku;
+    public TableColumn<Lasku, String> tcToimintaalue_Lasku;
+    public TableColumn<Lasku, String> tcTulopaiva_Lasku;
+    public TableColumn<Lasku, String> tcLahtopaiva_Lasku;
+    public TableColumn<Lasku, Integer> tcHlomaara_Lasku;
+    public TableColumn<Lasku, String> tcAsiakas_Lasku;
+    public TableColumn<Lasku, String> tcPalvelut_Lasku;
+    public TableColumn<Lasku, String> tcMokki_Lasku;
+    public TableColumn<Lasku, String> tcSposti_Lasku;
+
+
+    public void btLahetaLasku(ActionEvent actionEvent) {
+        System.out.println("Toiminta-alue: "+tvLasku.getItems().get(0).toimintaalue);
+        System.out.println("Tulopäivä: "+tvLasku.getItems().get(0).tulopaiva);
+        System.out.println("Lähtöpäivä: "+tvLasku.getItems().get(0).lahtopaiva);
+        System.out.println("Henkilömäärä: "+tvLasku.getItems().get(0).henkilomaara);
+        System.out.println("Asiakas: "+tvLasku.getItems().get(0).asiakas);
+        System.out.println("Palvelut: "+tvLasku.getItems().get(0).palvelut);
+        System.out.println("Mökki: "+tvLasku.getItems().get(0).mokki);
+        System.out.println("Sähköpostiosoite: "+tvLasku.getItems().get(0).sposti);
+    }
 }
