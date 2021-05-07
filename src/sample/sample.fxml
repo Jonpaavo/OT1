@@ -228,7 +228,26 @@
             </Tab>
             <Tab text="Laskujen hallinta">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="30.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tee lasku">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Text>
+                        <TableView fx:id="tvLasku" layoutX="374.0" layoutY="61.0" prefHeight="390.0" prefWidth="699.0">
+                          <columns>
+                            <TableColumn fx:id="tcToimintaalue_Lasku" prefWidth="91.99996948242188" text="Toiminta-alue" />
+                            <TableColumn fx:id="tcTulopaiva_Lasku" prefWidth="58.66668701171875" text="Tulopäivä" />
+                              <TableColumn fx:id="tcLahtopaiva_Lasku" prefWidth="75.0" text="Lähtöpäivä" />
+                              <TableColumn fx:id="tcHlomaara_Lasku" prefWidth="94.6666259765625" text="Henkilömäärä" />
+                              <TableColumn fx:id="tcAsiakas_Lasku" prefWidth="64.0" text="Asiakas" />
+                              <TableColumn fx:id="tcPalvelut_Lasku" prefWidth="85.33331298828125" text="Palvelut" />
+                              <TableColumn fx:id="tcMokki_Lasku" prefWidth="83.33331298828125" text="Mökki" />
+                              <TableColumn fx:id="tcSposti_Lasku" prefWidth="144.00002034505212" text="Sähköposti" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Raportointi">

@@ -18,7 +18,17 @@ public class Controller {
     // Luodaan tarvittavat elementit ja listat
 
     //LASKUJEN HALLINTA
+    //Laskujenhallinta table
     public TextField tfSposti;
+    public TableView <Lasku> tvLasku;
+    public TableColumn<Lasku, String> tcToimintaalue_Lasku;
+    public TableColumn<Lasku, String> tcTulopaiva_Lasku;
+    public TableColumn<Lasku, String> tcLahtopaiva_Lasku;
+    public TableColumn<Lasku, Integer> tcHlomaara_Lasku;
+    public TableColumn<Lasku, String> tcAsiakas_Lasku;
+    public TableColumn<Lasku, String> tcPalvelut_Lasku;
+    public TableColumn<Lasku, String> tcMokki_Lasku;
+    public TableColumn<Lasku, String> tcSposti_Lasku;
 
 
     // MÖKIN VARAUS
@@ -194,6 +204,8 @@ public class Controller {
 
     //lista johon menee kaikki Varaus-oliot
     ObservableList<Varaus> tilausLista = FXCollections.observableArrayList();
+    //lista johon menee kaikki laskutustiedot
+    ObservableList<Lasku> LaskuLista = FXCollections.observableArrayList();
 
     // Lisää varauksen tiedot varausnäytön tauluun
     public void Btlisaa(){
@@ -222,11 +234,24 @@ public class Controller {
             tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
             tcSposti.setCellValueFactory(new PropertyValueFactory<Varaus, String>("sposti"));
 
+            tcToimintaalue_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimintaalue"));
+            tcTulopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tulopaiva"));
+            tcLahtopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahtopaiva"));
+            tcHlomaara_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
+            tcAsiakas_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("asiakas"));
+            tcPalvelut_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("palvelut"));
+            tcMokki_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("mokki"));
+            tcSposti_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("sposti"));
+
+
+
             // Lisätään tilausListan Itemit tableViewiin
             tvTableView.setItems(tilausLista);
+            tvLasku.setItems(LaskuLista);
 
             // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
             tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+            LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
         }
     }
 
