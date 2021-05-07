@@ -199,7 +199,7 @@ public class Controller {
     public void Btlisaa(){
 
         // näyttää virhetekstin jos käyttäjä unohtaa täyttää kaikki pakolliset kentät
-        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || tfAsiakas.getCharacters().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null ) {
+        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || tfAsiakas.getCharacters().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null || tfSposti.getCharacters().toString() == "") {
             txtVarausVaroitus.setVisible(true);
         } else {
             txtVarausVaroitus.setVisible(false);
