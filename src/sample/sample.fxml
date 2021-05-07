@@ -101,24 +101,24 @@
                                  </font>
                               </Label>
                               <Label layoutX="19.0" layoutY="54.0" text="Toiminta-alue" />
-                              <Label layoutX="208.0" layoutY="104.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
-                              <Label layoutX="208.0" layoutY="54.0" text="Mökin nimi" />
-                              <Label layoutX="19.0" layoutY="104.0" text="Katuosoite" />
-                              <Label layoutX="210.0" layoutY="157.0" text="Kuvaus" />
-                              <TextField fx:id="txtfMokkienhallintaMokkinimi" layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
-                              <TextField fx:id="txtfMokkienhallintaKatuosoite" layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
-                              <TextField fx:id="txtfMokkienhallintaPostinumero" layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
-                              <Label layoutX="19.0" layoutY="157.0" text="Henkilömäärä" />
-                              <Label layoutX="18.0" layoutY="258.0" text="Varustelu" />
-                              <Label layoutX="19.0" layoutY="206.0" text="Hinta" />
-                              <TextField fx:id="txtfMokkienhallintaHlomaara" layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
-                              <TextField fx:id="txtfMokkienhallintaKuvaus" layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
-                              <TextField fx:id="txtfMokkienhallintaHinta" layoutX="18.0" layoutY="223.0" onInputMethodTextChanged="#hinta" />
-                              <Label layoutX="208.0" layoutY="206.0" text="ALV" />
-                               <TextField fx:id="txtfMokkienhallintaVarustelu" layoutX="18.0" layoutY="279.0" />
-                               <TextField fx:id="txtfMokkienhallintaAlv" layoutX="207.0" layoutY="223.0" onInputMethodTextChanged="#alv" />
+                              <Label layoutX="204.0" layoutY="149.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
+                              <Label layoutX="204.0" layoutY="99.0" text="Mökin nimi" />
+                              <Label layoutX="18.0" layoutY="151.0" text="Katuosoite" />
+                              <Label layoutX="206.0" layoutY="202.0" text="Kuvaus" />
+                              <TextField fx:id="txtfMokkienhallintaMokkinimi" layoutX="204.0" layoutY="116.0" />
+                              <TextField fx:id="txtfMokkienhallintaKatuosoite" layoutX="17.0" layoutY="168.0" />
+                              <TextField fx:id="txtfMokkienhallintaPostinumero" layoutX="203.0" layoutY="169.0" />
+                              <Label layoutX="18.0" layoutY="204.0" text="Henkilömäärä" />
+                              <Label layoutX="17.0" layoutY="305.0" text="Varustelu" />
+                              <Label layoutX="18.0" layoutY="253.0" text="Hinta" />
+                              <TextField fx:id="txtfMokkienhallintaHlomaara" layoutX="17.0" layoutY="221.0" />
+                              <TextField fx:id="txtfMokkienhallintaKuvaus" layoutX="203.0" layoutY="221.0" />
+                              <TextField fx:id="txtfMokkienhallintaHinta" layoutX="17.0" layoutY="270.0" />
+                              <Label layoutX="204.0" layoutY="251.0" text="ALV" />
+                               <TextField fx:id="txtfMokkienhallintaVarustelu" layoutX="17.0" layoutY="326.0" />
+                               <TextField fx:id="txtfMokkienhallintaAlv" layoutX="203.0" layoutY="270.0" />
                               <Button layoutX="341.0" layoutY="351.0" mnemonicParsing="false" text="Edellinen" />
-                              <Button fx:id="btTallenna" layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#LisaaMokki" text="Tallenna" />
+                              <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#LisaaMokki" text="Tallenna" />
                               <TableView fx:id="tbvMokkienhallintaMokit" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="743.0">
                                 <columns>
                                      <TableColumn fx:id="CmokkienhallintaID" prefWidth="75.0" text="ID" />
@@ -133,6 +133,8 @@
                                 </columns>
                               </TableView>
                               <ComboBox fx:id="cboxToimintaalue2" layoutX="18.0" layoutY="71.0" prefWidth="150.0" />
+                              <TextField fx:id="txtfMokkienhallintaMokkiID" layoutX="19.0" layoutY="116.0" />
+                              <Label layoutX="16.0" layoutY="99.0" text="MökkiID" />
 
                            </children>
                         </Pane>

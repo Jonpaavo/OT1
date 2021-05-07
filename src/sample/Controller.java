@@ -1,10 +1,5 @@
 package sample;
 
-
-import DAO.MokkiDAO;
-import DomainOliot.DomainOlio;
-import DomainOliot.Mokki;
-import Logiikka.Mokkienhallinta;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -255,39 +250,7 @@ public class Controller {
 
 
 
-    public void LataaTaulu() {
-        tbvMokkienhallintaMokit.getItems().clear();
-        List<Mokki> mokit;
-        Mokkienhallinta mokkienhallinta = new Mokkienhallinta();
-        mokit = mokkienhallinta.listaaMokit(HaeToimintaAlueid());
-        ObservableList<Mokki> taulunmokit = FXCollections.observableArrayList(mokit);
 
-        CmokkienhallintaNimi.setCellValueFactory(
-                new PropertyValueFactory<Mokki, String>("mokkiNimi"));
-        CmokkienhallintaPostinro.setCellValueFactory(
-                new PropertyValueFactory<Mokki, String>("postinro"));
-        CmokkienhallintaOsoite.setCellValueFactory(
-                new PropertyValueFactory<Mokki, String>("katuosoite"));
-        CmokkienhallintaKuvaus.setCellValueFactory(
-                new PropertyValueFactory<Mokki, String>("kuvaus"));
-        CmokkienhallintaHlomaara.setCellValueFactory(
-                new PropertyValueFactory<Mokki, Integer>("henkilomaara"));
-        CmokkienhallintaVarustelu.setCellValueFactory(
-                new PropertyValueFactory<Mokki, String>("varustelu"));
-        CmokkienhallintaHinta.setCellValueFactory(
-                new PropertyValueFactory<Mokki, Integer>("hinta"));
-        CmokkienhallintaAlv.setCellValueFactory(
-                new PropertyValueFactory<Mokki, Double>("alv"));
-        CmokkienhallintaID.setCellValueFactory(
-                new PropertyValueFactory<DomainOlio, Integer>("id"));
-
-        tbvMokkienhallintaMokit.setItems(taulunmokit);
-
-        //Poistaa painikkeet käytöstä, jos taulu näyttää kaikki mökit
-        boolean isDisabled = true;
-        isDisabled = cboxToimintaalue2.getValue().toString().equals("KAIKKI");
-        //LukitsePainikkeet(isDisabled);
-    }
     /**
      * Lisätään mökille toiminta-alue
      *
@@ -326,7 +289,7 @@ public class Controller {
      */
 
 
-    public void LisaaMokki() throws SQLException {
+    public void LisaaMokki()  {
         String nimi = txtfMokkienhallintaMokkinimi.getText();
         String osoite = txtfMokkienhallintaKatuosoite.getText();
         String kuvaus = txtfMokkienhallintaKuvaus.getText();
@@ -338,10 +301,6 @@ public class Controller {
 
         Mokki mokki = new Mokki(0, HaeToimintaAlueid(), postinumero, nimi,
                 osoite, kuvaus, hmaara, varustelu, hinta,alv);
-
-        MokkiDAO dao = new MokkiDAO();
-        dao.luo(mokki);
-        LataaTaulu();
 
     }
 
