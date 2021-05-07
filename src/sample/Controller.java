@@ -247,10 +247,12 @@ public class Controller {
 
             // Lisätään tilausListan Itemit tableViewiin
             tvTableView.setItems(tilausLista);
+            //Lisätään Laskulistan itemit Laskutusnäytön tableviewiin
             tvLasku.setItems(LaskuLista);
 
             // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
             tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+            // tehdään muuttujien perusteella Lasku-olio, jotta saadaan varaustiedot myös laskutusnäyttöön
             LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
         }
     }
