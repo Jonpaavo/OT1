@@ -5,9 +5,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -154,6 +158,7 @@ public class Controller {
         NaytaPalvelut();
         NaytaMokki();
         Varoitus();
+        naytaLaskuTiedot();
     }
 
     /**
@@ -389,6 +394,20 @@ public class Controller {
     public TableColumn<Lasku, String> tcMokki_Lasku;
     public TableColumn<Lasku, String> tcSposti_Lasku;
 
+    public void naytaLaskuTiedot() {
+
+
+        tvLasku.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+
+            if (tvLasku.getSelectionModel().getSelectedItem() != null) {
+                txtAreaLaskutiedot_Lasku.setText("Toiminta-alue: " + tvLasku.getSelectionModel().getSelectedItem().toimintaalue + "\nTulopäivä: " + tvLasku.getSelectionModel().getSelectedItem().tulopaiva + "\nLähtöpäivä: " + tvLasku.getSelectionModel().getSelectedItem().lahtopaiva + "\nHenkilömäärä: " + tvLasku.getSelectionModel().getSelectedItem().henkilomaara + "\nAsiakkaan nimi: " + tvLasku.getSelectionModel().getSelectedItem().asiakas + "\nMökki: " + tvLasku.getSelectionModel().getSelectedItem().mokki + "\nAsiakkaan sähköpostiosoite: " + tvLasku.getSelectionModel().getSelectedItem().sposti);
+            } else {
+                txtAreaLaskutiedot_Lasku.setText("Toiminta-alue:\nTulopäivä:\nLähtöpäivä:\nHenkilömäärä:\nAsiakkaan nimi:\nMökki:\nAsiakkaan sähköpostiosoite:");
+            }
+            });
+
+
+    }
 
     public void btLahetaLasku(ActionEvent actionEvent) {
         System.out.println("Toiminta-alue: "+tvLasku.getItems().get(0).toimintaalue);
@@ -399,5 +418,7 @@ public class Controller {
         System.out.println("Palvelut: "+tvLasku.getItems().get(0).palvelut);
         System.out.println("Mökki: "+tvLasku.getItems().get(0).mokki);
         System.out.println("Sähköpostiosoite: "+tvLasku.getItems().get(0).sposti);
+        System.out.println(tvLasku.getSelectionModel().getSelectedItem().asiakas);
+
     }
 }
