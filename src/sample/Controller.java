@@ -13,9 +13,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller {
 
@@ -405,20 +412,55 @@ public class Controller {
                 txtAreaLaskutiedot_Lasku.setText("Toiminta-alue:\nTulopäivä:\nLähtöpäivä:\nHenkilömäärä:\nAsiakkaan nimi:\nMökki:\nAsiakkaan sähköpostiosoite:");
             }
             });
+    }
 
+    public void lahetaEmail(String recepient) throws Exception {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port","587");
+
+        String myAccountEmail = "mvjarjestelma@gmail.com";
+        String password = "Salasana123";
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(myAccountEmail, password);
+            }
+        });
+
+        Message message = prepareMessage(session, myAccountEmail, recepient);
+        Transport.send(message);
+        System.out.println("Email lähetettiin");
+    }
+    public static Message prepareMessage(Session session, String myAccountEmail, String recepient) throws NoClassDefFoundError {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(myAccountEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
+            message.setSubject("Lasku varaamastasi mökistä");
+            message.setText("Hei tässä laskusi varaamastasi mökistä,\n");
+            return message;
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public void btLahetaLasku(ActionEvent actionEvent) throws Exception {
+        System.out.println("Toiminta-alue: "+tvLasku.getSelectionModel().getSelectedItem().toimintaalue);
+        System.out.println("Tulopäivä: "+tvLasku.getSelectionModel().getSelectedItem().tulopaiva);
+        System.out.println("Lähtöpäivä: "+tvLasku.getSelectionModel().getSelectedItem().lahtopaiva);
+        System.out.println("Henkilömäärä: "+tvLasku.getSelectionModel().getSelectedItem().henkilomaara);
+        System.out.println("Asiakas: "+tvLasku.getSelectionModel().getSelectedItem().asiakas);
+        System.out.println("Palvelut: "+tvLasku.getSelectionModel().getSelectedItem().palvelut);
+        System.out.println("Mökki: "+tvLasku.getSelectionModel().getSelectedItem().mokki);
+        System.out.println("Sähköpostiosoite: "+tvLasku.getSelectionModel().getSelectedItem().sposti);
+        lahetaEmail(tvLasku.getSelectionModel().getSelectedItem().sposti);
 
     }
 
-    public void btLahetaLasku(ActionEvent actionEvent) {
-        System.out.println("Toiminta-alue: "+tvLasku.getItems().get(0).toimintaalue);
-        System.out.println("Tulopäivä: "+tvLasku.getItems().get(0).tulopaiva);
-        System.out.println("Lähtöpäivä: "+tvLasku.getItems().get(0).lahtopaiva);
-        System.out.println("Henkilömäärä: "+tvLasku.getItems().get(0).henkilomaara);
-        System.out.println("Asiakas: "+tvLasku.getItems().get(0).asiakas);
-        System.out.println("Palvelut: "+tvLasku.getItems().get(0).palvelut);
-        System.out.println("Mökki: "+tvLasku.getItems().get(0).mokki);
-        System.out.println("Sähköpostiosoite: "+tvLasku.getItems().get(0).sposti);
-        System.out.println(tvLasku.getSelectionModel().getSelectedItem().asiakas);
-
-    }
 }
