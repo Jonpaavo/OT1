@@ -19,6 +19,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -102,6 +103,7 @@ public class Controller {
     public TableColumn tbcPostinro;
     public TableColumn tbcEmail;
     public TableColumn tbcPuhelinnro;
+    public ObservableList<String>asiakaslista = FXCollections.observableArrayList();
 
 
 
@@ -156,16 +158,6 @@ public class Controller {
     }
 
     public void tallennaAsiakas(ActionEvent actionEvent) {
-    }
-    public void initialize() {
-        NaytaToimintaalue();
-        NaytaToimintaalue2();
-        NaytaToimintaalue3();
-        NaytaHenkilomaara();
-        NaytaPalvelut();
-        NaytaMokki();
-        Varoitus();
-        naytaLaskuTiedot();
     }
 
     /**
@@ -331,21 +323,31 @@ public class Controller {
     // ASIAKASHALLINTA SQL
     // Asiakastaulu
 
+    // ASIAKASHALLINTA SQL
+    // Asiakastaulu
+
     // Tämä lähinnä testin vuoksi -> vaaditaan kuitenkin yhteyden muodostamiseen
     public void PaivitaAsiakas() {
 
         try {
+            asiakaslista.clear();
 
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
+            SQLYhteys conncetNow = new SQLYhteys();
+            Connection connection = conncetNow.getYhteys();
 
-            String query = "UPDATE asiakas SET postinro = ?, etunimi= ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?";
+            ResultSet resultSet = connection.createStatement().executeQuery("select * from asiakas");
 
-            PreparedStatement pst = connectDB.prepareStatement(query);
-        } catch (Exception e) {
+            while (resultSet.next()) {
+                asiakaslista.add(String.valueOf(new Asiakas(resultSet.getString("etunimi"), resultSet.getString("sukunimi"), resultSet.getString("lahiosoite"), resultSet.getString("postinro"), resultSet.getString("email"), resultSet.getString("puhelinnro"))));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return;
     }
+
+
+
 
     //Asiakkaiden lisääminen sql asiakas tauluun
     public void BtTallennaAsiakas() {
@@ -377,10 +379,80 @@ public class Controller {
             PaivitaAsiakas();
 
         } catch(Exception e) {
+            System.err.println("vahinko");
+            System.err.println(e.getMessage());
 
         }
     }
 
+    //Metodi, jolla näkee taulkon tiedot textfieldeissä
+    public void naytaTiedot() {
+
+        //Annetaan hiiren klikkaukselle tapahtuma
+        tbvAsiakas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //Lause, jolla valitaan taulukosta kaikki rivit ja sarakkeet
+                Asiakas as = (Asiakas) tbvAsiakas.getItems().get(tbvAsiakas.getSelectionModel().getSelectedIndex());
+
+                //Näytetään taulukon tiedot omissa textfieldeissä
+
+                tfPostinro.setText(as.getPostinro().toString());
+                tfEtunimi.setText(as.getEtunimi());
+                tfSukunimi.setText(as.getSukunimi());
+                tfLahiosoite.setText(as.getLahiosoite());
+                tfEmail.setText(as.getEmail());
+                tfPuhelinnro.setText(as.getPuhelinnro());
+            }
+        });
+    }
+
+
+
+    public void initialize() {
+        NaytaToimintaalue();
+        NaytaToimintaalue2();
+        NaytaToimintaalue3();
+        NaytaHenkilomaara();
+        NaytaPalvelut();
+        NaytaMokki();
+        Varoitus();
+
+        try {
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause, jolla valitaan kaikki tiedot asiakas taulusta
+            ResultSet resultSet = connectDB.createStatement().executeQuery("select * from asiakas");
+
+            //Taulun kaikkien tietojen läpikäyminen ja lisääminen tableviewiin
+            while(resultSet.next()) {
+                asiakaslista.add(String.valueOf(new Asiakas(resultSet.getString("etunimi"), resultSet.getString("sukunimi"), resultSet.getString("lahiosoite"), resultSet.getString("postinro"), resultSet.getString("email"), resultSet.getString("puhelinnro"))));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        //Scene builderin osien tietojen settaaminen tietokannasta
+        /*
+
+        tbcPostinro.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("postinro"));
+        tbcEtunimi.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("etunimi"));
+        tbcSukunimi.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("sukunimi"));
+        tbcLahiosoite.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("lahiosoite"));
+        tbcEmail.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("email"));
+        tbcPuhelinnro.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("puhelinnro"));
+
+        //Asetetaan kaikki taulun tiedot listaan
+        tbvAsiakas.setItems(asiakaslista);
+
+        //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+        naytaTiedot();
+
+         */
+
+    }
     /**
      * Laskunhallintanäkymä
      */

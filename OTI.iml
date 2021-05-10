@@ -23,12 +23,11 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="mysql-connector" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.24" level="project" />
     <orderEntry type="library" name="OTI" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.22" level="project" />
-    <orderEntry type="library" name="javax.mail" level="project" />
     <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="javax.mail" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.24" level="project" />
   </component>
 </module>
