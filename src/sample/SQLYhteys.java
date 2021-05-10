@@ -13,7 +13,7 @@ public class SQLYhteys {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            yhteys = DriverManager.getConnection("jdbc:mysql://localhost:3306/mvj?user=root&password=Pim2010pelipom");
+            yhteys = DriverManager.getConnection("jdbc:mysql://localhost:3306/mvj?user=root&password=");
 
             if (yhteys != null) {
                 System.out.println("Yhteys muodostettu!");
