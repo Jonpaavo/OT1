@@ -211,6 +211,7 @@
                                     <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#BtTallennaAsiakas" text="Tallenna" />
                                     <TableView fx:id="tbvAsiakas" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
                                        <columns>
+                                          <TableColumn prefWidth="75.0" text="asiakas_id" />
                                           <TableColumn fx:id="tbcEtunimi" prefWidth="75.0" text="etunimi" />
                                           <TableColumn fx:id="tbcSukunimi" prefWidth="75.0" text="sukunimi" />
                                           <TableColumn fx:id="tbcLahiosoite" prefWidth="75.0" text="lähiosoite" />
@@ -219,6 +220,7 @@
                                           <TableColumn fx:id="tbcPuhelinnro" prefWidth="75.0" text="puhelinnro" />
                                        </columns>
                                     </TableView>
+                                    <TextField fx:id="tfAsiakasID" layoutX="18.0" layoutY="234.0" />
                                  </children>
                               </Pane>
                            </children>
