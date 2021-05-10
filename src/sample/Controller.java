@@ -435,7 +435,7 @@ public class Controller {
         Transport.send(message);
         System.out.println("Email lähetettiin");
     }
-    public static Message prepareMessage(Session session, String myAccountEmail, String recepient) throws NoClassDefFoundError {
+    public static Message prepareMessage(Session session, String myAccountEmail, String recepient) throws NoClassDefFoundError, MessagingException {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
