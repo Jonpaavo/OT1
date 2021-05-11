@@ -19,7 +19,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -37,7 +36,7 @@ public class Controller {
     public ComboBox cboxHenkilomaara;
     public ComboBox cboxPalvelut;
     public ComboBox cboxMokki;
-    public ComboBox cboxToimintaalue2;
+    //public ComboBox cboxToimintaalue2;
     public ComboBox cboxToimintaalue3;
     public TextField tfAsiakas;
     public DatePicker dptulopaiva;
@@ -88,6 +87,7 @@ public class Controller {
     public TextField txtfMokkienhallintaHinta;
     public TextField txtfMokkienhallintaAlv;
     public TextField txtfMokkienhallintaMokkiID;
+    public TextField txtfMokkienhallintaTAid;
 
     // ASIAKASHALLINTA alustus
     public TextField tfEtunimi;
@@ -103,7 +103,6 @@ public class Controller {
     public TableColumn tbcPostinro;
     public TableColumn tbcEmail;
     public TableColumn tbcPuhelinnro;
-    public ObservableList<String>asiakaslista = FXCollections.observableArrayList();
 
 
 
@@ -112,10 +111,6 @@ public class Controller {
         cboxToimintaalue3.setItems(toimintaaluelista);
     }
 
-    // Näyttää toiminta-alueet Mökkien Hallinta - välilehdellä
-    public void NaytaToimintaalue2() {
-        cboxToimintaalue2.setItems(toimintaaluelista);
-    }
 
     // Lisätään toiminta-alueet comboboxiin
     public void NaytaToimintaalue() {
@@ -158,6 +153,16 @@ public class Controller {
     }
 
     public void tallennaAsiakas(ActionEvent actionEvent) {
+    }
+    public void initialize() {
+        NaytaToimintaalue();
+        //NaytaToimintaalue2();
+        NaytaToimintaalue3();
+        NaytaHenkilomaara();
+        NaytaPalvelut();
+        NaytaMokki();
+        Varoitus();
+        naytaLaskuTiedot();
     }
 
     /**
@@ -254,9 +259,9 @@ public class Controller {
      * MÖKKIENHALLINTANÄKYMÄ
      */
 
-    //Lisätään mökille toiminta-alue ID
+    /**Lisätään mökille toiminta-alue ID
 
-    public int HaeToimintaAlueid() {
+   public int HaeToimintaAlueid() {
         int toimintaAlueId;
         String toimintaAlueNimi = cboxToimintaalue2.getValue().toString();
 
@@ -281,8 +286,25 @@ public class Controller {
 
         return toimintaAlueId;
     }
+*/
     //Lisätään lista, johon lisätään kaikki mökki-oliot
     ObservableList<Mokki> mokit = FXCollections.observableArrayList();
+
+    // vaaditaan yhteyden muodostamiseen
+    public void PaivitaMokki() {
+
+        try {
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String query1 = "UPDATE mokki SET toimintaalue_id=?, postinro=?,mokkinimi=?,katuosoite=?, kuvaus =?,henkilomaara=?, varustelu=?, hinta=?, alv=? WHERE mokki_id = ?";
+
+            PreparedStatement pst1 = connectDB.prepareStatement(query1);
+        } catch (Exception e) {
+        }
+        return;
+    }
 
     // Lisää mökkien tiedot mökkinäytön tauluun
     public void LisaaMokki() {
@@ -290,6 +312,7 @@ public class Controller {
         //muuttujat teksikenttien sisällöstä
 
         int mokkiID = Integer.parseInt(txtfMokkienhallintaMokkiID.getText());
+        int toimintaAlueId = Integer.parseInt(txtfMokkienhallintaTAid.getText());
         String mokkinimi = txtfMokkienhallintaMokkinimi.getText();
         String katuosoite = txtfMokkienhallintaKatuosoite.getText();
         String kuvaus = txtfMokkienhallintaKuvaus.getText();
@@ -312,16 +335,53 @@ public class Controller {
 
 
         // lisätään mökki olio, joka lisäätän mökkilistalle
-        mokit.add(new Mokki(mokkiID, HaeToimintaAlueid(), postinro, mokkinimi, katuosoite, kuvaus,
+        mokit.add(new Mokki(mokkiID, toimintaAlueId, postinro, mokkinimi, katuosoite, kuvaus,
                 henkilomaara, varustelu, hinta, alv));
 
         //lisätään mökkilista taululle
 
         tbvMokkienhallintaMokit.setItems(mokit);
 
+        //
+
+        //Lisätään tiedot SQL tietokantaan
+        try {
+
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause asiakkaiden luomiselle
+            String query1 = "insert into mokki (mokki_id, toimintaalue_id, postinro,mokkinimi,katuosoite, kuvaus ,henkilomaara, varustelu, hinta, alv)values(?,?,?,?,?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqlmokki = connectDB.prepareStatement(query1);
+
+            //Noudetaan tiedot textfieldistä
+            sqlmokki.setInt(1,Integer.parseInt(txtfMokkienhallintaMokkiID.getText()));
+            sqlmokki.setInt(2,Integer.parseInt(txtfMokkienhallintaTAid.getText()));
+            sqlmokki.setString(3,txtfMokkienhallintaPostinumero.getText());
+            sqlmokki.setString(4,txtfMokkienhallintaMokkinimi.getText());
+            sqlmokki.setString(5,txtfMokkienhallintaKatuosoite.getText());
+            sqlmokki.setString(6,txtfMokkienhallintaKuvaus.getText());
+            sqlmokki.setInt(7,Integer.parseInt(txtfMokkienhallintaHlomaara.getText()));
+            sqlmokki.setString(8,txtfMokkienhallintaVarustelu.getText());
+            sqlmokki.setDouble(9,Double.parseDouble(txtfMokkienhallintaHinta.getText()));
+            sqlmokki.setDouble(10,Double.parseDouble(txtfMokkienhallintaAlv.getText()));
+
+            //Suoritetaan SQL komennot
+            sqlmokki.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaMokki();
+
+        } catch(Exception e) {
+            System.err.println("vahinko");
+            System.err.println(e.getMessage());
+
+        }
     }
-    // ASIAKASHALLINTA SQL
-    // Asiakastaulu
+
 
     // ASIAKASHALLINTA SQL
     // Asiakastaulu
@@ -330,24 +390,17 @@ public class Controller {
     public void PaivitaAsiakas() {
 
         try {
-            asiakaslista.clear();
 
-            SQLYhteys conncetNow = new SQLYhteys();
-            Connection connection = conncetNow.getYhteys();
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
 
-            ResultSet resultSet = connection.createStatement().executeQuery("select * from asiakas");
+            String query = "UPDATE asiakas SET postinro = ?, etunimi= ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?";
 
-            while (resultSet.next()) {
-                asiakaslista.add(String.valueOf(new Asiakas(resultSet.getString("etunimi"), resultSet.getString("sukunimi"), resultSet.getString("lahiosoite"), resultSet.getString("postinro"), resultSet.getString("email"), resultSet.getString("puhelinnro"))));
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            PreparedStatement pst = connectDB.prepareStatement(query);
+        } catch (Exception e) {
         }
+        return;
     }
-
-
-
 
     //Asiakkaiden lisääminen sql asiakas tauluun
     public void BtTallennaAsiakas() {
@@ -379,80 +432,11 @@ public class Controller {
             PaivitaAsiakas();
 
         } catch(Exception e) {
-            System.err.println("vahinko");
-            System.err.println(e.getMessage());
+
 
         }
     }
 
-    //Metodi, jolla näkee taulkon tiedot textfieldeissä
-    public void naytaTiedot() {
-
-        //Annetaan hiiren klikkaukselle tapahtuma
-        tbvAsiakas.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //Lause, jolla valitaan taulukosta kaikki rivit ja sarakkeet
-                Asiakas as = (Asiakas) tbvAsiakas.getItems().get(tbvAsiakas.getSelectionModel().getSelectedIndex());
-
-                //Näytetään taulukon tiedot omissa textfieldeissä
-
-                tfPostinro.setText(as.getPostinro().toString());
-                tfEtunimi.setText(as.getEtunimi());
-                tfSukunimi.setText(as.getSukunimi());
-                tfLahiosoite.setText(as.getLahiosoite());
-                tfEmail.setText(as.getEmail());
-                tfPuhelinnro.setText(as.getPuhelinnro());
-            }
-        });
-    }
-
-
-
-    public void initialize() {
-        NaytaToimintaalue();
-        NaytaToimintaalue2();
-        NaytaToimintaalue3();
-        NaytaHenkilomaara();
-        NaytaPalvelut();
-        NaytaMokki();
-        Varoitus();
-
-        try {
-            //Sql yhteyden määrittäminen
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            //Sql lause, jolla valitaan kaikki tiedot asiakas taulusta
-            ResultSet resultSet = connectDB.createStatement().executeQuery("select * from asiakas");
-
-            //Taulun kaikkien tietojen läpikäyminen ja lisääminen tableviewiin
-            while(resultSet.next()) {
-                asiakaslista.add(String.valueOf(new Asiakas(resultSet.getString("etunimi"), resultSet.getString("sukunimi"), resultSet.getString("lahiosoite"), resultSet.getString("postinro"), resultSet.getString("email"), resultSet.getString("puhelinnro"))));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        //Scene builderin osien tietojen settaaminen tietokannasta
-        /*
-
-        tbcPostinro.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("postinro"));
-        tbcEtunimi.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("etunimi"));
-        tbcSukunimi.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("sukunimi"));
-        tbcLahiosoite.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("lahiosoite"));
-        tbcEmail.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("email"));
-        tbcPuhelinnro.setCellValueFactory(new PropertyValueFactory<Asiakas,String>("puhelinnro"));
-
-        //Asetetaan kaikki taulun tiedot listaan
-        tbvAsiakas.setItems(asiakaslista);
-
-        //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
-        naytaTiedot();
-
-         */
-
-    }
     /**
      * Laskunhallintanäkymä
      */
@@ -507,7 +491,7 @@ public class Controller {
         Transport.send(message);
         System.out.println("Email lähetettiin");
     }
-    public static Message prepareMessage(Session session, String myAccountEmail, String recepient) throws NoClassDefFoundError, MessagingException {
+    public static Message prepareMessage(Session session, String myAccountEmail, String recepient) throws NoClassDefFoundError {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));

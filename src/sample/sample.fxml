@@ -23,252 +23,252 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <children>
-      <TabPane prefHeight="800.0" prefWidth="1118.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <tabs>
-          <Tab text="Mökin varaus">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <GridPane layoutX="24.0" prefHeight="349.0" prefWidth="558.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <ComboBox fx:id="cboxToimintaalue" prefWidth="150.0" GridPane.rowIndex="2" />
-                                    <Label text="Toiminta-alue" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="cboxHenkilomaara" prefWidth="150.0" GridPane.rowIndex="8" />
-                                    <DatePicker fx:id="dptulopaiva" GridPane.rowIndex="4" />
-                                    <DatePicker fx:id="dplahtopaiva" GridPane.rowIndex="6" />
-                                    <Label text="Tulopäivä" GridPane.rowIndex="3" />
-                                    <Label text="Lähtöpäivä" GridPane.rowIndex="5" />
-                                    <Label text="Henkilömäärä" GridPane.rowIndex="7" />
-                                    <Label text="Mökin varaus" />
-                                    <Button mnemonicParsing="false" onAction="#Btlisaa" text="Lisää" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                    <Label text="Asiakas" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="cboxMokki" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label text="Mökki" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label text="Palvelut (ei pakollinen)" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <ComboBox fx:id="cboxPalvelut" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <children>
-                                          <TextField fx:id="tfAsiakas" layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
-                                       </children>
-                                    </Pane>
-                                    <Text fx:id="txtVarausVaroitus" fill="#f00707" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" text="Täytä kaikki kentät!" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                       <font>
-                                          <Font name="System Bold" size="17.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </GridPane>
-                              <TableView fx:id="tvTableView" layoutX="468.0" layoutY="14.0" prefHeight="335.0" prefWidth="632.0">
-                                <columns>
-                                  <TableColumn fx:id="tcToimintaalue" prefWidth="87.99996948242188" text="Toiminta-alue" />
-                                  <TableColumn fx:id="tcTulopaiva" prefWidth="79.33331298828125" text="Tulopäivä" />
-                                    <TableColumn fx:id="tcLahtopaiva" prefWidth="80.00006103515625" text="Lähtöpäivä" />
-                                    <TableColumn fx:id="tcHenkilomaara" prefWidth="84.0" text="Henkilömäärä" />
-                                    <TableColumn fx:id="tcAsiakas" prefWidth="72.0" text="Asiakas" />
-                                    <TableColumn fx:id="tcPalvelut" prefWidth="66.66668701171875" text="Palvelut" />
-                                    <TableColumn fx:id="tcMokki" prefWidth="64.0001220703125" text="Mökki" />
-                                    <TableColumn fx:id="tcSposti" prefWidth="93.99993896484375" text="Sähköposti" />
-                                </columns>
-                              </TableView>
-                              <TextField fx:id="tfSposti" layoutX="24.0" layoutY="385.0" />
-                              <Label layoutX="24.0" layoutY="359.0" text="Sähköpostiosoite" />
-                           </children>
+    <children>
+        <TabPane prefHeight="800.0" prefWidth="1118.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab text="Mökin varaus">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <AnchorPane prefHeight="371.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <GridPane layoutX="24.0" prefHeight="349.0" prefWidth="558.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <ComboBox fx:id="cboxToimintaalue" prefWidth="150.0" GridPane.rowIndex="2" />
+                                                <Label text="Toiminta-alue" GridPane.rowIndex="1" />
+                                                <ComboBox fx:id="cboxHenkilomaara" prefWidth="150.0" GridPane.rowIndex="8" />
+                                                <DatePicker fx:id="dptulopaiva" GridPane.rowIndex="4" />
+                                                <DatePicker fx:id="dplahtopaiva" GridPane.rowIndex="6" />
+                                                <Label text="Tulopäivä" GridPane.rowIndex="3" />
+                                                <Label text="Lähtöpäivä" GridPane.rowIndex="5" />
+                                                <Label text="Henkilömäärä" GridPane.rowIndex="7" />
+                                                <Label text="Mökin varaus" />
+                                                <Button mnemonicParsing="false" onAction="#Btlisaa" text="Lisää" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                <Label text="Asiakas" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ComboBox fx:id="cboxMokki" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="Mökki" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Palvelut (ei pakollinen)" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <ComboBox fx:id="cboxPalvelut" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                    <children>
+                                                        <TextField fx:id="tfAsiakas" layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
+                                                    </children>
+                                                </Pane>
+                                                <Text fx:id="txtVarausVaroitus" fill="#f00707" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" text="Täytä kaikki kentät!" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                    <font>
+                                                        <Font name="System Bold" size="17.0" />
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                        </GridPane>
+                                        <TableView fx:id="tvTableView" layoutX="468.0" layoutY="14.0" prefHeight="335.0" prefWidth="632.0">
+                                            <columns>
+                                                <TableColumn fx:id="tcToimintaalue" prefWidth="87.99996948242188" text="Toiminta-alue" />
+                                                <TableColumn fx:id="tcTulopaiva" prefWidth="79.33331298828125" text="Tulopäivä" />
+                                                <TableColumn fx:id="tcLahtopaiva" prefWidth="80.00006103515625" text="Lähtöpäivä" />
+                                                <TableColumn fx:id="tcHenkilomaara" prefWidth="84.0" text="Henkilömäärä" />
+                                                <TableColumn fx:id="tcAsiakas" prefWidth="72.0" text="Asiakas" />
+                                                <TableColumn fx:id="tcPalvelut" prefWidth="66.66668701171875" text="Palvelut" />
+                                                <TableColumn fx:id="tcMokki" prefWidth="64.0001220703125" text="Mökki" />
+                                                <TableColumn fx:id="tcSposti" prefWidth="93.99993896484375" text="Sähköposti" />
+                                            </columns>
+                                        </TableView>
+                                        <TextField fx:id="tfSposti" layoutX="24.0" layoutY="385.0" />
+                                        <Label layoutX="24.0" layoutY="359.0" text="Sähköpostiosoite" />
+                                    </children>
+                                </AnchorPane>
+                            </children>
                         </AnchorPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Mökkien hallinta">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="761.0" prefWidth="1053.0">
-                     <children>
-                        <Pane prefHeight="443.0" prefWidth="1114.0">
-                           <children>
-                              <Label layoutX="18.0" layoutY="14.0" text="Lisää mökki">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="19.0" layoutY="54.0" text="Toiminta-alue" />
-                              <Label layoutX="204.0" layoutY="149.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
-                              <Label layoutX="204.0" layoutY="99.0" text="Mökin nimi" />
-                              <Label layoutX="18.0" layoutY="151.0" text="Katuosoite" />
-                              <Label layoutX="206.0" layoutY="202.0" text="Kuvaus" />
-                              <TextField fx:id="txtfMokkienhallintaMokkinimi" layoutX="204.0" layoutY="116.0" />
-                              <TextField fx:id="txtfMokkienhallintaKatuosoite" layoutX="17.0" layoutY="168.0" />
-                              <TextField fx:id="txtfMokkienhallintaPostinumero" layoutX="203.0" layoutY="169.0" />
-                              <Label layoutX="18.0" layoutY="204.0" text="Henkilömäärä" />
-                              <Label layoutX="17.0" layoutY="305.0" text="Varustelu" />
-                              <Label layoutX="18.0" layoutY="253.0" text="Hinta" />
-                              <TextField fx:id="txtfMokkienhallintaHlomaara" layoutX="17.0" layoutY="221.0" />
-                              <TextField fx:id="txtfMokkienhallintaKuvaus" layoutX="203.0" layoutY="221.0" />
-                              <TextField fx:id="txtfMokkienhallintaHinta" layoutX="17.0" layoutY="270.0" />
-                              <Label layoutX="204.0" layoutY="251.0" text="ALV" />
-                               <TextField fx:id="txtfMokkienhallintaVarustelu" layoutX="17.0" layoutY="326.0" />
-                               <TextField fx:id="txtfMokkienhallintaAlv" layoutX="203.0" layoutY="270.0" />
-                              <Button fx:id="btPoistamokki" layoutX="373.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
-                              <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#LisaaMokki" text="Tallenna" />
-                              <TableView fx:id="tbvMokkienhallintaMokit" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="743.0">
-                                <columns>
-                                     <TableColumn fx:id="CmokkienhallintaID" prefWidth="75.0" text="ID" />
-                                  <TableColumn fx:id="CmokkienhallintaNimi" prefWidth="75.0" text="Nimi" />
-                                    <TableColumn fx:id="CmokkienhallintaOsoite" prefWidth="75.0" text="Osoite" />
-                                    <TableColumn fx:id="CmokkienhallintaPostinro" prefWidth="75.0" text="Postinumero" />
-                                    <TableColumn fx:id="CmokkienhallintaKuvaus" prefWidth="75.0" text="Kuvaus" />
-                                    <TableColumn fx:id="CmokkienhallintaHlomaara" prefWidth="75.0" text="Hlömäärä" />
-                                    <TableColumn fx:id="CmokkienhallintaVarustelu" prefWidth="75.0" text="Varustelu" />
-                                    <TableColumn fx:id="CmokkienhallintaHinta" prefWidth="75.0" text="Hinta" />
-                                    <TableColumn fx:id="CmokkienhallintaAlv" prefWidth="75.0" text="ALV" />
-                                </columns>
-                              </TableView>
-                              <ComboBox fx:id="cboxToimintaalue2" layoutX="18.0" layoutY="71.0" prefWidth="150.0" />
-                              <TextField fx:id="txtfMokkienhallintaMokkiID" layoutX="19.0" layoutY="116.0" />
-                              <Label layoutX="16.0" layoutY="99.0" text="MökkiID" />
-                              <Button fx:id="naytamokkilista" layoutX="590.0" layoutY="351.0" mnemonicParsing="false" text="Näytä mökkilista" />
+                    </content>
+                </Tab>
+                <Tab text="Mökkien hallinta">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="761.0" prefWidth="1053.0">
+                            <children>
+                                <Pane prefHeight="443.0" prefWidth="1114.0">
+                                    <children>
+                                        <Label layoutX="18.0" layoutY="14.0" text="Lisää mökki">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="18.0" layoutY="41.0" text="Toiminta-alue" />
+                                        <Label layoutX="204.0" layoutY="149.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
+                                        <Label layoutX="204.0" layoutY="99.0" text="Mökin nimi" />
+                                        <Label layoutX="18.0" layoutY="151.0" text="Katuosoite" />
+                                        <Label layoutX="206.0" layoutY="202.0" text="Kuvaus" />
+                                        <TextField fx:id="txtfMokkienhallintaMokkinimi" layoutX="204.0" layoutY="116.0" />
+                                        <TextField fx:id="txtfMokkienhallintaKatuosoite" layoutX="17.0" layoutY="168.0" />
+                                        <TextField fx:id="txtfMokkienhallintaPostinumero" layoutX="203.0" layoutY="169.0" />
+                                        <Label layoutX="18.0" layoutY="204.0" text="Henkilömäärä" />
+                                        <Label layoutX="17.0" layoutY="305.0" text="Varustelu" />
+                                        <Label layoutX="18.0" layoutY="253.0" text="Hinta" />
+                                        <TextField fx:id="txtfMokkienhallintaHlomaara" layoutX="17.0" layoutY="221.0" />
+                                        <TextField fx:id="txtfMokkienhallintaKuvaus" layoutX="203.0" layoutY="221.0" />
+                                        <TextField fx:id="txtfMokkienhallintaHinta" layoutX="17.0" layoutY="270.0" />
+                                        <Label layoutX="204.0" layoutY="251.0" text="ALV" />
+                                        <TextField fx:id="txtfMokkienhallintaVarustelu" layoutX="17.0" layoutY="326.0" />
+                                        <TextField fx:id="txtfMokkienhallintaAlv" layoutX="203.0" layoutY="270.0" />
+                                        <Button fx:id="btPoistamokki" layoutX="373.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
+                                        <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#LisaaMokki" text="Tallenna" />
+                                        <TableView fx:id="tbvMokkienhallintaMokit" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="743.0">
+                                            <columns>
+                                                <TableColumn fx:id="CmokkienhallintaID" prefWidth="75.0" text="ID" />
+                                                <TableColumn fx:id="CmokkienhallintaNimi" prefWidth="75.0" text="Nimi" />
+                                                <TableColumn fx:id="CmokkienhallintaOsoite" prefWidth="75.0" text="Osoite" />
+                                                <TableColumn fx:id="CmokkienhallintaPostinro" prefWidth="75.0" text="Postinumero" />
+                                                <TableColumn fx:id="CmokkienhallintaKuvaus" prefWidth="75.0" text="Kuvaus" />
+                                                <TableColumn fx:id="CmokkienhallintaHlomaara" prefWidth="75.0" text="Hlömäärä" />
+                                                <TableColumn fx:id="CmokkienhallintaVarustelu" prefWidth="75.0" text="Varustelu" />
+                                                <TableColumn fx:id="CmokkienhallintaHinta" prefWidth="75.0" text="Hinta" />
+                                                <TableColumn fx:id="CmokkienhallintaAlv" prefWidth="75.0" text="ALV" />
+                                            </columns>
+                                        </TableView>
+                                        <TextField fx:id="txtfMokkienhallintaMokkiID" layoutX="19.0" layoutY="116.0" />
+                                        <Label layoutX="16.0" layoutY="99.0" text="MökkiID" />
+                                        <Button fx:id="naytamokkilista" layoutX="590.0" layoutY="351.0" mnemonicParsing="false" text="Näytä mökkilista" />
+                              <TextField fx:id="txtfMokkienhallintaTAid" layoutX="16.0" layoutY="62.0" />
 
-                           </children>
-                        </Pane>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Palveluiden hallinta">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
+                                    </children>
+                                </Pane>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Palveluiden hallinta">
+                    <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Pane prefHeight="443.0" prefWidth="1000.0">
-                                 <children>
-                                    <Label layoutX="18.0" layoutY="14.0" text="Lisää palvelu">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="19.0" layoutY="54.0" text="Toiminta-alue" />
-                                    <Label layoutX="192.0" layoutY="54.0" text="Palvelun nimi" />
-                                    <Label layoutX="19.0" layoutY="156.0" text="Kuvaus" />
-                                    <Label layoutX="18.0" layoutY="103.0" text="Hinta" />
-                                    <TextField fx:id="tfPalvelunnimi" layoutX="191.0" layoutY="71.0" onInputMethodTextChanged="#hlomaara" />
-                                    <TextField fx:id="tfPalvelunhinta" layoutX="18.0" layoutY="120.0" onInputMethodTextChanged="#hinta" />
-                                    <Label layoutX="191.0" layoutY="103.0" text="ALV" />
-                                    <TextField fx:id="tfPalvelunalv" layoutX="188.0" layoutY="120.0" onInputMethodTextChanged="#alv" />
-                                    <TextArea fx:id="tfPalvelunkuvaus" layoutX="14.0" layoutY="173.0" onInputMethodTextChanged="#varustelu" prefHeight="57.0" prefWidth="340.0" />
-                                    <Button fx:id="btPoistapalvelu" layoutX="374.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
-                                    <Button fx:id="BtTallennaPalvelu" layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#tallennaPalvelu" text="Tallenna" />
-                                    <TableView fx:id="tbvPalvelutaulu" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
-                                       <columns>
-                                          <TableColumn fx:id="COLpalvelunTA" prefWidth="131.0" text="Toiminta-alue" />
-                                          <TableColumn fx:id="COLPalvelunnimi" prefWidth="155.0" text="Palvelun nimi" />
-                                          <TableColumn fx:id="COLPalvelunhinta" prefWidth="97.0" text="Hinta" />
-                                          <TableColumn fx:id="COLPalvelunalv" prefWidth="57.0" text="Alv" />
-                                          <TableColumn fx:id="COLPalvelunkuvaus" prefWidth="110.0" text="Kuvaus" />
-                                       </columns>
-                                    </TableView>
-                                    <ComboBox fx:id="cboxToimintaalue3" layoutX="18.0" layoutY="71.0" prefWidth="150.0" />
-                                 </children>
-                              </Pane>
-                           </children>
-                        </AnchorPane>
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Asiakashallinta">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
+                            <children>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Pane prefHeight="443.0" prefWidth="1000.0">
+                                            <children>
+                                                <Label layoutX="18.0" layoutY="14.0" text="Lisää palvelu">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="19.0" layoutY="54.0" text="Toiminta-alue" />
+                                                <Label layoutX="192.0" layoutY="54.0" text="Palvelun nimi" />
+                                                <Label layoutX="19.0" layoutY="156.0" text="Kuvaus" />
+                                                <Label layoutX="18.0" layoutY="103.0" text="Hinta" />
+                                                <TextField fx:id="tfPalvelunnimi" layoutX="191.0" layoutY="71.0" onInputMethodTextChanged="#hlomaara" />
+                                                <TextField fx:id="tfPalvelunhinta" layoutX="18.0" layoutY="120.0" onInputMethodTextChanged="#hinta" />
+                                                <Label layoutX="191.0" layoutY="103.0" text="ALV" />
+                                                <TextField fx:id="tfPalvelunalv" layoutX="188.0" layoutY="120.0" onInputMethodTextChanged="#alv" />
+                                                <TextArea fx:id="tfPalvelunkuvaus" layoutX="14.0" layoutY="173.0" onInputMethodTextChanged="#varustelu" prefHeight="57.0" prefWidth="340.0" />
+                                                <Button fx:id="btPoistapalvelu" layoutX="374.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
+                                                <Button fx:id="BtTallennaPalvelu" layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#tallennaPalvelu" text="Tallenna" />
+                                                <TableView fx:id="tbvPalvelutaulu" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
+                                                    <columns>
+                                                        <TableColumn fx:id="COLpalvelunTA" prefWidth="131.0" text="Toiminta-alue" />
+                                                        <TableColumn fx:id="COLPalvelunnimi" prefWidth="155.0" text="Palvelun nimi" />
+                                                        <TableColumn fx:id="COLPalvelunhinta" prefWidth="97.0" text="Hinta" />
+                                                        <TableColumn fx:id="COLPalvelunalv" prefWidth="57.0" text="Alv" />
+                                                        <TableColumn fx:id="COLPalvelunkuvaus" prefWidth="110.0" text="Kuvaus" />
+                                                    </columns>
+                                                </TableView>
+                                                <ComboBox fx:id="cboxToimintaalue3" layoutX="18.0" layoutY="71.0" prefWidth="150.0" />
+                                            </children>
+                                        </Pane>
+                                    </children>
+                                </AnchorPane>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Asiakashallinta">
+                    <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Pane prefHeight="443.0" prefWidth="1000.0">
-                                 <children>
-                                    <Label layoutX="18.0" layoutY="14.0" text="Lisää mökki">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="19.0" layoutY="54.0" text="Etunimi" />
-                                    <Label layoutX="208.0" layoutY="104.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
-                                    <Label layoutX="208.0" layoutY="54.0" text="Sukunimi" />
-                                    <Label layoutX="19.0" layoutY="104.0" text="Lähiosoite" />
-                                    <Label layoutX="210.0" layoutY="157.0" text="Puhelinnumero" />
-                                    <TextField fx:id="tfSukunimi" layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
-                                    <TextField fx:id="tfEtunimi" layoutX="18.0" layoutY="71.0" />
-                                    <TextField fx:id="tfLahiosoite" layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
-                                    <TextField fx:id="tfPostinro" layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
-                                    <Label layoutX="19.0" layoutY="157.0" text="Sähköposti" />
-                                    <TextField fx:id="tfEmail" layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
-                                    <TextField fx:id="tfPuhelinnro" layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
-                                    <Button layoutX="373.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
-                                    <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#BtTallennaAsiakas" text="Tallenna" />
-                                    <TableView fx:id="tbvAsiakas" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
-                                       <columns>
-                                          <TableColumn prefWidth="75.0" text="asiakas_id" />
-                                          <TableColumn fx:id="tbcEtunimi" prefWidth="75.0" text="etunimi" />
-                                          <TableColumn fx:id="tbcSukunimi" prefWidth="75.0" text="sukunimi" />
-                                          <TableColumn fx:id="tbcLahiosoite" prefWidth="75.0" text="lähiosoite" />
-                                          <TableColumn fx:id="tbcPostinro" prefWidth="75.0" text="postinro" />
-                                          <TableColumn fx:id="tbcEmail" prefWidth="75.0" text="email" />
-                                          <TableColumn fx:id="tbcPuhelinnro" prefWidth="75.0" text="puhelinnro" />
-                                       </columns>
-                                    </TableView>
-                                    <TextField fx:id="tfAsiakasID" layoutX="18.0" layoutY="234.0" />
-                                 </children>
-                              </Pane>
-                           </children>
-                        </AnchorPane>
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Laskujen hallinta">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Text layoutX="30.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tee lasku">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                        </Text>
-                        <TableView fx:id="tvLasku" layoutX="374.0" layoutY="61.0" prefHeight="390.0" prefWidth="699.0">
-                          <columns>
-                            <TableColumn fx:id="tcToimintaalue_Lasku" prefWidth="91.99996948242188" text="Toiminta-alue" />
-                            <TableColumn fx:id="tcTulopaiva_Lasku" prefWidth="58.66668701171875" text="Tulopäivä" />
-                              <TableColumn fx:id="tcLahtopaiva_Lasku" prefWidth="75.0" text="Lähtöpäivä" />
-                              <TableColumn fx:id="tcHlomaara_Lasku" prefWidth="94.6666259765625" text="Henkilömäärä" />
-                              <TableColumn fx:id="tcAsiakas_Lasku" prefWidth="64.0" text="Asiakas" />
-                              <TableColumn fx:id="tcPalvelut_Lasku" prefWidth="85.33331298828125" text="Palvelut" />
-                              <TableColumn fx:id="tcMokki_Lasku" prefWidth="83.33331298828125" text="Mökki" />
-                              <TableColumn fx:id="tcSposti_Lasku" prefWidth="144.00002034505212" text="Sähköposti" />
-                          </columns>
-                        </TableView>
-                        <Text fx:id="txtLaskutiedot_Lasku" layoutX="30.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laskun tiedot:" />
-                        <TextArea fx:id="txtAreaLaskutiedot_Lasku" layoutX="7.0" layoutY="123.0" prefHeight="143.0" prefWidth="356.0" text="Toiminta-alue:&#10;Tulopäivä:&#10;Lähtöpäivä:&#10;Henkilömäärä:&#10;Asiakkaan nimi:&#10;Mökki:&#10;Asiakkaan sähköpostiosoite:" />
-                        <Button fx:id="btLahetaLasku" layoutX="268.0" layoutY="293.0" mnemonicParsing="false" onAction="#btLahetaLasku" text="Lähetä lasku" />
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Raportointi">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+                            <children>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Pane prefHeight="443.0" prefWidth="1000.0">
+                                            <children>
+                                                <Label layoutX="18.0" layoutY="14.0" text="Lisää mökki">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="19.0" layoutY="54.0" text="Etunimi" />
+                                                <Label layoutX="208.0" layoutY="104.0" prefHeight="17.0" prefWidth="73.0" text="Postinumero" />
+                                                <Label layoutX="208.0" layoutY="54.0" text="Sukunimi" />
+                                                <Label layoutX="19.0" layoutY="104.0" text="Lähiosoite" />
+                                                <Label layoutX="210.0" layoutY="157.0" text="Puhelinnumero" />
+                                                <TextField fx:id="tfSukunimi" layoutX="208.0" layoutY="71.0" onInputMethodTextChanged="#mokkinimi" />
+                                                <TextField fx:id="tfEtunimi" layoutX="18.0" layoutY="71.0" />
+                                                <TextField fx:id="tfLahiosoite" layoutX="18.0" layoutY="121.0" onInputMethodTextChanged="#osoite" />
+                                                <TextField fx:id="tfPostinro" layoutX="208.0" layoutY="121.0" onInputMethodTextChanged="#postinro" />
+                                                <Label layoutX="19.0" layoutY="157.0" text="Sähköposti" />
+                                                <TextField fx:id="tfEmail" layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
+                                                <TextField fx:id="tfPuhelinnro" layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
+                                                <Button layoutX="373.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
+                                                <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#BtTallennaAsiakas" text="Tallenna" />
+                                                <TableView fx:id="tbvAsiakas" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
+                                                    <columns>
+                                                        <TableColumn prefWidth="75.0" text="asiakas_id" />
+                                                        <TableColumn fx:id="tbcEtunimi" prefWidth="75.0" text="etunimi" />
+                                                        <TableColumn fx:id="tbcSukunimi" prefWidth="75.0" text="sukunimi" />
+                                                        <TableColumn fx:id="tbcLahiosoite" prefWidth="75.0" text="lähiosoite" />
+                                                        <TableColumn fx:id="tbcPostinro" prefWidth="75.0" text="postinro" />
+                                                        <TableColumn fx:id="tbcEmail" prefWidth="75.0" text="email" />
+                                                        <TableColumn fx:id="tbcPuhelinnro" prefWidth="75.0" text="puhelinnro" />
+                                                    </columns>
+                                                </TableView>
+                                                <TextField fx:id="tfAsiakasID" layoutX="18.0" layoutY="234.0" />
+                                            </children>
+                                        </Pane>
+                                    </children>
+                                </AnchorPane>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Laskujen hallinta">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Text layoutX="30.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tee lasku">
+                                    <font>
+                                        <Font size="23.0" />
+                                    </font>
+                                </Text>
+                                <TableView fx:id="tvLasku" layoutX="374.0" layoutY="61.0" prefHeight="390.0" prefWidth="699.0">
+                                    <columns>
+                                        <TableColumn fx:id="tcToimintaalue_Lasku" prefWidth="91.99996948242188" text="Toiminta-alue" />
+                                        <TableColumn fx:id="tcTulopaiva_Lasku" prefWidth="58.66668701171875" text="Tulopäivä" />
+                                        <TableColumn fx:id="tcLahtopaiva_Lasku" prefWidth="75.0" text="Lähtöpäivä" />
+                                        <TableColumn fx:id="tcHlomaara_Lasku" prefWidth="94.6666259765625" text="Henkilömäärä" />
+                                        <TableColumn fx:id="tcAsiakas_Lasku" prefWidth="64.0" text="Asiakas" />
+                                        <TableColumn fx:id="tcPalvelut_Lasku" prefWidth="85.33331298828125" text="Palvelut" />
+                                        <TableColumn fx:id="tcMokki_Lasku" prefWidth="83.33331298828125" text="Mökki" />
+                                        <TableColumn fx:id="tcSposti_Lasku" prefWidth="144.00002034505212" text="Sähköposti" />
+                                    </columns>
+                                </TableView>
+                                <Text fx:id="txtLaskutiedot_Lasku" layoutX="30.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laskun tiedot:" />
+                                <TextArea fx:id="txtAreaLaskutiedot_Lasku" layoutX="7.0" layoutY="123.0" prefHeight="143.0" prefWidth="356.0" text="Toiminta-alue:&#10;Tulopäivä:&#10;Lähtöpäivä:&#10;Henkilömäärä:&#10;Asiakkaan nimi:&#10;Mökki:&#10;Asiakkaan sähköpostiosoite:" />
+                                <Button fx:id="btLahetaLasku" layoutX="268.0" layoutY="293.0" mnemonicParsing="false" onAction="#btLahetaLasku" text="Lähetä lasku" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Raportointi">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
 </AnchorPane>
