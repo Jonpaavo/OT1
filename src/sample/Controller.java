@@ -261,32 +261,32 @@ public class Controller {
 
     /**Lisätään mökille toiminta-alue ID
 
-   public int HaeToimintaAlueid() {
-        int toimintaAlueId;
-        String toimintaAlueNimi = cboxToimintaalue2.getValue().toString();
+     public int HaeToimintaAlueid() {
+     int toimintaAlueId;
+     String toimintaAlueNimi = cboxToimintaalue2.getValue().toString();
 
-        if (toimintaAlueNimi.equals("TAHKO"))
-            toimintaAlueId = 1;
-        else if (toimintaAlueNimi.equals("RUKA"))
-            toimintaAlueId = 2;
-        else if (toimintaAlueNimi.equals("YLLÄS"))
-            toimintaAlueId = 3;
-        else if (toimintaAlueNimi.equals("HIMOS"))
-            toimintaAlueId = 4;
-        else if (toimintaAlueNimi.equals("LEVI"))
-            toimintaAlueId = 5;
-        else if (toimintaAlueNimi.equals("KOLI"))
-            toimintaAlueId = 6;
-        else if (toimintaAlueNimi.equals("VUOKATTI"))
-            toimintaAlueId = 7;
-        else if (toimintaAlueNimi.equals("PALLAS"))
-            toimintaAlueId = 8;
-        else
-            toimintaAlueId = 0;
+     if (toimintaAlueNimi.equals("TAHKO"))
+     toimintaAlueId = 1;
+     else if (toimintaAlueNimi.equals("RUKA"))
+     toimintaAlueId = 2;
+     else if (toimintaAlueNimi.equals("YLLÄS"))
+     toimintaAlueId = 3;
+     else if (toimintaAlueNimi.equals("HIMOS"))
+     toimintaAlueId = 4;
+     else if (toimintaAlueNimi.equals("LEVI"))
+     toimintaAlueId = 5;
+     else if (toimintaAlueNimi.equals("KOLI"))
+     toimintaAlueId = 6;
+     else if (toimintaAlueNimi.equals("VUOKATTI"))
+     toimintaAlueId = 7;
+     else if (toimintaAlueNimi.equals("PALLAS"))
+     toimintaAlueId = 8;
+     else
+     toimintaAlueId = 0;
 
-        return toimintaAlueId;
-    }
-*/
+     return toimintaAlueId;
+     }
+     */
     //Lisätään lista, johon lisätään kaikki mökki-oliot
     ObservableList<Mokki> mokit = FXCollections.observableArrayList();
 
@@ -463,11 +463,11 @@ public class Controller {
         tvLasku.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
 
             if (tvLasku.getSelectionModel().getSelectedItem() != null) {
-                txtAreaLaskutiedot_Lasku.setText("Toiminta-alue: " + tvLasku.getSelectionModel().getSelectedItem().toimintaalue + "\nTulopäivä: " + tvLasku.getSelectionModel().getSelectedItem().tulopaiva + "\nLähtöpäivä: " + tvLasku.getSelectionModel().getSelectedItem().lahtopaiva + "\nHenkilömäärä: " + tvLasku.getSelectionModel().getSelectedItem().henkilomaara + "\nAsiakkaan nimi: " + tvLasku.getSelectionModel().getSelectedItem().asiakas + "\nMökki: " + tvLasku.getSelectionModel().getSelectedItem().mokki + "\nAsiakkaan sähköpostiosoite: " + tvLasku.getSelectionModel().getSelectedItem().sposti);
+                txtAreaLaskutiedot_Lasku.setText("Toiminta-alue: " + tvLasku.getSelectionModel().getSelectedItem().toimintaalue + "\nTulopäivä: " + tvLasku.getSelectionModel().getSelectedItem().tulopaiva + "\nLähtöpäivä: " + tvLasku.getSelectionModel().getSelectedItem().lahtopaiva + "\nHenkilömäärä: " + tvLasku.getSelectionModel().getSelectedItem().henkilomaara + "\nAsiakkaan nimi: " + tvLasku.getSelectionModel().getSelectedItem().asiakas + "\nPalvelut: " + tvLasku.getSelectionModel().getSelectedItem().palvelut + "\nMökki: " + tvLasku.getSelectionModel().getSelectedItem().mokki + "\nAsiakkaan sähköpostiosoite: " + tvLasku.getSelectionModel().getSelectedItem().sposti);
             } else {
-                txtAreaLaskutiedot_Lasku.setText("Toiminta-alue:\nTulopäivä:\nLähtöpäivä:\nHenkilömäärä:\nAsiakkaan nimi:\nMökki:\nAsiakkaan sähköpostiosoite:");
+                txtAreaLaskutiedot_Lasku.setText("Toiminta-alue:\nTulopäivä:\nLähtöpäivä:\nHenkilömäärä:\nAsiakkaan nimi:\nPalvelut:\nMökki:\nAsiakkaan sähköpostiosoite:");
             }
-            });
+        });
     }
 
     public void lahetaEmail(String recepient) throws Exception {
@@ -476,6 +476,8 @@ public class Controller {
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port","587");
+        String msg = ("Hei, Tässä lasku varaamastasi mökistä\nToiminta-alue: "+tvLasku.getSelectionModel().getSelectedItem().toimintaalue+"\nTulopäivä: "+tvLasku.getSelectionModel().getSelectedItem().tulopaiva+"\nLähtöpäivä: "+tvLasku.getSelectionModel().getSelectedItem().lahtopaiva+"\nHenkilömäärä: "+tvLasku.getSelectionModel().getSelectedItem().henkilomaara+"\nAsiakkaan nimi: "+tvLasku.getSelectionModel().getSelectedItem().asiakas+"\nPalvelut: "+tvLasku.getSelectionModel().getSelectedItem().palvelut+"\nMökki: "+tvLasku.getSelectionModel().getSelectedItem().mokki+"\nSähköpostiosoite: "+tvLasku.getSelectionModel().getSelectedItem().sposti
+        +"\n\nLasku maksetaan tilille FI20945830579348\nHinta: XXX");
 
         String myAccountEmail = "mvjarjestelma@gmail.com";
         String password = "Salasana123";
@@ -487,17 +489,17 @@ public class Controller {
             }
         });
 
-        Message message = prepareMessage(session, myAccountEmail, recepient);
+        Message message = prepareMessage(session, myAccountEmail, recepient, msg);
         Transport.send(message);
         System.out.println("Email lähetettiin");
     }
-    public static Message prepareMessage(Session session, String myAccountEmail, String recepient) throws NoClassDefFoundError {
+    public static Message prepareMessage(Session session, String myAccountEmail, String recepient, String msg) throws NoClassDefFoundError {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("Lasku varaamastasi mökistä");
-            message.setText("Hei tässä laskusi varaamastasi mökistä,\n");
+            message.setText(msg);
             return message;
         } catch (MessagingException ex) {
             ex.printStackTrace();
