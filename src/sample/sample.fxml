@@ -218,7 +218,7 @@
                                                         <TableColumn fx:id="tbcAsiakas_id" prefWidth="75.0" text="asiakas_id" />
                                                         <TableColumn fx:id="tbcEtunimi" prefWidth="75.0" text="etunimi" />
                                                         <TableColumn fx:id="tbcSukunimi" prefWidth="75.0" text="sukunimi" />
-                                                        <TableColumn fx:id="tbcLahiosoite" prefWidth="75.0" text="lähiosoite" />
+                                                        <TableColumn fx:id="tbcLahiosoite" prefWidth="75.0" text="lahiosoite" />
                                                         <TableColumn fx:id="tbcPostinro" prefWidth="75.0" text="postinro" />
                                                         <TableColumn fx:id="tbcEmail" prefWidth="75.0" text="email" />
                                                         <TableColumn fx:id="tbcPuhelinnro" prefWidth="75.0" text="puhelinnro" />

@@ -463,7 +463,7 @@ public class Controller {
         tbcEmail.setCellValueFactory(
                 new PropertyValueFactory<Asiakas, String>("email"));
         tbcLahiosoite.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("lähiosoite"));
+                new PropertyValueFactory<Asiakas, String>("lahiosoite"));
         tbcPostinro.setCellValueFactory(
                 new PropertyValueFactory<Asiakas, String>("postinro"));
         tbvAsiakas.setItems(taulunasiakkaat);
