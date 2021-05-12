@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -22,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <TabPane prefHeight="800.0" prefWidth="1118.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -200,7 +196,7 @@
                                     <children>
                                         <Pane prefHeight="443.0" prefWidth="1000.0">
                                             <children>
-                                                <Label layoutX="18.0" layoutY="14.0" text="Lisää mökki">
+                                                <Label layoutX="18.0" layoutY="14.0" text="Lisää asiakas">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
@@ -217,7 +213,7 @@
                                                 <Label layoutX="19.0" layoutY="157.0" text="Sähköposti" />
                                                 <TextField fx:id="tfEmail" layoutX="18.0" layoutY="174.0" onInputMethodTextChanged="#hlomaara" />
                                                 <TextField fx:id="tfPuhelinnro" layoutX="207.0" layoutY="174.0" onInputMethodTextChanged="#kuvaus" />
-                                                <Button layoutX="373.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
+                                                <Button layoutX="373.0" layoutY="351.0" mnemonicParsing="false" onAction="#BtAsiakasPoista" text="Poista" />
                                                 <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#BtTallennaAsiakas" text="Tallenna" />
                                                 <TableView fx:id="tbvAsiakas" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="619.0">
                                                     <columns>
@@ -230,7 +226,6 @@
                                                         <TableColumn fx:id="tbcPuhelinnro" prefWidth="75.0" text="puhelinnro" />
                                                     </columns>
                                                 </TableView>
-                                                <TextField fx:id="tfAsiakasID" layoutX="18.0" layoutY="234.0" />
                                             </children>
                                         </Pane>
                                     </children>

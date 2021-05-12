@@ -90,6 +90,22 @@ public class Asiakas {
         }
     }
 
+    public void PoistaAsiakas(Integer id) throws SQLException {
+
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query = "DELETE FROM asiakas WHERE asiakas_id = ?";
+
+        PreparedStatement lause = connectDB.prepareStatement(query);
+        lause.setInt(1, id);
+
+        lause.executeUpdate();
+
+        lause.close();
+
+    }
+
     public int getAsiakas_id() {
         return asiakas_id;
     }

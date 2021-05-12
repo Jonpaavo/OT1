@@ -322,38 +322,7 @@ public class Controller {
     // Lisää mökkien tiedot mökkinäytön tauluun
     public void LisaaMokki() {
 
-        //muuttujat teksikenttien sisällöstä
 
-        int mokkiID = Integer.parseInt(txtfMokkienhallintaMokkiID.getText());
-        int toimintaAlueId = Integer.parseInt(txtfMokkienhallintaTAid.getText());
-        String mokkinimi = txtfMokkienhallintaMokkinimi.getText();
-        String katuosoite = txtfMokkienhallintaKatuosoite.getText();
-        String kuvaus = txtfMokkienhallintaKuvaus.getText();
-        int henkilomaara = Integer.parseInt(txtfMokkienhallintaHlomaara.getText());
-        String varustelu = txtfMokkienhallintaVarustelu.getText();
-        String postinro = txtfMokkienhallintaPostinumero.getText();
-        double hinta = Double.parseDouble(txtfMokkienhallintaHinta.getText());
-        double alv = Double.parseDouble(txtfMokkienhallintaAlv.getText());
-
-        //lisätään taulun sarakkeisiin
-        CmokkienhallintaNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
-        CmokkienhallintaOsoite.setCellValueFactory(new PropertyValueFactory<Mokki, String>("katuosoite"));
-        CmokkienhallintaKuvaus.setCellValueFactory(new PropertyValueFactory<Mokki, String>("kuvaus"));
-        CmokkienhallintaHlomaara.setCellValueFactory(new PropertyValueFactory<Mokki, String>("henkilomaara"));
-        CmokkienhallintaVarustelu.setCellValueFactory(new PropertyValueFactory<Mokki, String>("varustelu"));
-        CmokkienhallintaPostinro.setCellValueFactory(new PropertyValueFactory<Mokki, String>("postinro"));
-        CmokkienhallintaHinta.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("hinta"));
-        CmokkienhallintaAlv.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("alv"));
-        CmokkienhallintaID.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokkiID"));
-
-
-        // lisätään mökki olio, joka lisäätän mökkilistalle
-        mokit.add(new Mokki(mokkiID, toimintaAlueId, postinro, mokkinimi, katuosoite, kuvaus,
-                henkilomaara, varustelu, hinta, alv));
-
-        //lisätään mökkilista taululle
-
-        tbvMokkienhallintaMokit.setItems(mokit);
 
         //
 
@@ -440,6 +409,8 @@ public class Controller {
         return;
     }
 
+    ObservableList<Asiakas> asiakasobslist = FXCollections.observableArrayList();
+
     //Asiakkaiden lisääminen sql asiakas tauluun
     public void BtTallennaAsiakas() {
 
@@ -469,9 +440,39 @@ public class Controller {
             //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
             PaivitaAsiakas();
 
+            Asiakas asiakas = new Asiakas();
+            if (asiakas.listaaAsiakkaat() != null) {
+                lataaAsiakasTaulu();
+            }
+
+
+
         } catch(Exception e) {
         }
     }
+
+    public void BtAsiakasPoista() throws SQLException {
+
+        Asiakas poistaasiakas = new Asiakas();
+        Asiakas valittuasiakas = (Asiakas) tbvAsiakas.getSelectionModel().getSelectedItem();
+        Asiakas asiakas = new Asiakas();
+        asiakas.setAsiakas_id(valittuasiakas.getAsiakas_id());
+        poistaasiakas.PoistaAsiakas(asiakas.getAsiakas_id());
+        tyhjennaTekstiKentat_asiakas();
+        lataaAsiakasTaulu();
+    }
+
+    public void tyhjennaTekstiKentat_asiakas() {
+
+        //toimii
+        tfEtunimi.setText("");
+        tfSukunimi.setText("");
+        tfPuhelinnro.setText("");
+        tfEmail.setText("");
+        tfLahiosoite.setText("");
+        tfPostinro.setText("");
+    }
+
 
 
 
