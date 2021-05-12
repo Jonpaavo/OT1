@@ -96,6 +96,22 @@ public class Mokki {
         }
     }
 
+    public void PoistaMokki(Integer id) throws SQLException {
+
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query4 = "DELETE FROM mvj.mokki WHERE mokki_id = ?";
+
+        PreparedStatement lause1 = connectDB.prepareStatement(query4);
+        lause1.setInt(1, id);
+
+        lause1.executeUpdate();
+
+        lause1.close();
+
+        }
+
     public String getPostinro() {
         return postinro;
     }

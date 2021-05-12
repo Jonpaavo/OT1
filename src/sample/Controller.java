@@ -387,8 +387,30 @@ public class Controller {
         CmokkienhallintaID.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokkiID"));
         tbvMokkienhallintaMokit.setItems(taulunmokit);
     }
+    public void BtMokkiPoista() throws SQLException {
 
+        Mokki poistamokki = new Mokki();
+        Mokki valittumokki = (Mokki) tbvMokkienhallintaMokit.getSelectionModel().getSelectedItem();
+        Mokki mokki3 = new Mokki();
+        mokki3.setMokkiID(valittumokki.getMokkiID());
+        poistamokki.PoistaMokki(mokki3.getMokkiID());
+        tyhjennaTekstiKentat_mokki();
+        lataaMokkiTaulu();
+    }
+    public void tyhjennaTekstiKentat_mokki() {
 
+        //toimii
+        txtfMokkienhallintaMokkiID.setText("");
+        txtfMokkienhallintaTAid.setText("");
+        txtfMokkienhallintaPostinumero.setText("");
+        txtfMokkienhallintaMokkinimi.setText("");
+        txtfMokkienhallintaKatuosoite.setText("");
+        txtfMokkienhallintaKuvaus.setText("");
+        txtfMokkienhallintaHlomaara.setText("");
+        txtfMokkienhallintaVarustelu.setText("");
+        txtfMokkienhallintaHinta.setText("");
+        txtfMokkienhallintaAlv.setText("");
+    }
 
     // ASIAKASHALLINTA SQL
     // Asiakastaulu
@@ -585,4 +607,6 @@ public class Controller {
 
     }
 
+    public void Poistamokki(ActionEvent actionEvent) {
+    }
 }

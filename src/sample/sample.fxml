@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -18,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <TabPane prefHeight="800.0" prefWidth="1118.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -120,8 +124,8 @@
                                         <Label layoutX="204.0" layoutY="251.0" text="ALV" />
                                         <TextField fx:id="txtfMokkienhallintaVarustelu" layoutX="17.0" layoutY="326.0" />
                                         <TextField fx:id="txtfMokkienhallintaAlv" layoutX="203.0" layoutY="270.0" />
-                                        <Button fx:id="btPoistamokki" layoutX="373.0" layoutY="351.0" mnemonicParsing="false" text="Poista" />
-                                        <Button layoutX="480.0" layoutY="351.0" mnemonicParsing="false" onAction="#LisaaMokki" text="Tallenna" />
+                                        <Button layoutX="786.0" layoutY="393.0" mnemonicParsing="false" onAction="#BtMokkiPoista" text="Poista" />
+                                        <Button layoutX="215.0" layoutY="326.0" mnemonicParsing="false" onAction="#LisaaMokki" text="Tallenna" />
                                         <TableView fx:id="tbvMokkienhallintaMokit" layoutX="373.0" layoutY="34.0" prefHeight="301.0" prefWidth="743.0">
                                             <columns>
                                                 <TableColumn fx:id="CmokkienhallintaID" prefWidth="75.0" text="ID" />
@@ -138,9 +142,14 @@
                                         </TableView>
                                         <TextField fx:id="txtfMokkienhallintaMokkiID" layoutX="19.0" layoutY="116.0" />
                                         <Label layoutX="16.0" layoutY="99.0" text="MökkiID" />
-                                        <Button layoutX="590.0" layoutY="351.0" mnemonicParsing="false" text="Näytä mökkilista" />
                               <TextField fx:id="txtfMokkienhallintaTAid" layoutX="16.0" layoutY="62.0" />
                               <Label layoutX="18.0" layoutY="408.0" prefHeight="21.0" prefWidth="960.0" text="Toiminta-alue ID: 1 = Tahko   2 = Ruka   3 = Ylläs   4 = Himos   5 =  Levi   6 = Koli   7 = Vuokatti   8= Pallas" />
+                              <Label layoutX="786.0" layoutY="341.0" text="Poista mökki" underline="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="786.0" layoutY="372.0" text="Valitse mökki listalta, minkä haluat poistaa" />
 
                                     </children>
                                 </Pane>
