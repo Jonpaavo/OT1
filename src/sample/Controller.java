@@ -5,9 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
@@ -22,8 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controller {
 
@@ -60,11 +55,13 @@ public class Controller {
     public TableColumn<Varaus, String> tcToimintaalue;
     public TableColumn<Varaus, String> tcTulopaiva;
     public  TableColumn<Varaus, String> tcLahtopaiva;
-    public  TableColumn<Varaus, Integer> tcHenkilomaara;
-    public  TableColumn<Varaus, String> tcAsiakas;
-    public  TableColumn<Varaus, String> tcPalvelut;
-    public  TableColumn<Varaus, String> tcMokki;
-    public TableColumn <Varaus, String> tcSposti;
+    public TableColumn<Varaus, String> tcHenkilomaara;
+    public TableColumn<Varaus, String> tcAsiakas;
+    public TableColumn<Varaus, String> tcPalvelut;
+    public TableColumn<Varaus, String> tcMokki;
+    public TableColumn<Varaus, String> tcSposti;
+    public TableColumn<Varaus, Integer> tcVarausID;
+
     // MÖKKIENHALLINTA
     //Mökkienhallinta table
     public TableColumn <Mokki, String> CmokkienhallintaNimi;
@@ -166,6 +163,7 @@ public class Controller {
         Varoitus();
         naytaLaskuTiedot();
 
+
         //toimii nyt
         Asiakas asiakas = new Asiakas();
         if (asiakas.listaaAsiakkaat() != null) {
@@ -176,11 +174,136 @@ public class Controller {
         if (mokki3.listaaMokit() != null) {
             lataaMokkiTaulu();
         }
+
+        Varaus varaus = new Varaus();
+        if (varaus.listaaVaraukset() != null) {
+            lataaVarausTaulu();
+        }
+    }
+
+    public void lataaVarausTaulu() {
+        //toimii
+        tvTableView.getItems().clear();
+        Varaus varaushallinta = new Varaus();
+        List<Varaus> varauslista = varaushallinta.listaaVaraukset();
+        ObservableList<Varaus> taulunvaraukset = FXCollections.observableArrayList(varauslista);
+
+        tcVarausID.setCellValueFactory(
+                new PropertyValueFactory<Varaus, Integer>("varaus_id"));
+        tcToimintaalue.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("toimintaalue"));
+        tcTulopaiva.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("tulopaiva"));
+        tcLahtopaiva.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("lahtopaiva"));
+        tcHenkilomaara.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("henkilomaara"));
+        tcAsiakas.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("asiakas"));
+        tcPalvelut.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("palvelut"));
+        tcMokki.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("mokki"));
+        tcSposti.setCellValueFactory(
+                new PropertyValueFactory<Varaus, String>("sposti"));
+        tvTableView.setItems(taulunvaraukset);
     }
 
     /**
      * MÖKINVARAUSNÄKYMÄ
      */
+
+    public void PaivitaVaraus() {
+
+        try {
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String varausquery1 = "UPDATE varaus SET toiminta_alue = ?, tulopaiva = ?, lahtopaiva = ?, henkilomaara = ?, asiakas = ?, palvelut = ?, mokki = ?, sposti = ? WHERE varaus_id = ?";
+
+            PreparedStatement preparedStatementv = connectDB.prepareStatement(varausquery1);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+    ObservableList<Varaus> varaukset = FXCollections.observableArrayList();
+
+    public void LisaaVaraus() {
+
+        //muuttujat teksikenttien sisällöstä
+        String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
+        String tulopaiva = dptulopaiva.getValue().toString();
+        String lahtopaiva = dplahtopaiva.getValue().toString();
+        Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
+        String asiakas = tfAsiakas.getCharacters().toString();
+        Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
+        Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+        String sposti = tfSposti.getCharacters().toString();
+
+        //lisätään taulun sarakkeisiin
+        tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
+        tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
+        tcLahtopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("lahtopaiva"));
+        tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, String>("henkilomaara"));
+        tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
+        tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
+        tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
+        tcSposti.setCellValueFactory(new PropertyValueFactory<Varaus, String>("sposti"));
+
+
+
+        // lisätään Varaus olio, joka lisäätän mökkilistalle
+        varaukset.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+
+        //lisätään mökkilista taululle
+
+        tvTableView.setItems(varaukset);
+
+        //
+
+        //Lisätään tiedot SQL tietokantaan
+        try {
+
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause asiakkaiden luomiselle
+            String varausquery = "insert into varaus (toiminta_alue, tulopaiva, lahtopaiva, henkilomaara, asiakas, palvelut, mokki, sposti )values(?,?,?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqlvaraus = connectDB.prepareStatement(varausquery);
+
+            //Noudetaan tiedot textfieldistä
+            sqlvaraus.setString(1, cboxToimintaalue.getSelectionModel().getSelectedItem().toString());
+            sqlvaraus.setString(2, dptulopaiva.getValue().toString());
+            sqlvaraus.setString(3, dplahtopaiva.getValue().toString());
+            sqlvaraus.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
+            sqlvaraus.setString(5, tfAsiakas.getCharacters().toString());
+            sqlvaraus.setString(6, cboxPalvelut.getSelectionModel().getSelectedItem().toString());
+            sqlvaraus.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
+            sqlvaraus.setString(8, tfSposti.getCharacters().toString());
+
+            //Suoritetaan SQL komennot
+            sqlvaraus.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaVaraus();
+
+        } catch(Exception e) {
+            System.err.println("vahinko");
+            System.err.println(e.getMessage());
+
+        }
+
+        Varaus varaus1 = new Varaus();
+        if (varaus1.listaaVaraukset() != null) {
+            lataaVarausTaulu();
+        }
+    }
+
 
     // Antaa valittavaksi mökit siltä toimialueelta, joka näytöllä on valittuna
     public void NaytaMokki() {
@@ -239,7 +362,7 @@ public class Controller {
             tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
             tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
             tcLahtopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("lahtopaiva"));
-            tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, Integer>("henkilomaara"));
+            tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, String>("henkilomaara"));
             tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
             tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
             tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
@@ -265,7 +388,9 @@ public class Controller {
             tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
             // tehdään muuttujien perusteella Lasku-olio, jotta saadaan varaustiedot myös laskutusnäyttöön
             LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+            LisaaVaraus();
         }
+
     }
 
     /**

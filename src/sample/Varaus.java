@@ -1,14 +1,21 @@
 package sample;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Varaus {
-    String toimintaalue;
-    String asiakas;
-    String tulopaiva;
-    String lahtopaiva;
-    String sposti;
-    Object henkilomaara, mokki, palvelut;
+    private String toimintaalue;
+    private String asiakas;
+    private String tulopaiva;
+    private String lahtopaiva;
+    private String sposti;
+    private Object henkilomaara, mokki, palvelut;
+    private int varaus_id;
 
     public Varaus(String toimintaalue, String tulopaiva, String lahtopaiva, Object henkilomaara, String asiakas ,Object palvelut, Object mokki, String sposti) {
 
@@ -21,6 +28,73 @@ public class Varaus {
         this.mokki = mokki;
         this.sposti = sposti;
     }
+
+    public Varaus() {
+
+    }
+
+    public Varaus luoVarausTuloksista(ResultSet tulokset) throws SQLException {
+        var varaus = new Varaus();
+        varaus.setVaraus_id(tulokset.getInt("varaus_id"));
+        varaus.setToimintaalue(tulokset.getString("toiminta_alue"));
+        varaus.setTulopaiva(tulokset.getString("tulopaiva"));
+        varaus.setLahtopaiva(tulokset.getString("lahtopaiva"));
+        varaus.setHenkilomaara(tulokset.getString("henkilomaara"));
+        varaus.setAsiakas(tulokset.getString("asiakas"));
+        varaus.setPalvelut(tulokset.getString("palvelut"));
+        varaus.setMokki(tulokset.getString("mokki"));
+        varaus.setSposti(tulokset.getString("sposti"));
+
+        return varaus;
+    }
+
+    public List<Varaus> varaus_listaa() throws SQLException {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query = "SELECT * FROM varaus";
+
+        PreparedStatement lause = connectDB.prepareStatement(query);
+
+        ResultSet tulokset = lause.executeQuery();
+
+        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
+        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
+        if (!tulokset.next()) return null;
+
+        List<Varaus> varaukset = new ArrayList<>();
+
+        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
+        // tulokset.next()-metodikutsua!
+        do {
+            Varaus varaus = luoVarausTuloksista(tulokset);
+            varaukset.add(varaus);
+        } while (tulokset.next());
+
+        tulokset.close();
+        lause.close();
+        //yhteys.close();
+
+        return varaukset;
+    }
+
+    public List<Varaus> listaaVaraukset() {
+        try {
+            return varaus_listaa();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int getVaraus_id() {
+        return varaus_id;
+    }
+
+    public void setVaraus_id(int varaus_id) {
+        this.varaus_id = varaus_id;
+    }
+
     public String getToimintaalue() {
         return toimintaalue;
     }

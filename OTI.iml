@@ -34,5 +34,7 @@
     <orderEntry type="library" name="activation" level="project" />
     <orderEntry type="library" name="javax.mail2" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.242" level="project" />
+    <orderEntry type="library" name="activation2" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.231" level="project" />
   </component>
 </module>

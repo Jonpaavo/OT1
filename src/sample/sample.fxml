@@ -78,14 +78,15 @@
                                         </GridPane>
                                         <TableView fx:id="tvTableView" layoutX="468.0" layoutY="14.0" prefHeight="335.0" prefWidth="632.0">
                                             <columns>
-                                                <TableColumn fx:id="tcToimintaalue" prefWidth="87.99996948242188" text="Toiminta-alue" />
-                                                <TableColumn fx:id="tcTulopaiva" prefWidth="79.33331298828125" text="Tulopäivä" />
-                                                <TableColumn fx:id="tcLahtopaiva" prefWidth="80.00006103515625" text="Lähtöpäivä" />
-                                                <TableColumn fx:id="tcHenkilomaara" prefWidth="84.0" text="Henkilömäärä" />
-                                                <TableColumn fx:id="tcAsiakas" prefWidth="72.0" text="Asiakas" />
-                                                <TableColumn fx:id="tcPalvelut" prefWidth="66.66668701171875" text="Palvelut" />
-                                                <TableColumn fx:id="tcMokki" prefWidth="64.0001220703125" text="Mökki" />
-                                                <TableColumn fx:id="tcSposti" prefWidth="93.99993896484375" text="Sähköposti" />
+                                                <TableColumn fx:id="tcToimintaalue" prefWidth="90.0" text="Toiminta-alue" />
+                                                <TableColumn fx:id="tcTulopaiva" prefWidth="74.00006103515625" text="Tulopäivä" />
+                                                <TableColumn fx:id="tcLahtopaiva" prefWidth="82.0" text="Lähtöpäivä" />
+                                                <TableColumn fx:id="tcHenkilomaara" prefWidth="84.66668701171875" text="Henkilömäärä" />
+                                                <TableColumn fx:id="tcAsiakas" prefWidth="55.33331298828125" text="Asiakas" />
+                                                <TableColumn fx:id="tcPalvelut" prefWidth="55.33331298828125" text="Palvelut" />
+                                                <TableColumn fx:id="tcMokki" prefWidth="68.66668701171875" text="Mökki" />
+                                                <TableColumn fx:id="tcSposti" prefWidth="79.33331298828125" text="Sähköposti" />
+                                    <TableColumn fx:id="tcVarausID" prefWidth="40.666748046875" text="ID" />
                                             </columns>
                                         </TableView>
                                         <TextField fx:id="tfSposti" layoutX="24.0" layoutY="385.0" />
