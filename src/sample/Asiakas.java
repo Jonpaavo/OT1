@@ -1,5 +1,12 @@
 package sample;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Asiakas {
 
 
@@ -9,6 +16,8 @@ public class Asiakas {
     private String lahiosoite;
     private String email;
     private String puhelinnro;
+    private int asiakas_id;
+
 
     public Asiakas() {
     }
@@ -21,6 +30,72 @@ public class Asiakas {
         this.lahiosoite = lahiosoite;
         this.email = email;
         this.puhelinnro = puhelinnro;
+    }
+
+    /**
+     * Palauttaa listan kaikista tietokannassa olevista Asiakas-olioista.
+     *
+     * @return Lista kaikista Asiakas-olioista.
+     * @throws SQLException Heitetään, jos tietokannan kanssa kommunikoinnissa ilmenee ongelmia.
+     */
+    public List<Asiakas> listaa() throws SQLException {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query = "SELECT * FROM asiakas";
+
+        PreparedStatement lause = connectDB.prepareStatement(query);
+
+        ResultSet tulokset = lause.executeQuery();
+
+        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
+        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
+        if (!tulokset.next()) return null;
+
+        List<Asiakas> asiakkaat = new ArrayList<>();
+
+        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
+        // tulokset.next()-metodikutsua!
+        do {
+            Asiakas asiakas = luoAsiakasTuloksista(tulokset);
+            asiakkaat.add(asiakas);
+        } while (tulokset.next());
+
+        tulokset.close();
+        lause.close();
+        //yhteys.close();
+
+        return asiakkaat;
+    }
+
+    private Asiakas luoAsiakasTuloksista(ResultSet tulokset) throws SQLException {
+        var asiakas = new Asiakas();
+        asiakas.setAsiakas_id(tulokset.getInt("asiakas_id"));
+        asiakas.setPostinro(tulokset.getString("postinro"));
+        asiakas.setEtunimi(tulokset.getString("etunimi"));
+        asiakas.setSukunimi(tulokset.getString("sukunimi"));
+        asiakas.setLahiosoite(tulokset.getString("lahiosoite"));
+        asiakas.setEmail(tulokset.getString("email"));
+        asiakas.setPuhelinnro(tulokset.getString("puhelinnro"));
+
+        return asiakas;
+    }
+
+    public List<Asiakas> listaaAsiakkaat() {
+        try {
+            return listaa();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int getAsiakas_id() {
+        return asiakas_id;
+    }
+
+    public void setAsiakas_id(int asiakas_id) {
+        this.asiakas_id = asiakas_id;
     }
 
     public String getPostinro() {

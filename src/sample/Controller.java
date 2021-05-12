@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,6 +104,7 @@ public class Controller {
     public TableColumn tbcPostinro;
     public TableColumn tbcEmail;
     public TableColumn tbcPuhelinnro;
+    public TableColumn tbcAsiakas_id;
 
 
 
@@ -163,6 +165,12 @@ public class Controller {
         NaytaMokki();
         Varoitus();
         naytaLaskuTiedot();
+
+        //toimii nyt
+        Asiakas asiakas = new Asiakas();
+        if (asiakas.listaaAsiakkaat() != null) {
+            lataaAsiakasTaulu();
+        }
     }
 
     /**
@@ -432,10 +440,35 @@ public class Controller {
             PaivitaAsiakas();
 
         } catch(Exception e) {
-
-
         }
     }
+
+
+
+    public void lataaAsiakasTaulu() {
+        //toimii
+        tbvAsiakas.getItems().clear();
+        Asiakas asiakashallinta = new Asiakas();
+        List<Asiakas> asiakaslista = asiakashallinta.listaaAsiakkaat();
+        ObservableList<Asiakas> taulunasiakkaat = FXCollections.observableArrayList(asiakaslista);
+
+        tbcAsiakas_id.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
+        tbcEtunimi.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("etunimi"));
+        tbcSukunimi.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("sukunimi"));
+        tbcPuhelinnro.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("puhelinnro"));
+        tbcEmail.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("email"));
+        tbcLahiosoite.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("lähiosoite"));
+        tbcPostinro.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("postinro"));
+        tbvAsiakas.setItems(taulunasiakkaat);
+    }
+
 
     /**
      * Laskunhallintanäkymä
