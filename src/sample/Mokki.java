@@ -1,5 +1,12 @@
 package sample;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Mokki {
     private String postinro;
     private String mokkinimi;
@@ -24,6 +31,69 @@ public class Mokki {
         this.hinta = hinta;
         this.toimintaAlueId = toimintaAlueId;
         this.alv= alv;
+    }
+
+    public Mokki() {
+
+    }
+
+    public List<Mokki> listaaM() throws SQLException {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query1 = "SELECT * FROM mvj.mokki";
+
+        PreparedStatement lause1 = connectDB.prepareStatement(query1);
+
+        ResultSet tulokset1 = lause1.executeQuery();
+
+        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
+        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
+        if (!tulokset1.next()) return null;
+
+        List<Mokki> mokitlista = new ArrayList<>();
+
+        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
+        // tulokset.next()-metodikutsua!
+        do {
+            Mokki mokki1 = luoMokkiTuloksista(tulokset1);
+            mokitlista.add(mokki1);
+        } while (tulokset1.next());
+
+        tulokset1.close();
+        lause1.close();
+        //yhteys.close();
+
+        return mokitlista;
+    }
+
+
+
+    private Mokki luoMokkiTuloksista(ResultSet tulokset1) throws SQLException {
+        var mokki1 = new Mokki();
+        mokki1.setMokkiID(tulokset1.getInt("mokki_id"));
+        mokki1.setPostinro(tulokset1.getString("postinro"));
+        mokki1.setMokkinimi(tulokset1.getString("mokkinimi"));
+        mokki1.setKatuosoite(tulokset1.getString("katuosoite"));
+        mokki1.setKuvaus(tulokset1.getString("kuvaus"));
+        mokki1.setHenkilomaara(tulokset1.getInt("henkilomaara"));
+        mokki1.setVarustelu(tulokset1.getString("varustelu"));
+        mokki1.setHinta(tulokset1.getDouble("hinta"));
+        mokki1.setAlv(tulokset1.getDouble("alv"));
+        mokki1.setToimintaAlueId(tulokset1.getInt("toimintaalue_id"));
+
+
+        return mokki1;
+    }
+
+
+    public List<Mokki> listaaMokit() {
+        try {
+            return listaaM();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getPostinro() {

@@ -171,6 +171,11 @@ public class Controller {
         if (asiakas.listaaAsiakkaat() != null) {
             lataaAsiakasTaulu();
         }
+
+        Mokki mokki3 = new Mokki();
+        if (mokki3.listaaMokit() != null) {
+            lataaMokkiTaulu();
+        }
     }
 
     /**
@@ -388,7 +393,32 @@ public class Controller {
             System.err.println(e.getMessage());
 
         }
+
+        Mokki mokki3 = new Mokki();
+        if (mokki3.listaaMokit() != null) {
+            lataaMokkiTaulu();
+        }
     }
+
+    public void lataaMokkiTaulu() {
+        //toimii
+        tbvMokkienhallintaMokit.getItems().clear();
+        Mokki mokkienhallinta = new Mokki();
+        List<Mokki>  mokitlista = mokkienhallinta.listaaMokit();
+        ObservableList<Mokki> taulunmokit = FXCollections.observableArrayList(mokitlista);
+
+        CmokkienhallintaNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
+        CmokkienhallintaOsoite.setCellValueFactory(new PropertyValueFactory<Mokki, String>("katuosoite"));
+        CmokkienhallintaKuvaus.setCellValueFactory(new PropertyValueFactory<Mokki, String>("kuvaus"));
+        CmokkienhallintaHlomaara.setCellValueFactory(new PropertyValueFactory<Mokki, String>("henkilomaara"));
+        CmokkienhallintaVarustelu.setCellValueFactory(new PropertyValueFactory<Mokki, String>("varustelu"));
+        CmokkienhallintaPostinro.setCellValueFactory(new PropertyValueFactory<Mokki, String>("postinro"));
+        CmokkienhallintaHinta.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("hinta"));
+        CmokkienhallintaAlv.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("alv"));
+        CmokkienhallintaID.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokkiID"));
+        tbvMokkienhallintaMokit.setItems(taulunmokit);
+    }
+
 
 
     // ASIAKASHALLINTA SQL
@@ -510,7 +540,7 @@ public class Controller {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port","587");
         String msg = ("Hei, Tässä lasku varaamastasi mökistä\nToiminta-alue: "+tvLasku.getSelectionModel().getSelectedItem().toimintaalue+"\nTulopäivä: "+tvLasku.getSelectionModel().getSelectedItem().tulopaiva+"\nLähtöpäivä: "+tvLasku.getSelectionModel().getSelectedItem().lahtopaiva+"\nHenkilömäärä: "+tvLasku.getSelectionModel().getSelectedItem().henkilomaara+"\nAsiakkaan nimi: "+tvLasku.getSelectionModel().getSelectedItem().asiakas+"\nPalvelut: "+tvLasku.getSelectionModel().getSelectedItem().palvelut+"\nMökki: "+tvLasku.getSelectionModel().getSelectedItem().mokki+"\nSähköpostiosoite: "+tvLasku.getSelectionModel().getSelectedItem().sposti
-        +"\n\nLasku maksetaan tilille FI20945830579348\nHinta: XXX");
+                +"\n\nLasku maksetaan tilille FI20945830579348\nHinta: XXX");
 
         String myAccountEmail = "mvjarjestelma@gmail.com";
         String password = "Salasana123";

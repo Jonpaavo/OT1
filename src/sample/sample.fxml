@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -18,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <TabPane prefHeight="800.0" prefWidth="1118.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -127,18 +131,20 @@
                                                 <TableColumn fx:id="CmokkienhallintaID" prefWidth="75.0" text="ID" />
                                                 <TableColumn fx:id="CmokkienhallintaNimi" prefWidth="75.0" text="Nimi" />
                                                 <TableColumn fx:id="CmokkienhallintaOsoite" prefWidth="75.0" text="Osoite" />
-                                                <TableColumn fx:id="CmokkienhallintaPostinro" prefWidth="75.0" text="Postinumero" />
-                                                <TableColumn fx:id="CmokkienhallintaKuvaus" prefWidth="75.0" text="Kuvaus" />
+                                                <TableColumn fx:id="CmokkienhallintaPostinro" prefWidth="105.0" text="Postinumero" />
+                                                <TableColumn fx:id="CmokkienhallintaKuvaus" prefWidth="45.0" text="Kuvaus" />
                                                 <TableColumn fx:id="CmokkienhallintaHlomaara" prefWidth="75.0" text="Hlömäärä" />
                                                 <TableColumn fx:id="CmokkienhallintaVarustelu" prefWidth="75.0" text="Varustelu" />
                                                 <TableColumn fx:id="CmokkienhallintaHinta" prefWidth="75.0" text="Hinta" />
                                                 <TableColumn fx:id="CmokkienhallintaAlv" prefWidth="75.0" text="ALV" />
+                                                <TableColumn fx:id="CmokkienhallintaTAID" prefWidth="75.0" text="TA ID" />
                                             </columns>
                                         </TableView>
                                         <TextField fx:id="txtfMokkienhallintaMokkiID" layoutX="19.0" layoutY="116.0" />
                                         <Label layoutX="16.0" layoutY="99.0" text="MökkiID" />
-                                        <Button fx:id="naytamokkilista" layoutX="590.0" layoutY="351.0" mnemonicParsing="false" text="Näytä mökkilista" />
+                                        <Button layoutX="590.0" layoutY="351.0" mnemonicParsing="false" text="Näytä mökkilista" />
                               <TextField fx:id="txtfMokkienhallintaTAid" layoutX="16.0" layoutY="62.0" />
+                              <Label layoutX="18.0" layoutY="408.0" prefHeight="21.0" prefWidth="960.0" text="Toiminta-alue ID: 1 = Tahko   2 = Ruka   3 = Ylläs   4 = Himos   5 =  Levi   6 = Koli   7 = Vuokatti   8= Pallas" />
 
                                     </children>
                                 </Pane>
