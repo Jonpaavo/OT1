@@ -101,6 +101,27 @@ public class Lasku {
 
     }
 
+    public static Integer laskeHinta(Integer id) throws SQLException {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connection = yhteys.getYhteys();
+
+        String query7 = "select datediff((select lahtopaiva from lasku where lasku_id = ?), (select tulopaiva from lasku where lasku_id = ?))";
+        PreparedStatement lause7 = connection.prepareStatement(query7);
+        lause7.setInt(1, id);
+        lause7.setInt(2, id);
+        ResultSet tulos = lause7.executeQuery();
+        if (!tulos.next()) {
+            return null;
+        } else {
+            System.out.println(tulos.getInt(1) * 200);
+            int hinta = tulos.getInt(1)*200;
+            lause7.execute();
+
+            lause7.close();
+            return hinta;
+        }
+    }
+
 
     public int getLasku_id() {
         return lasku_id;

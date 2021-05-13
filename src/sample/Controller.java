@@ -439,7 +439,6 @@ public class Controller {
 
         tvTableView.setItems(varaukset);
 
-        //
 
         //Lisätään tiedot SQL tietokantaan
         try {
@@ -1182,7 +1181,7 @@ public class Controller {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port","587");
         String msg = ("Hei, Tässä lasku varaamastasi mökistä\nToiminta-alue: "+tvLasku.getSelectionModel().getSelectedItem().toimintaalue+"\nTulopäivä: "+tvLasku.getSelectionModel().getSelectedItem().tulopaiva+"\nLähtöpäivä: "+tvLasku.getSelectionModel().getSelectedItem().lahtopaiva+"\nHenkilömäärä: "+tvLasku.getSelectionModel().getSelectedItem().henkilomaara+"\nAsiakkaan nimi: "+tvLasku.getSelectionModel().getSelectedItem().asiakas+"\nPalvelut: "+tvLasku.getSelectionModel().getSelectedItem().palvelut+"\nMökki: "+tvLasku.getSelectionModel().getSelectedItem().mokki+"\nSähköpostiosoite: "+tvLasku.getSelectionModel().getSelectedItem().sposti
-                +"\n\nLasku maksetaan tilille FI20945830579348\nHinta: XXX");
+                +"\n\nLasku maksetaan tilille FI20945830579348\nHinta: "+Lasku.laskeHinta(tvLasku.getSelectionModel().getSelectedItem().lasku_id));
 
         String myAccountEmail = "mvjarjestelma@gmail.com";
         String password = "Salasana123";
@@ -1222,6 +1221,8 @@ public class Controller {
         System.out.println("Palvelut: " + tvLasku.getSelectionModel().getSelectedItem().palvelut);
         System.out.println("Mökki: " + tvLasku.getSelectionModel().getSelectedItem().mokki);
         System.out.println("Sähköpostiosoite: " + tvLasku.getSelectionModel().getSelectedItem().sposti);
+        System.out.println(tvLasku.getSelectionModel().getSelectedItem().lasku_id);
+        Lasku.laskeHinta(tvLasku.getSelectionModel().getSelectedItem().lasku_id);
         lahetaEmail(tvLasku.getSelectionModel().getSelectedItem().sposti);
 
     }
