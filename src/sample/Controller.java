@@ -37,7 +37,6 @@ public class Controller {
     public ComboBox cboxMokki;
     //public ComboBox cboxToimintaalue2;
     public ComboBox cboxToimintaalue3;
-    public TextField tfAsiakas;
     public DatePicker dptulopaiva;
     public DatePicker dplahtopaiva;
     public ObservableList<String>toimintaaluelista = FXCollections.observableArrayList("Tahko", "Ruka", "Ylläs", "Himos", "Levi", "Koli", "Vuokatti", "Pallas");
@@ -106,6 +105,16 @@ public class Controller {
     public TableColumn tbcPuhelinnro;
     public TableColumn tbcAsiakas_id;
 
+    final ObservableList options = FXCollections.observableArrayList();
+    final ObservableList listamokkicbox = FXCollections.observableArrayList();
+    final ObservableList listaruka = FXCollections.observableArrayList();
+    final ObservableList listayllas = FXCollections.observableArrayList();
+    final ObservableList listahimos = FXCollections.observableArrayList();
+    final ObservableList listalevi = FXCollections.observableArrayList();
+    final ObservableList listakoli = FXCollections.observableArrayList();
+    final ObservableList listavuokatti = FXCollections.observableArrayList();
+    final ObservableList listapallas = FXCollections.observableArrayList();
+
 
 
     // Näyttää toiminta-alueet Palveluiden Hallinta - välilehdellä
@@ -157,7 +166,7 @@ public class Controller {
     public void tallennaAsiakas(ActionEvent actionEvent) {
     }
 
-    final ObservableList options = FXCollections.observableArrayList();
+
     public void initialize() {
         NaytaToimintaalue();
         //NaytaToimintaalue2();
@@ -263,7 +272,7 @@ public class Controller {
         String tulopaiva = dptulopaiva.getValue().toString();
         String lahtopaiva = dplahtopaiva.getValue().toString();
         Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
-        String asiakas = tfAsiakas.getCharacters().toString();
+        String asiakas = cboxAsiakkaat.getValue().toString();
         Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
         Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
         String sposti = tfSposti.getCharacters().toString();
@@ -307,7 +316,7 @@ public class Controller {
             sqllasku.setString(2, dptulopaiva.getValue().toString());
             sqllasku.setString(3, dplahtopaiva.getValue().toString());
             sqllasku.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
-            sqllasku.setString(5, tfAsiakas.getCharacters().toString());
+            sqllasku.setString(5, cboxAsiakkaat.getValue().toString());
             sqllasku.setString(6, cboxPalvelut.getSelectionModel().getSelectedItem().toString());
             sqllasku.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
             sqllasku.setString(8, tfSposti.getCharacters().toString());
@@ -406,7 +415,7 @@ public class Controller {
         String tulopaiva = dptulopaiva.getValue().toString();
         String lahtopaiva = dplahtopaiva.getValue().toString();
         Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
-        String asiakas = tfAsiakas.getCharacters().toString();
+        String asiakas = cboxAsiakkaat.getValue().toString();
         Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
         Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
         String sposti = tfSposti.getCharacters().toString();
@@ -450,7 +459,7 @@ public class Controller {
             sqlvaraus.setString(2, dptulopaiva.getValue().toString());
             sqlvaraus.setString(3, dplahtopaiva.getValue().toString());
             sqlvaraus.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
-            sqlvaraus.setString(5, tfAsiakas.getCharacters().toString());
+            sqlvaraus.setString(5, cboxAsiakkaat.getValue().toString());
             sqlvaraus.setString(6, cboxPalvelut.getSelectionModel().getSelectedItem().toString());
             sqlvaraus.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
             sqlvaraus.setString(8, tfSposti.getCharacters().toString());
@@ -476,26 +485,145 @@ public class Controller {
 
     // Antaa valittavaksi mökit siltä toimialueelta, joka näytöllä on valittuna
     public void NaytaMokki() {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
         cboxToimintaalue.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object vanhaArvo, Object uusiArvo) {
                 if (uusiArvo.toString() == "Tahko") {
-                    cboxMokki.setItems(tahkomokitlista);
+
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 1;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listamokkicbox.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listamokkicbox);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
+
                 } else if (uusiArvo.toString() == "Ruka") {
-                    cboxMokki.setItems(rukamokitlista);
+
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 2;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaruka.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listaruka);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
+
                 } else if (uusiArvo.toString() == "Ylläs") {
-                    cboxMokki.setItems(yllasmokitlista);
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 3;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listayllas.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listayllas);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
                 } else if (uusiArvo.toString() == "Himos") {
-                    cboxMokki.setItems(himosmokitlista);
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 4;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listahimos.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listahimos);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
                 } else if (uusiArvo.toString() == "Levi") {
-                    cboxMokki.setItems(levimokitlista);
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 5;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listalevi.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listalevi);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
                 } else if (uusiArvo.toString() == "Koli") {
-                    cboxMokki.setItems(kolimokitlista);
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 6;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listakoli.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listakoli);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
                 } else if (uusiArvo.toString() == "Vuokatti") {
-                    cboxMokki.setItems(vuokattimokitlista);
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 7;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listavuokatti.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listavuokatti);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
                 } else if (uusiArvo.toString() == "Pallas") {
-                    cboxMokki.setItems(pallasmokitlista);
+                    try{
+                        String query = "select mokkinimi from mokki where toimintaalue_id = 8;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listapallas.add(tulokset.getString("mokkinimi"));
+                        }
+                        cboxMokki.setItems(listapallas);
+                        lause.close();
+                        tulokset.close();
+
+
+                    }catch (SQLException ex){
+
+                    }
                 }
+                removeDuplicatesMokki();
             }
         });
     }
@@ -513,8 +641,9 @@ public class Controller {
     // Lisää varauksen tiedot varausnäytön tauluun
     public void Btlisaa(){
 
+
         // näyttää virhetekstin jos käyttäjä unohtaa täyttää kaikki pakolliset kentät
-        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || tfAsiakas.getCharacters().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null || tfSposti.getCharacters().toString() == "") {
+        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || cboxAsiakkaat.getValue().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null || tfSposti.getCharacters().toString() == "") {
             txtVarausVaroitus.setVisible(true);
         } else {
             txtVarausVaroitus.setVisible(false);
@@ -523,7 +652,7 @@ public class Controller {
             String tulopaiva = dptulopaiva.getValue().toString();
             String lahtopaiva = dplahtopaiva.getValue().toString();
             Object hlomaara = cboxHenkilomaara.getSelectionModel().getSelectedItem();
-            String asiakas = tfAsiakas.getCharacters().toString();
+            String asiakas = cboxAsiakkaat.getValue().toString();
             Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
             Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
             String sposti = tfSposti.getCharacters().toString();
@@ -548,6 +677,7 @@ public class Controller {
 
 
 
+
             // Lisätään tilausListan Itemit tableViewiin
             tvTableView.setItems(tilausLista);
             //Lisätään Laskulistan itemit Laskutusnäytön tableviewiin
@@ -559,6 +689,7 @@ public class Controller {
             LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
             LisaaVaraus();
             LisaaLasku();
+
         }
 
     }
@@ -757,11 +888,13 @@ public class Controller {
             //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
             PaivitaAsiakas();
 
+            //Päivitetään tableview
             Asiakas asiakas = new Asiakas();
             if (asiakas.listaaAsiakkaat() != null) {
                 lataaAsiakasTaulu();
             }
 
+            //Päivitetään Asiakas ID combobox
             String query1 = "select asiakas_id from asiakas";
             PreparedStatement lause = connectDB.prepareStatement(query1);
             ResultSet tulokset = lause.executeQuery();
@@ -773,10 +906,6 @@ public class Controller {
             lause.close();
             tulokset.close();
             removeDuplicates();
-
-
-
-
 
         } catch(Exception e) {
         }
@@ -802,9 +931,133 @@ public class Controller {
                 size--;
             }
         }
+    }
+    //Poistaa asiakas_id duplikaatit
+    public void removeDuplicatesMokki() {
 
+        int tahko = listamokkicbox.size();
+        int ruka = listaruka.size();
+        int yllas = listayllas.size();
+        int himos = listahimos.size();
+        int levi = listalevi.size();
+        int koli = listakoli.size();
+        int vuokatti = listavuokatti.size();
+        int pallas = listapallas.size();
 
+        int duplicates = 0;
 
+        for (int i = 0; i < tahko - 1; i++) {
+
+            for (int j = i + 1; j < tahko; j++) {
+
+                if (!listamokkicbox.get(j).equals(listamokkicbox.get(i)))
+                    continue;
+                duplicates++;
+                listamokkicbox.remove(j);
+
+                j--;
+
+                tahko--;
+            }
+        }
+        for (int i = 0; i < ruka - 1; i++) {
+
+            for (int j = i + 1; j < ruka; j++) {
+
+                if (!listaruka.get(j).equals(listaruka.get(i)))
+                    continue;
+                duplicates++;
+                listaruka.remove(j);
+
+                j--;
+
+                ruka--;
+            }
+        }
+        for (int i = 0; i < yllas - 1; i++) {
+
+            for (int j = i + 1; j < yllas; j++) {
+
+                if (!listayllas.get(j).equals(listayllas.get(i)))
+                    continue;
+                duplicates++;
+                listayllas.remove(j);
+
+                j--;
+
+                yllas--;
+            }
+        }
+        for (int i = 0; i < himos - 1; i++) {
+
+            for (int j = i + 1; j < himos; j++) {
+
+                if (!listahimos.get(j).equals(listahimos.get(i)))
+                    continue;
+                duplicates++;
+                listahimos.remove(j);
+
+                j--;
+
+                himos--;
+            }
+        }
+        for (int i = 0; i < levi - 1; i++) {
+
+            for (int j = i + 1; j < levi; j++) {
+
+                if (!listalevi.get(j).equals(listalevi.get(i)))
+                    continue;
+                duplicates++;
+                listalevi.remove(j);
+
+                j--;
+
+                levi--;
+            }
+        }
+        for (int i = 0; i < koli - 1; i++) {
+
+            for (int j = i + 1; j < koli; j++) {
+
+                if (!listakoli.get(j).equals(listakoli.get(i)))
+                    continue;
+                duplicates++;
+                listakoli.remove(j);
+
+                j--;
+
+                koli--;
+            }
+        }
+        for (int i = 0; i < vuokatti - 1; i++) {
+
+            for (int j = i + 1; j < vuokatti; j++) {
+
+                if (!listavuokatti.get(j).equals(listavuokatti.get(i)))
+                    continue;
+                duplicates++;
+                listavuokatti.remove(j);
+
+                j--;
+
+                vuokatti--;
+            }
+        }
+        for (int i = 0; i < pallas - 1; i++) {
+
+            for (int j = i + 1; j < pallas; j++) {
+
+                if (!listapallas.get(j).equals(listapallas.get(i)))
+                    continue;
+                duplicates++;
+                listapallas.remove(j);
+
+                j--;
+
+                pallas--;
+            }
+        }
     }
 
 

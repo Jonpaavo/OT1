@@ -59,15 +59,15 @@
                                                         <Font size="18.0" />
                                                     </font></Label>
                                                 <Button mnemonicParsing="false" onAction="#Btlisaa" text="Lisää" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                <Label text="Asiakas" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Asiakas ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <ComboBox fx:id="cboxMokki" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Label text="Mökki" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label text="Palvelut (ei pakollinen)" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <ComboBox fx:id="cboxPalvelut" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                    <children>
-                                                        <TextField fx:id="tfAsiakas" layoutY="7.0" prefHeight="22.0" prefWidth="130.0" />
-                                                    </children>
+                                       <children>
+                                          <ComboBox fx:id="cboxAsiakkaat" layoutY="7.0" prefWidth="150.0" />
+                                       </children>
                                                 </Pane>
                                                 <Text fx:id="txtVarausVaroitus" fill="#f00707" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" text="Täytä kaikki kentät!" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                                     <font>
@@ -93,7 +93,6 @@
                                         <Label layoutX="24.0" layoutY="359.0" text="Sähköpostiosoite" />
                                         <Button fx:id="btVarauspoista" layoutX="468.0" layoutY="355.0" mnemonicParsing="false" onAction="#btVarausPoista" text="Poista varaus" />
                                         <Text layoutX="571.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Voit poistaa varauksen valitsemalla sen taulusta ja painamalla Poista varaus -nappia" />
-                              <ComboBox fx:id="cboxAsiakkaat" layoutX="303.0" layoutY="385.0" prefWidth="150.0" />
                                     </children>
                                 </AnchorPane>
                             </children>
