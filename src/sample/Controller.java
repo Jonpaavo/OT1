@@ -16,9 +16,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class Controller {
 
@@ -153,6 +156,8 @@ public class Controller {
 
     public void tallennaAsiakas(ActionEvent actionEvent) {
     }
+
+    final ObservableList options = FXCollections.observableArrayList();
     public void initialize() {
         NaytaToimintaalue();
         //NaytaToimintaalue2();
@@ -162,6 +167,28 @@ public class Controller {
         NaytaMokki();
         Varoitus();
         naytaLaskuTiedot();
+        //VarausAsiakas();
+
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+        try{
+            String query = "select asiakas_id from asiakas";
+            PreparedStatement lause = connectDB.prepareStatement(query);
+            ResultSet tulokset = lause.executeQuery();
+            while(tulokset.next()){
+                options.add(tulokset.getString("asiakas_id"));
+            }
+            cboxAsiakkaat.setItems(options);
+            lause.close();
+            tulokset.close();
+
+
+
+        }catch (SQLException ex){
+
+        }
+
+
 
         Lasku lasku5 = new Lasku();
         if (lasku5.listaaLaskut() != null) {
@@ -735,11 +762,51 @@ public class Controller {
                 lataaAsiakasTaulu();
             }
 
+            String query1 = "select asiakas_id from asiakas";
+            PreparedStatement lause = connectDB.prepareStatement(query1);
+            ResultSet tulokset = lause.executeQuery();
+            while(tulokset.next()){
+                options.add(tulokset.getString("asiakas_id"));
+
+            }
+            cboxAsiakkaat.setItems(options);
+            lause.close();
+            tulokset.close();
+            removeDuplicates();
+
+
+
 
 
         } catch(Exception e) {
         }
     }
+
+    //Poistaa asiakas_id duplikaatit
+    public void removeDuplicates() {
+
+        int size = options.size();
+        int duplicates = 0;
+
+        for (int i = 0; i < size - 1; i++) {
+
+            for (int j = i + 1; j < size; j++) {
+
+                if (!options.get(j).equals(options.get(i)))
+                    continue;
+                duplicates++;
+                options.remove(j);
+
+                j--;
+
+                size--;
+            }
+        }
+
+
+
+    }
+
 
     public void BtAsiakasPoista() throws SQLException {
 
@@ -752,6 +819,24 @@ public class Controller {
         lataaAsiakasTaulu();
     }
 
+  /*  public void BtMuokkaaAsiakas() throws SQLException{
+        Asiakas asiakashallinta = new Asiakas();
+        Asiakas asiakas = new Asiakas();
+        Asiakas valittuasiakas = (Asiakas) tbvAsiakas.getSelectionModel().getSelectedItem();
+        asiakas.setAsiakas_id(valittuasiakas.getAsiakas_id());
+        Asiakas asiakas1 = asiakas.MuokkaaAsiakas(tfEtunimi.getText());
+        asiakas1.setEtunimi(tfEtunimi.getText());
+        asiakas1.setSukunimi(tfSukunimi.getText());
+        asiakas1.setLahiosoite(tfLahiosoite.getText());
+        asiakas1.setEmail(tfEmail.getText());
+        asiakas1.setPostinro(tfPostinro.getText());
+        asiakas1.setPuhelinnro(tfPuhelinnro.getText());
+
+
+        asiakashallinta.PaivitaAsiakas(asiakas1);
+        lataaAsiakasTaulu();
+    }*/
+
     public void tyhjennaTekstiKentat_asiakas() {
 
         //toimii
@@ -763,6 +848,18 @@ public class Controller {
         tfPostinro.setText("");
     }
 
+    public ComboBox cboxAsiakkaat;
+
+  /*  public void VarausAsiakas(){
+
+        cboxAsiakkaat.getItems().clear();
+        Asiakas asiakas = new Asiakas();
+        List<Asiakas>asiakasList = asiakas.listaaCombobox();
+        ObservableList<Asiakas> comboboxasiakkaat = FXCollections.observableArrayList(asiakasList);
+       // cboxAsiakkaat.setValue(new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
+        cboxAsiakkaat.setItems(comboboxasiakkaat);
+
+    }*/
 
 
 
