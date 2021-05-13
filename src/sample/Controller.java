@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 public class Controller {
 
-    // Luodaan tarvittavat elementit ja listat
+
 
 
 

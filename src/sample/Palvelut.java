@@ -34,12 +34,7 @@ public class Palvelut {
         this.toimintaalue_id = toimintaalue_id;
     }
 
-    /**
-     * Palauttaa listan kaikista tietokannassa olevista Palvelu-olioista.
-     *
-     * @return Lista kaikista Palvelu-olioista.
-     * @throws SQLException Heitetään, jos tietokannan kanssa kommunikoinnissa ilmenee ongelmia.
-     */
+
     public List<Palvelut> listaa() throws SQLException {
         SQLYhteys connectNow = new SQLYhteys();
         Connection connectDB = connectNow.getYhteys();

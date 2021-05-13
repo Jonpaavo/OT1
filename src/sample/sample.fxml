@@ -196,6 +196,7 @@
                                     <TextField fx:id="tfPalveluKuvaus" layoutX="14.0" layoutY="185.0" />
                                             </children>
                                         </Pane>
+                              <Label layoutX="28.0" layoutY="418.0" prefHeight="21.0" prefWidth="960.0" text="Toiminta-alue ID: 1 = Tahko   2 = Ruka   3 = Ylläs   4 = Himos   5 =  Levi   6 = Koli   7 = Vuokatti   8= Pallas" />
                                     </children>
                                 </AnchorPane>
                             </children></AnchorPane>
