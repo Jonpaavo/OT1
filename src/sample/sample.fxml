@@ -92,6 +92,7 @@
                                         <TextField fx:id="tfSposti" layoutX="24.0" layoutY="385.0" />
                                         <Label layoutX="24.0" layoutY="359.0" text="Sähköpostiosoite" />
                               <Button fx:id="btVarauspoista" layoutX="468.0" layoutY="355.0" mnemonicParsing="false" onAction="#btVarausPoista" text="Poista varaus" />
+                              <Text layoutX="571.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Voit poistaa varauksen valitsemalla sen taulusta ja painamalla Poista varaus -nappia" />
                                     </children>
                                 </AnchorPane>
                             </children>
@@ -270,6 +271,7 @@
                                 <TextArea fx:id="txtAreaLaskutiedot_Lasku" layoutX="7.0" layoutY="123.0" prefHeight="143.0" prefWidth="356.0" text="Toiminta-alue:&#10;Tulopäivä:&#10;Lähtöpäivä:&#10;Henkilömäärä:&#10;Asiakkaan nimi:&#10;Mökki:&#10;Asiakkaan sähköpostiosoite:" />
                                 <Button fx:id="btLahetaLasku" layoutX="268.0" layoutY="293.0" mnemonicParsing="false" onAction="#btLahetaLasku" text="Lähetä lasku" />
                         <Button fx:id="btPoistalasku" layoutX="374.0" layoutY="464.0" mnemonicParsing="false" onAction="#btPoistaLasku" text="Poista lasku" />
+                        <Text fx:id="txtvalitsevaraus" layoutX="377.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valitse varaus" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
