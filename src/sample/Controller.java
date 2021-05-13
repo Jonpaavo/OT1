@@ -34,6 +34,7 @@ public class Controller {
     public ComboBox cboxToimintaalue;
     public ComboBox cboxHenkilomaara;
     public ComboBox cboxPalvelut;
+    public ComboBox cboxVarausPalvelut;
     public ComboBox cboxMokki;
     //public ComboBox cboxToimintaalue2;
     public ComboBox cboxToimintaalue3;
@@ -105,6 +106,28 @@ public class Controller {
     public TableColumn tbcPuhelinnro;
     public TableColumn tbcAsiakas_id;
 
+    //PALVELUIDEN HALLINTA
+    public ComboBox cboxPalvelutoimintaalue;
+    public TextField tfPalveluNimi;
+    public TextField tfPalveluHinta;
+    public TextField tfPalveluAlv;
+    public TextField tfPalveluKuvaus;
+
+    //public ObservableList<Integer> toimintaaluelista = FXCollections.observableArrayList(1, 2, 3);
+    //public ObservableList<String>palvelulista = FXCollections.observableArrayList();
+    public TextField tfToimintaalue_id;
+    public TableView tbvPalvelu;
+
+    public TableColumn tbcPalveluHinta;
+    public TableColumn tbcPalveluAlv;
+    public TableColumn tbcPalveluKuvaus;
+    public TableColumn tbcPalveluToimintaalue_id;
+    public TableColumn tbcPalvelupalvelu_id;
+    public TableColumn tbcPalveluNimi;
+
+
+    public ObservableList<String> listaPalvelutoimintaalue= FXCollections.observableArrayList("1","2","3","4","5","6","7","8");
+
     final ObservableList options = FXCollections.observableArrayList();
     final ObservableList listamokkicbox = FXCollections.observableArrayList();
     final ObservableList listaruka = FXCollections.observableArrayList();
@@ -115,12 +138,14 @@ public class Controller {
     final ObservableList listavuokatti = FXCollections.observableArrayList();
     final ObservableList listapallas = FXCollections.observableArrayList();
 
+    final ObservableList listavarauspalvelu = FXCollections.observableArrayList();
+
 
 
     // Näyttää toiminta-alueet Palveluiden Hallinta - välilehdellä
-    public void NaytaToimintaalue3() {
+    /*public void NaytaToimintaalue3() {
         cboxToimintaalue3.setItems(toimintaaluelista);
-    }
+    }*/
 
 
     // Lisätään toiminta-alueet comboboxiin
@@ -133,9 +158,7 @@ public class Controller {
         cboxHenkilomaara.setItems(henkilomaaralista);
     }
 
-    public void NaytaPalvelut(){
-        cboxPalvelut.setItems(palvelulista);
-    }
+
     public void mokkinimi(InputMethodEvent inputMethodEvent) {
     }
 
@@ -167,25 +190,26 @@ public class Controller {
     }
 
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         NaytaToimintaalue();
         //NaytaToimintaalue2();
-        NaytaToimintaalue3();
+        //NaytaToimintaalue3();
         NaytaHenkilomaara();
-        NaytaPalvelut();
+        //NaytaPalvelut();
         NaytaMokki();
         Varoitus();
         naytaLaskuTiedot();
+        CboxPalveluToimintaalue();
         //VarausAsiakas();
 
         SQLYhteys yhteys = new SQLYhteys();
         Connection connectDB = yhteys.getYhteys();
         try{
-            String query = "select asiakas_id from asiakas";
+            String query = "select etunimi from asiakas";
             PreparedStatement lause = connectDB.prepareStatement(query);
             ResultSet tulokset = lause.executeQuery();
             while(tulokset.next()){
-                options.add(tulokset.getString("asiakas_id"));
+                options.add(tulokset.getString("etunimi"));
             }
             cboxAsiakkaat.setItems(options);
             lause.close();
@@ -196,6 +220,24 @@ public class Controller {
         }catch (SQLException ex){
 
         }
+
+        try{
+            String query = "select nimi from palvelu";
+            PreparedStatement lause = connectDB.prepareStatement(query);
+            ResultSet tulokset = lause.executeQuery();
+            while(tulokset.next()){
+                listavarauspalvelu.add(tulokset.getString("nimi"));
+            }
+            cboxVarausPalvelut.setItems(listavarauspalvelu);
+            lause.close();
+            tulokset.close();
+            removeDuplicatesPalvelu();
+
+
+        }catch (SQLException ex){
+
+        }
+
 
 
 
@@ -218,6 +260,11 @@ public class Controller {
         Varaus varaus = new Varaus();
         if (varaus.listaaVaraukset() != null) {
             lataaVarausTaulu();
+        }
+
+        Palvelut palvelu = new Palvelut();
+        if (palvelu.listaaPalvelut() != null) {
+            lataaPalvelutaulu();
         }
     }
 
@@ -274,7 +321,7 @@ public class Controller {
         Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
         String asiakas = cboxAsiakkaat.getValue().toString();
         Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
-        Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+        Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
         String sposti = tfSposti.getCharacters().toString();
 
         //lisätään taulun sarakkeisiin
@@ -317,7 +364,7 @@ public class Controller {
             sqllasku.setString(3, dplahtopaiva.getValue().toString());
             sqllasku.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
             sqllasku.setString(5, cboxAsiakkaat.getValue().toString());
-            sqllasku.setString(6, cboxPalvelut.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(6, cboxVarausPalvelut.getSelectionModel().getSelectedItem().toString());
             sqllasku.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
             sqllasku.setString(8, tfSposti.getCharacters().toString());
 
@@ -417,7 +464,7 @@ public class Controller {
         Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
         String asiakas = cboxAsiakkaat.getValue().toString();
         Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
-        Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+        Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
         String sposti = tfSposti.getCharacters().toString();
 
         //lisätään taulun sarakkeisiin
@@ -459,7 +506,7 @@ public class Controller {
             sqlvaraus.setString(3, dplahtopaiva.getValue().toString());
             sqlvaraus.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
             sqlvaraus.setString(5, cboxAsiakkaat.getValue().toString());
-            sqlvaraus.setString(6, cboxPalvelut.getSelectionModel().getSelectedItem().toString());
+            sqlvaraus.setString(6, cboxVarausPalvelut.getSelectionModel().getSelectedItem().toString());
             sqlvaraus.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
             sqlvaraus.setString(8, tfSposti.getCharacters().toString());
 
@@ -653,7 +700,7 @@ public class Controller {
             Object hlomaara = cboxHenkilomaara.getSelectionModel().getSelectedItem();
             String asiakas = cboxAsiakkaat.getValue().toString();
             Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
-            Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+            Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
             String sposti = tfSposti.getCharacters().toString();
 
             tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
@@ -894,11 +941,11 @@ public class Controller {
             }
 
             //Päivitetään Asiakas ID combobox
-            String query1 = "select asiakas_id from asiakas";
+            String query1 = "select etunimi from asiakas";
             PreparedStatement lause = connectDB.prepareStatement(query1);
             ResultSet tulokset = lause.executeQuery();
             while(tulokset.next()){
-                options.add(tulokset.getString("asiakas_id"));
+                options.add(tulokset.getString("etunimi"));
 
             }
             cboxAsiakkaat.setItems(options);
@@ -924,6 +971,27 @@ public class Controller {
                     continue;
                 duplicates++;
                 options.remove(j);
+
+                j--;
+
+                size--;
+            }
+        }
+    }
+    //poistaa palvelu duplikaatit
+    public void removeDuplicatesPalvelu() {
+
+        int size = listavarauspalvelu.size();
+        int duplicates = 0;
+
+        for (int i = 0; i < size - 1; i++) {
+
+            for (int j = i + 1; j < size; j++) {
+
+                if (!listavarauspalvelu.get(j).equals(listavarauspalvelu.get(i)))
+                    continue;
+                duplicates++;
+                listavarauspalvelu.remove(j);
 
                 j--;
 
@@ -1232,4 +1300,193 @@ public class Controller {
 
     public void Poistamokki(ActionEvent actionEvent) {
     }
+
+    /**
+     * Palveluhallinta
+     */
+
+    public void CboxPalveluToimintaalue(){
+        cboxPalvelutoimintaalue.setItems(listaPalvelutoimintaalue);
+    }
+
+    public void PaivitaPalvelu() {
+
+        try {
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+            String query = "UPDATE palvelu SET toimintaalue_id = ?, nimi = ?, kuvaus = ?, hinta = ?, alv = ? WHERE palvelu_id = ?";
+
+            PreparedStatement pst = connectDB.prepareStatement(query);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+    //palveluiden lisääminen tauluun
+    public void btPalveluLisaa() {
+
+        try {
+            //SQL yhteys määritetään
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String query = "INSERT INTO palvelu (toimintaalue_id, nimi, kuvaus, hinta, alv)values(?,?,?,?,?)";
+
+            PreparedStatement sqlpalvelu = connectDB.prepareStatement(query);
+
+            sqlpalvelu.setInt(1, Integer.parseInt(String.valueOf(cboxPalvelutoimintaalue.getValue())));
+            sqlpalvelu.setString(2, tfPalveluNimi.getText());
+            sqlpalvelu.setString(3, tfPalveluKuvaus.getText());
+            sqlpalvelu.setDouble(4, Double.parseDouble(tfPalveluHinta.getText()));
+            sqlpalvelu.setDouble(5, Double.parseDouble(tfPalveluAlv.getText()));
+
+            sqlpalvelu.executeUpdate();
+
+            PaivitaPalvelu();
+
+            try{
+                String query1 = "select nimi from palvelu";
+                PreparedStatement lause = connectDB.prepareStatement(query1);
+                ResultSet tulokset = lause.executeQuery();
+                while(tulokset.next()){
+                    listavarauspalvelu.add(tulokset.getString("nimi"));
+                }
+                cboxVarausPalvelut.setItems(listavarauspalvelu);
+                lause.close();
+                tulokset.close();
+                removeDuplicatesPalvelu();
+
+
+            }catch (SQLException ex){
+
+            }
+
+            Palvelut palvelu = new Palvelut();
+            if (palvelu.listaaPalvelut() != null) {
+                lataaPalvelutaulu();
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void lataaPalvelutaulu() {
+        tbvPalvelu.getItems().clear();
+        Palvelut palveluhallinta = new Palvelut();
+        List<Palvelut> palvelulista = palveluhallinta.listaaPalvelut();
+        ObservableList<Palvelut> taulunpalvelut = FXCollections.observableArrayList(palvelulista);
+
+        tbcPalvelupalvelu_id.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Integer>("palvelu_id"));
+        tbcPalveluToimintaalue_id.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Integer>("toimintaalue_id"));
+        tbcPalveluNimi.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, String>("nimi"));
+        tbcPalveluKuvaus.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, String>("kuvaus"));
+        tbcPalveluKuvaus.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Double>("hinta"));
+        tbcPalveluAlv.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Double>("alv"));
+        tbvPalvelu.setItems(taulunpalvelut);
+    }
+
+    public void BtPalveluPoista() throws SQLException {
+
+        Palvelut poistapalvelu = new Palvelut();
+        Palvelut valittupalvelu = (Palvelut) tbvPalvelu.getSelectionModel().getSelectedItem();
+        Palvelut palvelu = new Palvelut();
+        palvelu.setPalvelu_id(valittupalvelu.getPalvelu_id());
+        poistapalvelu.poistaPalvelu(palvelu.getPalvelu_id());
+        //tyhjennaTekstiKentat_palvelu();
+        lataaPalvelutaulu();
+    }
+
+/*
+    public void btMuokkaa() {
+        try {
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Metodi, jolla pystytään suorittamaan sql komennot
+            PreparedStatement pst;
+            //Tietojen näyttäminen textfieldeissä
+
+           /* //SQL lause jolla päivitellään tietoja
+
+            String query = "UPDATE palvelu SET toimintaalue_id=?, nimi=?, tyyppi=?, kuvaus=?, hinta=?, alv=? " +
+                    "WHERE palvelu_id = " + Integer.getInteger(String.valueOf(tbcpalvelu_id));
+
+            PreparedStatement preparedStmt = connectDB.prepareStatement(query);
+            preparedStmt.setInt(1, Integer.parseInt(String.valueOf(((tfToimintaalue_id)))));
+            preparedStmt.setString(2, String.valueOf(txtnimi));
+            preparedStmt.setInt(3, Integer.parseInt(String.valueOf(tftyyppi)));
+            preparedStmt.setString(4, String.valueOf(txtkuvaus));
+            preparedStmt.setDouble(5, Double.parseDouble(String.valueOf(txthinta)));
+            preparedStmt.setDouble(6, Double.parseDouble(String.valueOf(txtalv)));
+
+            // Suoritetaan tietokantaan lisäys.
+            int rowsInserted = preparedStmt.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Palvelu lisättiin tietokantaan!");
+            }
+            preparedStmt.close(); */
+
+           /* int rivi1 = Integer.valueOf(tfToimintaalue_id.getText());
+            String rivi2 = txtnimi.getText();
+            int rivi3 = Integer.valueOf(tftyyppi.getText());
+            String rivi4 = txtkuvaus.getText();
+            double rivi5 = Double.parseDouble(txthinta.getText());
+            double rivi6 = Double.parseDouble(txtalv.getText());
+            int rivi7 = Integer.valueOf(tbcpalvelu_id.getText());
+
+
+
+            //Sql lause, jolla päivitetään palvelun tietoja taulussa
+            String query = "UPDATE palvelu SET toimintaalue_id= '"+rivi1+"',nimi='"+rivi2+"',tyyppi='"+rivi3+"',kuvaus='"+rivi4+"',hinta='"+rivi5+"',alv='"
+                    +rivi6+"' WHERE palvelu_id='"+rivi7+"'";*/
+
+
+            /*String query = "UPDATE palvelu SET toimintaalue_id=?, nimi=?, tyyppi=?, kuvaus=?, hinta=?, alv=? " +
+                    "WHERE palvelu_id = " + Integer.getInteger(String.valueOf(tbcpalvelu_id));
+
+
+
+
+            //Lause, jolla suoritetaan komennot sql:ssa
+            pst = connectDB.prepareStatement(query);
+            pst.execute();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            naytaTiedotPalvelu();
+            PaivitaPalvelu();
+
+
+        } catch (Exception e) {
+        }
+    }*/
+
+    /*public void naytaTiedotPalvelu(){
+        tvpalvelu.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Palvelu palvelu = (Palvelu) tvpalvelu.getItems().get(tvpalvelu.getSelectionModel().getSelectedIndex());
+
+                tfToimintaalue_id.setText(String.valueOf(palvelu.getToimintaalue_id()));
+                txtnimi.setText(palvelu.getNimi());
+                tftyyppi.setText(String.valueOf(palvelu.getTyyppi()));
+                txtkuvaus.setText(palvelu.getKuvaus());
+                txthinta.setText(String.valueOf(palvelu.getHinta()));
+                txtalv.setText(String.valueOf(palvelu.getAlv()));
+            }
+        });
+
+    }*/
+
+
 }
+
+
