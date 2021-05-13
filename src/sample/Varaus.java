@@ -87,6 +87,26 @@ public class Varaus {
         }
     }
 
+    public void PoistaVaraus(Integer id) throws SQLException {
+
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query4 = "DELETE FROM mvj.varaus WHERE varaus_id = ?";
+        String query5 = "DELETE FROM mvj.lasku WHERE lasku_id = ?";
+
+        PreparedStatement lause2 = connectDB.prepareStatement(query4);
+        lause2.setInt(1, id);
+        lause2.executeUpdate();
+        lause2.close();
+
+        PreparedStatement lause3 = connectDB.prepareStatement(query5);
+        lause3.setInt(1, id);
+        lause3.executeUpdate();
+        lause3.close();
+
+    }
+
     public int getVaraus_id() {
         return varaus_id;
     }

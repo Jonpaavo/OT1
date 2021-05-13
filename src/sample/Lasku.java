@@ -85,6 +85,22 @@ public class Lasku {
         }
     }
 
+    public void PoistaLasku(Integer id) throws SQLException {
+
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String query6 = "DELETE FROM mvj.lasku WHERE lasku_id = ?";
+
+        PreparedStatement lause2 = connectDB.prepareStatement(query6);
+        lause2.setInt(1, id);
+
+        lause2.executeUpdate();
+
+        lause2.close();
+
+    }
+
 
     public int getLasku_id() {
         return lasku_id;

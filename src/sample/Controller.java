@@ -336,6 +336,24 @@ public class Controller {
     /**
      * MÖKINVARAUSNÄKYMÄ
      */
+    public void btPoistaLasku(ActionEvent actionEvent) throws SQLException {
+        Lasku poistalasku = new Lasku();
+        Lasku valittulasku = (Lasku) tvLasku.getSelectionModel().getSelectedItem();
+        Lasku lasku4 = new Lasku();
+        lasku4.setLasku_id(valittulasku.getLasku_id());
+        poistalasku.PoistaLasku(lasku4.getLasku_id());
+        lataaLaskuTaulu();
+    }
+
+    public void btVarausPoista(ActionEvent actionEvent) throws SQLException {
+        Varaus poistavaraus = new Varaus();
+        Varaus valittuvaraus = (Varaus) tvTableView.getSelectionModel().getSelectedItem();
+        Varaus varaus4 = new Varaus();
+        varaus4.setVaraus_id(valittuvaraus.getVaraus_id());
+        poistavaraus.PoistaVaraus(varaus4.getVaraus_id());
+        lataaVarausTaulu();
+    }
+
 
     public void PaivitaVaraus() {
 
@@ -846,18 +864,20 @@ public class Controller {
 
 
     public void btLahetaLasku(ActionEvent actionEvent) throws Exception {
-        System.out.println("Toiminta-alue: "+tvLasku.getSelectionModel().getSelectedItem().toimintaalue);
-        System.out.println("Tulopäivä: "+tvLasku.getSelectionModel().getSelectedItem().tulopaiva);
-        System.out.println("Lähtöpäivä: "+tvLasku.getSelectionModel().getSelectedItem().lahtopaiva);
-        System.out.println("Henkilömäärä: "+tvLasku.getSelectionModel().getSelectedItem().henkilomaara);
-        System.out.println("Asiakas: "+tvLasku.getSelectionModel().getSelectedItem().asiakas);
-        System.out.println("Palvelut: "+tvLasku.getSelectionModel().getSelectedItem().palvelut);
-        System.out.println("Mökki: "+tvLasku.getSelectionModel().getSelectedItem().mokki);
-        System.out.println("Sähköpostiosoite: "+tvLasku.getSelectionModel().getSelectedItem().sposti);
+        System.out.println("Toiminta-alue: " + tvLasku.getSelectionModel().getSelectedItem().toimintaalue);
+        System.out.println("Tulopäivä: " + tvLasku.getSelectionModel().getSelectedItem().tulopaiva);
+        System.out.println("Lähtöpäivä: " + tvLasku.getSelectionModel().getSelectedItem().lahtopaiva);
+        System.out.println("Henkilömäärä: " + tvLasku.getSelectionModel().getSelectedItem().henkilomaara);
+        System.out.println("Asiakas: " + tvLasku.getSelectionModel().getSelectedItem().asiakas);
+        System.out.println("Palvelut: " + tvLasku.getSelectionModel().getSelectedItem().palvelut);
+        System.out.println("Mökki: " + tvLasku.getSelectionModel().getSelectedItem().mokki);
+        System.out.println("Sähköpostiosoite: " + tvLasku.getSelectionModel().getSelectedItem().sposti);
         lahetaEmail(tvLasku.getSelectionModel().getSelectedItem().sposti);
 
     }
-    //kommentti
+    public void PoistaVaraus(ActionEvent actionEvent) {
+
+    }
 
     public void Poistamokki(ActionEvent actionEvent) {
     }
