@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -22,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <TabPane prefHeight="800.0" prefWidth="1118.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -261,7 +257,8 @@
                                         <TableColumn fx:id="tcAsiakas_Lasku" prefWidth="64.0" text="Asiakas" />
                                         <TableColumn fx:id="tcPalvelut_Lasku" prefWidth="85.33331298828125" text="Palvelut" />
                                         <TableColumn fx:id="tcMokki_Lasku" prefWidth="83.33331298828125" text="Mökki" />
-                                        <TableColumn fx:id="tcSposti_Lasku" prefWidth="144.00002034505212" text="Sähköposti" />
+                                        <TableColumn fx:id="tcSposti_Lasku" prefWidth="101.99993896484375" text="Sähköposti" />
+                              <TableColumn fx:id="tcLaskuID" prefWidth="40.00006103515625" text="ID" />
                                     </columns>
                                 </TableView>
                                 <Text fx:id="txtLaskutiedot_Lasku" layoutX="30.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laskun tiedot:" />

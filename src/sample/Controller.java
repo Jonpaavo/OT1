@@ -163,6 +163,10 @@ public class Controller {
         Varoitus();
         naytaLaskuTiedot();
 
+        Lasku lasku5 = new Lasku();
+        if (lasku5.listaaLaskut() != null) {
+            lataaLaskuTaulu();
+        }
 
         //toimii nyt
         Asiakas asiakas = new Asiakas();
@@ -180,6 +184,126 @@ public class Controller {
             lataaVarausTaulu();
         }
     }
+
+    public void lataaLaskuTaulu() {
+        //toimii
+        tvLasku.getItems().clear();
+        Lasku laskuhallinta = new Lasku();
+        List<Lasku> laskulista = laskuhallinta.listaaLaskut();
+        ObservableList<Lasku> taulunlaskut = FXCollections.observableArrayList(laskulista);
+
+        tcLaskuID.setCellValueFactory(
+                new PropertyValueFactory<Lasku, Integer>("lasku_id"));
+        tcToimintaalue_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("toimintaalue"));
+        tcTulopaiva_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("tulopaiva"));
+        tcLahtopaiva_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("lahtopaiva"));
+        tcHlomaara_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
+        tcAsiakas_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("asiakas"));
+        tcPalvelut_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("palvelut"));
+        tcMokki_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("mokki"));
+        tcSposti_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("sposti"));
+        tvLasku.setItems(taulunlaskut);
+    }
+
+    public void PaivitaLasku() {
+
+        try {
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String laskuquery1 = "UPDATE lasku SET toiminta_alue = ?, tulopaiva = ?, lahtopaiva = ?, henkilomaara = ?, asiakas = ?, palvelut = ?, mokki = ?, sposti = ? WHERE varaus_id = ?";
+
+            PreparedStatement preparedStatementl = connectDB.prepareStatement(laskuquery1);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+    ObservableList<Lasku> laskut = FXCollections.observableArrayList();
+
+    public void LisaaLasku(){
+        //muuttujat teksikenttien sisällöstä
+        String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
+        String tulopaiva = dptulopaiva.getValue().toString();
+        String lahtopaiva = dplahtopaiva.getValue().toString();
+        Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
+        String asiakas = tfAsiakas.getCharacters().toString();
+        Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
+        Object palvelut = cboxPalvelut.getSelectionModel().getSelectedItem();
+        String sposti = tfSposti.getCharacters().toString();
+
+        //lisätään taulun sarakkeisiin
+        tcToimintaalue_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimintaalue"));
+        tcTulopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tulopaiva"));
+        tcLahtopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahtopaiva"));
+        tcHlomaara_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
+        tcAsiakas_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("asiakas"));
+        tcMokki_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("mokki"));
+        tcPalvelut_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("palvelut"));
+        tcSposti_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("sposti"));
+
+
+
+        // lisätään Varaus olio, joka lisäätän mökkilistalle
+        laskut.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+
+        //lisätään mökkilista taululle
+
+        tvLasku.setItems(laskut);
+
+        //
+
+        //Lisätään tiedot SQL tietokantaan
+        try {
+
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause asiakkaiden luomiselle
+            String laskuquery = "insert into lasku (toiminta_alue, tulopaiva, lahtopaiva, henkilomaara, asiakas, palvelut, mokki, sposti )values(?,?,?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqllasku = connectDB.prepareStatement(laskuquery);
+
+            //Noudetaan tiedot textfieldistä
+            sqllasku.setString(1, cboxToimintaalue.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(2, dptulopaiva.getValue().toString());
+            sqllasku.setString(3, dplahtopaiva.getValue().toString());
+            sqllasku.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
+            sqllasku.setString(5, tfAsiakas.getCharacters().toString());
+            sqllasku.setString(6, cboxPalvelut.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(8, tfSposti.getCharacters().toString());
+
+            //Suoritetaan SQL komennot
+            sqllasku.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaLasku();
+
+        } catch(Exception e) {
+            System.err.println("vahinko");
+            System.err.println(e.getMessage());
+
+        }
+
+        Lasku lasku1 = new Lasku();
+        if (lasku1.listaaLaskut() != null) {
+            lataaLaskuTaulu();
+        }
+    }
+
+
 
     public void lataaVarausTaulu() {
         //toimii
@@ -389,6 +513,7 @@ public class Controller {
             // tehdään muuttujien perusteella Lasku-olio, jotta saadaan varaustiedot myös laskutusnäyttöön
             LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
             LisaaVaraus();
+            LisaaLasku();
         }
 
     }
@@ -667,6 +792,7 @@ public class Controller {
     public TableColumn<Lasku, String> tcPalvelut_Lasku;
     public TableColumn<Lasku, String> tcMokki_Lasku;
     public TableColumn<Lasku, String> tcSposti_Lasku;
+    public TableColumn<Lasku, Integer> tcLaskuID;
 
     public void naytaLaskuTiedot() {
 

@@ -1,5 +1,12 @@
 package sample;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Lasku {
     String toimintaalue;
     String asiakas;
@@ -7,6 +14,7 @@ public class Lasku {
     String lahtopaiva;
     String sposti;
     Object henkilomaara, mokki, palvelut;
+    int lasku_id;
 
     public Lasku(String toimintaalue, String tulopaiva, String lahtopaiva, Object henkilomaara, String asiakas ,Object palvelut, Object mokki, String sposti) {
 
@@ -19,6 +27,73 @@ public class Lasku {
         this.mokki = mokki;
         this.sposti = sposti;
     }
+
+    public Lasku() {
+    }
+
+    public Lasku luoLaskuTuloksista(ResultSet tulokset) throws SQLException {
+        var lasku = new Lasku();
+        lasku.setLasku_id(tulokset.getInt("lasku_id"));
+        lasku.setToimintaalue(tulokset.getString("toiminta_alue"));
+        lasku.setTulopaiva(tulokset.getString("tulopaiva"));
+        lasku.setLahtopaiva(tulokset.getString("lahtopaiva"));
+        lasku.setHenkilomaara(tulokset.getString("henkilomaara"));
+        lasku.setAsiakas(tulokset.getString("asiakas"));
+        lasku.setPalvelut(tulokset.getString("palvelut"));
+        lasku.setMokki(tulokset.getString("mokki"));
+        lasku.setSposti(tulokset.getString("sposti"));
+
+        return lasku;
+    }
+
+    public List<Lasku> lasku_listaa() throws SQLException {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+
+        String laskuquery = "SELECT * FROM lasku";
+
+        PreparedStatement lause = connectDB.prepareStatement(laskuquery);
+
+        ResultSet tulokset = lause.executeQuery();
+
+        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
+        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
+        if (!tulokset.next()) return null;
+
+        List<Lasku> laskut = new ArrayList<>();
+
+        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
+        // tulokset.next()-metodikutsua!
+        do {
+            Lasku lasku = luoLaskuTuloksista(tulokset);
+            laskut.add(lasku);
+        } while (tulokset.next());
+
+        tulokset.close();
+        lause.close();
+        //yhteys.close();
+
+        return laskut;
+    }
+
+    public List<Lasku> listaaLaskut() {
+        try {
+            return lasku_listaa();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public int getLasku_id() {
+        return lasku_id;
+    }
+
+    public void setLasku_id(int lasku_id) {
+        this.lasku_id = lasku_id;
+    }
+
     public String getToimintaalue() {
         return toimintaalue;
     }
