@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Varaus {
@@ -58,14 +57,10 @@ public class Varaus {
 
         ResultSet tulokset = lause.executeQuery();
 
-        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
-        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
         if (!tulokset.next()) return null;
 
         List<Varaus> varaukset = new ArrayList<>();
 
-        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
-        // tulokset.next()-metodikutsua!
         do {
             Varaus varaus = luoVarausTuloksista(tulokset);
             varaukset.add(varaus);
@@ -73,7 +68,6 @@ public class Varaus {
 
         tulokset.close();
         lause.close();
-        //yhteys.close();
 
         return varaukset;
     }

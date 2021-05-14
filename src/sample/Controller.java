@@ -7,10 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -18,40 +16,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 public class Controller {
 
 
-
-
-
-
-    // MÖKIN VARAUS
+    // MÖKIN VARAUS alustukset
     public ComboBox cboxToimintaalue;
     public ComboBox cboxHenkilomaara;
-    public ComboBox cboxPalvelut;
     public ComboBox cboxVarausPalvelut;
     public ComboBox cboxMokki;
-    //public ComboBox cboxToimintaalue2;
-    public ComboBox cboxToimintaalue3;
     public DatePicker dptulopaiva;
     public DatePicker dplahtopaiva;
     public ObservableList<String>toimintaaluelista = FXCollections.observableArrayList("Tahko", "Ruka", "Ylläs", "Himos", "Levi", "Koli", "Vuokatti", "Pallas");
     public ObservableList<String>henkilomaaralista = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","yli 10");
-    public ObservableList<String>palvelulista = FXCollections.observableArrayList("Porosafari","Koiravaljakkoajelu","Hevosajelu", "Vesiskootteriajelu","Seikkailupalvelu","Airsoft");
-    public ObservableList<String>tahkomokitlista = FXCollections.observableArrayList("Tahko 1", "Tahko 2", "Tahko 3", "Tahko 4", "Tahko 5");
-    public ObservableList<String>rukamokitlista = FXCollections.observableArrayList("Ruka 1", "Ruka 2", "Ruka 3", "Ruka 4", "Ruka 5");
-    public ObservableList<String>yllasmokitlista = FXCollections.observableArrayList("Ylläs 1", "Ylläs 2", "Ylläs 3", "Ylläs 4", "Ylläs 5");
-    public ObservableList<String>himosmokitlista = FXCollections.observableArrayList("Himos 1", "Himos 2", "Himos 3", "Himos 4", "Himos 5");
-    public ObservableList<String>levimokitlista = FXCollections.observableArrayList("Levi 1", "Levi 2", "Levi 3", "Levi 4", "Levi 5");
-    public ObservableList<String>kolimokitlista = FXCollections.observableArrayList("Koli 1", "Koli 2", "Koli 3", "Koli 4", "Koli 5");
-    public ObservableList<String>vuokattimokitlista = FXCollections.observableArrayList("Vuokatti 1", "Vuokatti 2", "Vuokatti 3", "Vuokatti 4", "Vuokatti 5");
-    public ObservableList<String>pallasmokitlista = FXCollections.observableArrayList("Pallas 1", "Pallas 2", "Pallas 3", "Pallas 4", "Pallas 5");
     public Text txtVarausVaroitus;
+    public ComboBox cboxAsiakkaat;
 
     //MÖKINVARAUS TABLE
     public TableView <Varaus> tvTableView;
@@ -66,7 +47,7 @@ public class Controller {
     public TableColumn<Varaus, Integer> tcVarausID;
 
     // MÖKKIENHALLINTA
-    //Mökkienhallinta table
+    //MÖKKIENHALLINTA table
     public TableColumn <Mokki, String> CmokkienhallintaNimi;
     public TableColumn <Mokki, String> CmokkienhallintaOsoite;
     public TableColumn <Mokki, String>CmokkienhallintaKuvaus;
@@ -76,9 +57,9 @@ public class Controller {
     public TableColumn <Mokki, Double> CmokkienhallintaHinta;
     public TableColumn <Mokki, Double> CmokkienhallintaAlv;
     public TableColumn <Mokki, Integer>CmokkienhallintaID;
-
     public TableView tbvMokkienhallintaMokit;
 
+    //MÖKKIENHALLINTA alustukset
     public TextField txtfMokkienhallintaMokkinimi;
     public TextField txtfMokkienhallintaKatuosoite;
     public TextField txtfMokkienhallintaKuvaus;
@@ -112,12 +93,8 @@ public class Controller {
     public TextField tfPalveluHinta;
     public TextField tfPalveluAlv;
     public TextField tfPalveluKuvaus;
-
-    //public ObservableList<Integer> toimintaaluelista = FXCollections.observableArrayList(1, 2, 3);
-    //public ObservableList<String>palvelulista = FXCollections.observableArrayList();
-    public TextField tfToimintaalue_id;
     public TableView tbvPalvelu;
-
+    public ObservableList<String> listaPalvelutoimintaalue= FXCollections.observableArrayList("1","2","3","4","5","6","7","8");
     public TableColumn tbcPalveluHinta;
     public TableColumn tbcPalveluAlv;
     public TableColumn tbcPalveluKuvaus;
@@ -125,9 +102,7 @@ public class Controller {
     public TableColumn tbcPalvelupalvelu_id;
     public TableColumn tbcPalveluNimi;
 
-
-    public ObservableList<String> listaPalvelutoimintaalue= FXCollections.observableArrayList("1","2","3","4","5","6","7","8");
-
+    // Listat SQL tiedoille toiminta-aluehallinnan mökin valinta comboboxiin
     final ObservableList options = FXCollections.observableArrayList();
     final ObservableList listamokkicbox = FXCollections.observableArrayList();
     final ObservableList listaruka = FXCollections.observableArrayList();
@@ -138,6 +113,7 @@ public class Controller {
     final ObservableList listavuokatti = FXCollections.observableArrayList();
     final ObservableList listapallas = FXCollections.observableArrayList();
 
+    // Listat SQL tiedoille toiminta-aluehallinnan palvelum valinta comboboxiin
     final ObservableList listaPalveluTahko = FXCollections.observableArrayList();
     final ObservableList listaPalveluRuka = FXCollections.observableArrayList();
     final ObservableList listaPalveluYllas = FXCollections.observableArrayList();
@@ -146,16 +122,6 @@ public class Controller {
     final ObservableList listaPalveluKoli = FXCollections.observableArrayList();
     final ObservableList listaPalveluVuokatti = FXCollections.observableArrayList();
     final ObservableList listaPalveluPallas = FXCollections.observableArrayList();
-
-    final ObservableList listavarauspalvelu = FXCollections.observableArrayList();
-
-
-
-    // Näyttää toiminta-alueet Palveluiden Hallinta - välilehdellä
-    /*public void NaytaToimintaalue3() {
-        cboxToimintaalue3.setItems(toimintaaluelista);
-    }*/
-
 
     // Lisätään toiminta-alueet comboboxiin
     public void NaytaToimintaalue() {
@@ -167,53 +133,19 @@ public class Controller {
         cboxHenkilomaara.setItems(henkilomaaralista);
     }
 
-
-    public void mokkinimi(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void osoite(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void postinro(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void hlomaara(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void kuvaus(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void hinta(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void alv(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void varustelu(InputMethodEvent inputMethodEvent) {
-    }
-
-    public void tallennaPalvelu(ActionEvent actionEvent) {
-    }
-
-    public void tallennaAsiakas(ActionEvent actionEvent) {
-    }
-
-
+    // Alustaa ohjelman toiminnallisuuksia käynnistyksessä
     public void initialize() throws SQLException {
         NaytaToimintaalue();
-        //NaytaToimintaalue2();
-        //NaytaToimintaalue3();
         NaytaHenkilomaara();
-        //NaytaPalvelut();
         NaytaMokki();
         Varoitus();
         naytaLaskuTiedot();
         CboxPalveluToimintaalue();
-        //VarausAsiakas();
         NaytaPalvelu();
 
         SQLYhteys yhteys = new SQLYhteys();
         Connection connectDB = yhteys.getYhteys();
+        //Asiakkaiden tuominen tietokannasta asiakas comboboxiin mökin varaus näkymässä
         try{
             String query = "select etunimi from asiakas";
             PreparedStatement lause = connectDB.prepareStatement(query);
@@ -225,38 +157,14 @@ public class Controller {
             lause.close();
             tulokset.close();
 
-
-
         }catch (SQLException ex){
-
         }
-
-       /* try{
-            String query = "select nimi from palvelu";
-            PreparedStatement lause = connectDB.prepareStatement(query);
-            ResultSet tulokset = lause.executeQuery();
-            while(tulokset.next()){
-                listavarauspalvelu.add(tulokset.getString("nimi"));
-            }
-            cboxVarausPalvelut.setItems(listavarauspalvelu);
-            lause.close();
-            tulokset.close();
-            removeDuplicatesPalvelu();
-
-
-        }catch (SQLException ex){
-
-        }*/
-
-
-
 
         Lasku lasku5 = new Lasku();
         if (lasku5.listaaLaskut() != null) {
             lataaLaskuTaulu();
         }
 
-        //toimii nyt
         Asiakas asiakas = new Asiakas();
         if (asiakas.listaaAsiakkaat() != null) {
             lataaAsiakasTaulu();
@@ -278,128 +186,11 @@ public class Controller {
         }
     }
 
-    public void lataaLaskuTaulu() {
-        //toimii
-        tvLasku.getItems().clear();
-        Lasku laskuhallinta = new Lasku();
-        List<Lasku> laskulista = laskuhallinta.listaaLaskut();
-        ObservableList<Lasku> taulunlaskut = FXCollections.observableArrayList(laskulista);
-
-        tcLaskuID.setCellValueFactory(
-                new PropertyValueFactory<Lasku, Integer>("lasku_id"));
-        tcToimintaalue_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("toimintaalue"));
-        tcTulopaiva_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("tulopaiva"));
-        tcLahtopaiva_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("lahtopaiva"));
-        tcHlomaara_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
-        tcAsiakas_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("asiakas"));
-        tcPalvelut_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("palvelut"));
-        tcMokki_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("mokki"));
-        tcSposti_Lasku.setCellValueFactory(
-                new PropertyValueFactory<Lasku, String>("sposti"));
-        tvLasku.setItems(taulunlaskut);
-    }
-
-    public void PaivitaLasku() {
-
-        try {
-
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            String laskuquery1 = "UPDATE lasku SET toiminta_alue = ?, tulopaiva = ?, lahtopaiva = ?, henkilomaara = ?, asiakas = ?, palvelut = ?, mokki = ?, sposti = ? WHERE varaus_id = ?";
-
-            PreparedStatement preparedStatementl = connectDB.prepareStatement(laskuquery1);
-        } catch (Exception e) {
-        }
-        return;
-    }
-
-    ObservableList<Lasku> laskut = FXCollections.observableArrayList();
-
-    public void LisaaLasku(){
-        //muuttujat teksikenttien sisällöstä
-        String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
-        String tulopaiva = dptulopaiva.getValue().toString();
-        String lahtopaiva = dplahtopaiva.getValue().toString();
-        Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
-        String asiakas = cboxAsiakkaat.getValue().toString();
-        Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
-        Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
-        String sposti = tfSposti.getCharacters().toString();
-
-        //lisätään taulun sarakkeisiin
-        tcToimintaalue_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimintaalue"));
-        tcTulopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tulopaiva"));
-        tcLahtopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahtopaiva"));
-        tcHlomaara_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
-        tcAsiakas_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("asiakas"));
-        tcMokki_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("mokki"));
-        tcPalvelut_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("palvelut"));
-        tcSposti_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("sposti"));
-
-
-
-        // lisätään Varaus olio, joka lisäätän mökkilistalle
-        laskut.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
-
-        //lisätään mökkilista taululle
-
-        tvLasku.setItems(laskut);
-
-        //
-
-        //Lisätään tiedot SQL tietokantaan
-        try {
-
-            //Sql yhteyden määrittäminen
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            //Sql lause asiakkaiden luomiselle
-            String laskuquery = "insert into lasku (toiminta_alue, tulopaiva, lahtopaiva, henkilomaara, asiakas, palvelut, mokki, sposti )values(?,?,?,?,?,?,?,?)";
-
-            //Preparedstatement määrittää sql lauseen
-            PreparedStatement sqllasku = connectDB.prepareStatement(laskuquery);
-
-            //Noudetaan tiedot textfieldistä
-            sqllasku.setString(1, cboxToimintaalue.getSelectionModel().getSelectedItem().toString());
-            sqllasku.setString(2, dptulopaiva.getValue().toString());
-            sqllasku.setString(3, dplahtopaiva.getValue().toString());
-            sqllasku.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
-            sqllasku.setString(5, cboxAsiakkaat.getValue().toString());
-            sqllasku.setString(6, cboxVarausPalvelut.getSelectionModel().getSelectedItem().toString());
-            sqllasku.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
-            sqllasku.setString(8, tfSposti.getCharacters().toString());
-
-            //Suoritetaan SQL komennot
-            sqllasku.executeUpdate();
-
-            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
-            PaivitaLasku();
-
-        } catch(Exception e) {
-            System.err.println("vahinko");
-            System.err.println(e.getMessage());
-
-        }
-
-        Lasku lasku1 = new Lasku();
-        if (lasku1.listaaLaskut() != null) {
-            lataaLaskuTaulu();
-        }
-    }
-
-
+    /**
+     * MÖKINVARAUSNÄKYMÄ
+     */
 
     public void lataaVarausTaulu() {
-        //toimii
         tvTableView.getItems().clear();
         Varaus varaushallinta = new Varaus();
         List<Varaus> varauslista = varaushallinta.listaaVaraukset();
@@ -424,18 +215,6 @@ public class Controller {
         tcSposti.setCellValueFactory(
                 new PropertyValueFactory<Varaus, String>("sposti"));
         tvTableView.setItems(taulunvaraukset);
-    }
-
-    /**
-     * MÖKINVARAUSNÄKYMÄ
-     */
-    public void btPoistaLasku(ActionEvent actionEvent) throws SQLException {
-        Lasku poistalasku = new Lasku();
-        Lasku valittulasku = (Lasku) tvLasku.getSelectionModel().getSelectedItem();
-        Lasku lasku4 = new Lasku();
-        lasku4.setLasku_id(valittulasku.getLasku_id());
-        poistalasku.PoistaLasku(lasku4.getLasku_id());
-        lataaLaskuTaulu();
     }
 
     public void btVarausPoista(ActionEvent actionEvent) throws SQLException {
@@ -487,15 +266,11 @@ public class Controller {
         tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
         tcSposti.setCellValueFactory(new PropertyValueFactory<Varaus, String>("sposti"));
 
-
-
         // lisätään Varaus olio, joka lisäätän mökkilistalle
         varaukset.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
 
         //lisätään mökkilista taululle
-
         tvTableView.setItems(varaukset);
-
 
         //Lisätään tiedot SQL tietokantaan
         try {
@@ -538,6 +313,395 @@ public class Controller {
         }
     }
 
+    // Laittaa Varausnäytön varoitustekstin näkymättömäksi
+    public void Varoitus() {
+        txtVarausVaroitus.setVisible(false);
+    }
+
+    //lista johon menee kaikki Varaus-oliot
+    ObservableList<Varaus> tilausLista = FXCollections.observableArrayList();
+    //lista johon menee kaikki laskutustiedot
+    ObservableList<Lasku> LaskuLista = FXCollections.observableArrayList();
+
+    // Lisää varauksen tiedot varausnäytön tauluun
+    public void Btlisaa(){
+
+        // näyttää virhetekstin jos käyttäjä unohtaa täyttää kaikki pakolliset kentät
+        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || cboxAsiakkaat.getValue().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null || tfSposti.getCharacters().toString() == "") {
+            txtVarausVaroitus.setVisible(true);
+        } else {
+            txtVarausVaroitus.setVisible(false);
+            //tehdään muuttujat näytöllä olevista objekteista
+            String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
+            String tulopaiva = dptulopaiva.getValue().toString();
+            String lahtopaiva = dplahtopaiva.getValue().toString();
+            Object hlomaara = cboxHenkilomaara.getSelectionModel().getSelectedItem();
+            String asiakas = cboxAsiakkaat.getValue().toString();
+            Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
+            Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
+            String sposti = tfSposti.getCharacters().toString();
+
+            tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
+            tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
+            tcLahtopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("lahtopaiva"));
+            tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, String>("henkilomaara"));
+            tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
+            tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
+            tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
+            tcSposti.setCellValueFactory(new PropertyValueFactory<Varaus, String>("sposti"));
+
+            tcToimintaalue_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimintaalue"));
+            tcTulopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tulopaiva"));
+            tcLahtopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahtopaiva"));
+            tcHlomaara_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
+            tcAsiakas_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("asiakas"));
+            tcPalvelut_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("palvelut"));
+            tcMokki_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("mokki"));
+            tcSposti_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("sposti"));
+
+            // Lisätään tilausListan Itemit tableViewiin
+            tvTableView.setItems(tilausLista);
+            //Lisätään Laskulistan itemit Laskutusnäytön tableviewiin
+            tvLasku.setItems(LaskuLista);
+
+            // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
+            tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+            // tehdään muuttujien perusteella Lasku-olio, jotta saadaan varaustiedot myös laskutusnäyttöön
+            LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
+            LisaaVaraus();
+            LisaaLasku();
+
+        }
+
+    }
+
+    /**
+     * MÖKKIENHALLINTANÄKYMÄ
+     */
+
+    //Lisätään lista, johon lisätään kaikki mökki-oliot
+    ObservableList<Mokki> mokit = FXCollections.observableArrayList();
+
+    // vaaditaan yhteyden muodostamiseen
+    public void PaivitaMokki() {
+
+        try {
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String query1 = "UPDATE mokki SET toimintaalue_id=?, postinro=?,mokkinimi=?,katuosoite=?, kuvaus =?,henkilomaara=?, varustelu=?, hinta=?, alv=? WHERE mokki_id = ?";
+
+            PreparedStatement pst1 = connectDB.prepareStatement(query1);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+    // Lisää mökkien tiedot mökkinäytön tauluun
+    public void LisaaMokki() {
+
+        //Lisätään tiedot SQL tietokantaan
+        try {
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause asiakkaiden luomiselle
+            String query1 = "insert into mokki (mokki_id, toimintaalue_id, postinro,mokkinimi,katuosoite, kuvaus ,henkilomaara, varustelu, hinta, alv)values(?,?,?,?,?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqlmokki = connectDB.prepareStatement(query1);
+
+            //Noudetaan tiedot textfieldistä
+            sqlmokki.setInt(1,Integer.parseInt(txtfMokkienhallintaMokkiID.getText()));
+            sqlmokki.setInt(2,Integer.parseInt(txtfMokkienhallintaTAid.getText()));
+            sqlmokki.setString(3,txtfMokkienhallintaPostinumero.getText());
+            sqlmokki.setString(4,txtfMokkienhallintaMokkinimi.getText());
+            sqlmokki.setString(5,txtfMokkienhallintaKatuosoite.getText());
+            sqlmokki.setString(6,txtfMokkienhallintaKuvaus.getText());
+            sqlmokki.setInt(7,Integer.parseInt(txtfMokkienhallintaHlomaara.getText()));
+            sqlmokki.setString(8,txtfMokkienhallintaVarustelu.getText());
+            sqlmokki.setDouble(9,Double.parseDouble(txtfMokkienhallintaHinta.getText()));
+            sqlmokki.setDouble(10,Double.parseDouble(txtfMokkienhallintaAlv.getText()));
+
+            //Suoritetaan SQL komennot
+            sqlmokki.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaMokki();
+
+        } catch(Exception e) {
+            System.err.println("vahinko");
+            System.err.println(e.getMessage());
+
+        }
+
+        Mokki mokki3 = new Mokki();
+        if (mokki3.listaaMokit() != null) {
+            lataaMokkiTaulu();
+        }
+    }
+
+    public void lataaMokkiTaulu() {
+        //toimii
+        tbvMokkienhallintaMokit.getItems().clear();
+        Mokki mokkienhallinta = new Mokki();
+        List<Mokki>  mokitlista = mokkienhallinta.listaaMokit();
+        ObservableList<Mokki> taulunmokit = FXCollections.observableArrayList(mokitlista);
+
+        CmokkienhallintaNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
+        CmokkienhallintaOsoite.setCellValueFactory(new PropertyValueFactory<Mokki, String>("katuosoite"));
+        CmokkienhallintaKuvaus.setCellValueFactory(new PropertyValueFactory<Mokki, String>("kuvaus"));
+        CmokkienhallintaHlomaara.setCellValueFactory(new PropertyValueFactory<Mokki, String>("henkilomaara"));
+        CmokkienhallintaVarustelu.setCellValueFactory(new PropertyValueFactory<Mokki, String>("varustelu"));
+        CmokkienhallintaPostinro.setCellValueFactory(new PropertyValueFactory<Mokki, String>("postinro"));
+        CmokkienhallintaHinta.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("hinta"));
+        CmokkienhallintaAlv.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("alv"));
+        CmokkienhallintaID.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokkiID"));
+        tbvMokkienhallintaMokit.setItems(taulunmokit);
+    }
+    public void BtMokkiPoista() throws SQLException {
+
+        Mokki poistamokki = new Mokki();
+        Mokki valittumokki = (Mokki) tbvMokkienhallintaMokit.getSelectionModel().getSelectedItem();
+        Mokki mokki3 = new Mokki();
+        mokki3.setMokkiID(valittumokki.getMokkiID());
+        poistamokki.PoistaMokki(mokki3.getMokkiID());
+        tyhjennaTekstiKentat_mokki();
+        lataaMokkiTaulu();
+    }
+    public void tyhjennaTekstiKentat_mokki() {
+
+        //toimii
+        txtfMokkienhallintaMokkiID.setText("");
+        txtfMokkienhallintaTAid.setText("");
+        txtfMokkienhallintaPostinumero.setText("");
+        txtfMokkienhallintaMokkinimi.setText("");
+        txtfMokkienhallintaKatuosoite.setText("");
+        txtfMokkienhallintaKuvaus.setText("");
+        txtfMokkienhallintaHlomaara.setText("");
+        txtfMokkienhallintaVarustelu.setText("");
+        txtfMokkienhallintaHinta.setText("");
+        txtfMokkienhallintaAlv.setText("");
+    }
+
+
+    /**
+     * ASIAKASHALLINTA
+     */
+
+    // Muodostaa SQL-yhteyden ja tekee SQL-komennon
+    public void PaivitaAsiakas() {
+
+        try {
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String query = "UPDATE asiakas SET postinro = ?, etunimi= ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?";
+
+            PreparedStatement pst = connectDB.prepareStatement(query);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+    ObservableList<Asiakas> asiakasobslist = FXCollections.observableArrayList();
+
+    //Asiakkaiden lisääminen sql asiakas tauluun
+    public void BtTallennaAsiakas() {
+
+        try {
+
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            //Sql lause asiakkaiden luomiselle
+            String query = "insert into asiakas (postinro,etunimi,sukunimi,lahiosoite,email,puhelinnro)values(?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqlasiakas = connectDB.prepareStatement(query);
+
+            //Noudetaan tiedot textfieldistä
+            sqlasiakas.setString(1,tfPostinro.getText());
+            sqlasiakas.setString(2,tfEtunimi.getText());
+            sqlasiakas.setString(3,tfSukunimi.getText());
+            sqlasiakas.setString(4,tfLahiosoite.getText());
+            sqlasiakas.setString(5,tfEmail.getText());
+            sqlasiakas.setString(6,tfPuhelinnro.getText());
+
+            //Suoritetaan SQL komennot
+            sqlasiakas.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaAsiakas();
+
+            //Päivitetään tableview
+            Asiakas asiakas = new Asiakas();
+            if (asiakas.listaaAsiakkaat() != null) {
+                lataaAsiakasTaulu();
+            }
+
+            //Päivitetään Asiakas ID combobox
+            String query1 = "select etunimi from asiakas";
+            PreparedStatement lause = connectDB.prepareStatement(query1);
+            ResultSet tulokset = lause.executeQuery();
+            while(tulokset.next()){
+                options.add(tulokset.getString("etunimi"));
+
+            }
+            cboxAsiakkaat.setItems(options);
+            lause.close();
+            tulokset.close();
+            removeDuplicates();
+
+        } catch(Exception e) {
+        }
+    }
+
+
+
+    public void BtAsiakasPoista() throws SQLException {
+
+        Asiakas poistaasiakas = new Asiakas();
+        Asiakas valittuasiakas = (Asiakas) tbvAsiakas.getSelectionModel().getSelectedItem();
+        Asiakas asiakas = new Asiakas();
+        asiakas.setAsiakas_id(valittuasiakas.getAsiakas_id());
+        poistaasiakas.PoistaAsiakas(asiakas.getAsiakas_id());
+        tyhjennaTekstiKentat_asiakas();
+        lataaAsiakasTaulu();
+    }
+
+
+    public void tyhjennaTekstiKentat_asiakas() {
+
+        //toimii
+        tfEtunimi.setText("");
+        tfSukunimi.setText("");
+        tfPuhelinnro.setText("");
+        tfEmail.setText("");
+        tfLahiosoite.setText("");
+        tfPostinro.setText("");
+    }
+
+
+
+
+    public void lataaAsiakasTaulu() {
+        //toimii
+        tbvAsiakas.getItems().clear();
+        Asiakas asiakashallinta = new Asiakas();
+        List<Asiakas> asiakaslista = asiakashallinta.listaaAsiakkaat();
+        ObservableList<Asiakas> taulunasiakkaat = FXCollections.observableArrayList(asiakaslista);
+
+        tbcAsiakas_id.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
+        tbcEtunimi.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("etunimi"));
+        tbcSukunimi.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("sukunimi"));
+        tbcPuhelinnro.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("puhelinnro"));
+        tbcEmail.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("email"));
+        tbcLahiosoite.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("lahiosoite"));
+        tbcPostinro.setCellValueFactory(
+                new PropertyValueFactory<Asiakas, String>("postinro"));
+        tbvAsiakas.setItems(taulunasiakkaat);
+    }
+
+    /**
+     * Palveluhallinta
+     */
+
+
+    public void CboxPalveluToimintaalue(){
+        cboxPalvelutoimintaalue.setItems(listaPalvelutoimintaalue);
+    }
+
+    public void PaivitaPalvelu() {
+
+        try {
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+            String query = "UPDATE palvelu SET toimintaalue_id = ?, nimi = ?, kuvaus = ?, hinta = ?, alv = ? WHERE palvelu_id = ?";
+
+            PreparedStatement pst = connectDB.prepareStatement(query);
+        } catch (Exception e) {
+        }
+        return;
+    }
+
+    //palveluiden lisääminen tauluun
+    public void btPalveluLisaa() {
+
+        try {
+            //SQL yhteys määritetään
+
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
+
+            String query = "INSERT INTO palvelu (toimintaalue_id, nimi, kuvaus, hinta, alv)values(?,?,?,?,?)";
+
+            PreparedStatement sqlpalvelu = connectDB.prepareStatement(query);
+
+            sqlpalvelu.setInt(1, Integer.parseInt(String.valueOf(cboxPalvelutoimintaalue.getValue())));
+            sqlpalvelu.setString(2, tfPalveluNimi.getText());
+            sqlpalvelu.setString(3, tfPalveluKuvaus.getText());
+            sqlpalvelu.setDouble(4, Double.parseDouble(tfPalveluHinta.getText()));
+            sqlpalvelu.setDouble(5, Double.parseDouble(tfPalveluAlv.getText()));
+
+            sqlpalvelu.executeUpdate();
+
+            PaivitaPalvelu();
+
+            Palvelut palvelu = new Palvelut();
+            if (palvelu.listaaPalvelut() != null) {
+                lataaPalvelutaulu();
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void lataaPalvelutaulu() {
+        tbvPalvelu.getItems().clear();
+        Palvelut palveluhallinta = new Palvelut();
+        List<Palvelut> palvelulista = palveluhallinta.listaaPalvelut();
+        ObservableList<Palvelut> taulunpalvelut = FXCollections.observableArrayList(palvelulista);
+
+        tbcPalvelupalvelu_id.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Integer>("palvelu_id"));
+        tbcPalveluToimintaalue_id.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Integer>("toimintaalue_id"));
+        tbcPalveluNimi.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, String>("nimi"));
+        tbcPalveluKuvaus.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, String>("kuvaus"));
+        tbcPalveluHinta.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Double>("hinta"));
+        tbcPalveluAlv.setCellValueFactory(
+                new PropertyValueFactory<Palvelut, Double>("alv"));
+        tbvPalvelu.setItems(taulunpalvelut);
+    }
+
+    public void BtPalveluPoista() throws SQLException {
+
+        Palvelut poistapalvelu = new Palvelut();
+        Palvelut valittupalvelu = (Palvelut) tbvPalvelu.getSelectionModel().getSelectedItem();
+        Palvelut palvelu = new Palvelut();
+        palvelu.setPalvelu_id(valittupalvelu.getPalvelu_id());
+        poistapalvelu.poistaPalvelu(palvelu.getPalvelu_id());
+        lataaPalvelutaulu();
+    }
+
+    /**
+     * TOIMINTA-ALUEIDEN HALLINTA
+     */
 
     // Antaa valittavaksi mökit siltä toimialueelta, joka näytöllä on valittuna
     public void NaytaMokki() {
@@ -684,289 +848,161 @@ public class Controller {
         });
     }
 
-    // Laittaa Varausnäytön varoitustekstin näkymättömäksi
-    public void Varoitus() {
-        txtVarausVaroitus.setVisible(false);
-    }
+    // Antaa valittavaksi palvelut siltä toimialueelta, joka näytöllä on valittuna
+    public void NaytaPalvelu() {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+        cboxToimintaalue.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object vanhaArvo, Object uusiArvo) {
+                if (uusiArvo.toString() == "Tahko") {
 
-    //lista johon menee kaikki Varaus-oliot
-    ObservableList<Varaus> tilausLista = FXCollections.observableArrayList();
-    //lista johon menee kaikki laskutustiedot
-    ObservableList<Lasku> LaskuLista = FXCollections.observableArrayList();
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 1;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluTahko.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluTahko);
+                        lause.close();
+                        tulokset.close();
+                        removeDuplicatesPalvelu();
 
-    // Lisää varauksen tiedot varausnäytön tauluun
-    public void Btlisaa(){
 
+                    }catch (SQLException ex){
 
-        // näyttää virhetekstin jos käyttäjä unohtaa täyttää kaikki pakolliset kentät
-        if (cboxToimintaalue.getSelectionModel().getSelectedItem() == null || cboxHenkilomaara.getSelectionModel().getSelectedItem() == null || cboxAsiakkaat.getValue().toString() == "" || cboxMokki.getSelectionModel().getSelectedItem() == null || dptulopaiva.getValue() == null || dplahtopaiva.getValue() == null || tfSposti.getCharacters().toString() == "") {
-            txtVarausVaroitus.setVisible(true);
-        } else {
-            txtVarausVaroitus.setVisible(false);
-            //tehdään muuttujat näytöllä olevista objekteista
-            String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
-            String tulopaiva = dptulopaiva.getValue().toString();
-            String lahtopaiva = dplahtopaiva.getValue().toString();
-            Object hlomaara = cboxHenkilomaara.getSelectionModel().getSelectedItem();
-            String asiakas = cboxAsiakkaat.getValue().toString();
-            Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
-            Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
-            String sposti = tfSposti.getCharacters().toString();
+                    }
 
-            tcToimintaalue.setCellValueFactory(new PropertyValueFactory<Varaus, String>("toimintaalue"));
-            tcTulopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("tulopaiva"));
-            tcLahtopaiva.setCellValueFactory(new PropertyValueFactory<Varaus, String>("lahtopaiva"));
-            tcHenkilomaara.setCellValueFactory(new PropertyValueFactory<Varaus, String>("henkilomaara"));
-            tcAsiakas.setCellValueFactory(new PropertyValueFactory<Varaus, String>("asiakas"));
-            tcPalvelut.setCellValueFactory(new PropertyValueFactory<Varaus, String>("palvelut"));
-            tcMokki.setCellValueFactory(new PropertyValueFactory<Varaus, String>("mokki"));
-            tcSposti.setCellValueFactory(new PropertyValueFactory<Varaus, String>("sposti"));
+                } else if (uusiArvo.toString() == "Ruka") {
 
-            tcToimintaalue_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimintaalue"));
-            tcTulopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tulopaiva"));
-            tcLahtopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahtopaiva"));
-            tcHlomaara_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
-            tcAsiakas_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("asiakas"));
-            tcPalvelut_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("palvelut"));
-            tcMokki_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("mokki"));
-            tcSposti_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("sposti"));
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 2;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluRuka.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluRuka);
+                        lause.close();
+                        tulokset.close();
 
 
 
+                    }catch (SQLException ex){
 
-            // Lisätään tilausListan Itemit tableViewiin
-            tvTableView.setItems(tilausLista);
-            //Lisätään Laskulistan itemit Laskutusnäytön tableviewiin
-            tvLasku.setItems(LaskuLista);
+                    }
 
-            // tehdään muuttujien perusteella Varaus-olio, joka lisätään tilausListaan
-            tilausLista.add(new Varaus(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
-            // tehdään muuttujien perusteella Lasku-olio, jotta saadaan varaustiedot myös laskutusnäyttöön
-            LaskuLista.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
-            LisaaVaraus();
-            LisaaLasku();
-
-        }
-
-    }
-
-    /**
-     * MÖKKIENHALLINTANÄKYMÄ
-     */
-
-    /**Lisätään mökille toiminta-alue ID
-
-     public int HaeToimintaAlueid() {
-     int toimintaAlueId;
-     String toimintaAlueNimi = cboxToimintaalue2.getValue().toString();
-
-     if (toimintaAlueNimi.equals("TAHKO"))
-     toimintaAlueId = 1;
-     else if (toimintaAlueNimi.equals("RUKA"))
-     toimintaAlueId = 2;
-     else if (toimintaAlueNimi.equals("YLLÄS"))
-     toimintaAlueId = 3;
-     else if (toimintaAlueNimi.equals("HIMOS"))
-     toimintaAlueId = 4;
-     else if (toimintaAlueNimi.equals("LEVI"))
-     toimintaAlueId = 5;
-     else if (toimintaAlueNimi.equals("KOLI"))
-     toimintaAlueId = 6;
-     else if (toimintaAlueNimi.equals("VUOKATTI"))
-     toimintaAlueId = 7;
-     else if (toimintaAlueNimi.equals("PALLAS"))
-     toimintaAlueId = 8;
-     else
-     toimintaAlueId = 0;
-
-     return toimintaAlueId;
-     }
-     */
-    //Lisätään lista, johon lisätään kaikki mökki-oliot
-    ObservableList<Mokki> mokit = FXCollections.observableArrayList();
-
-    // vaaditaan yhteyden muodostamiseen
-    public void PaivitaMokki() {
-
-        try {
-
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            String query1 = "UPDATE mokki SET toimintaalue_id=?, postinro=?,mokkinimi=?,katuosoite=?, kuvaus =?,henkilomaara=?, varustelu=?, hinta=?, alv=? WHERE mokki_id = ?";
-
-            PreparedStatement pst1 = connectDB.prepareStatement(query1);
-        } catch (Exception e) {
-        }
-        return;
-    }
-
-    // Lisää mökkien tiedot mökkinäytön tauluun
-    public void LisaaMokki() {
+                } else if (uusiArvo.toString() == "Ylläs") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 3;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluYllas.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluYllas);
+                        lause.close();
+                        tulokset.close();
 
 
 
-        //
+                    }catch (SQLException ex){
 
-        //Lisätään tiedot SQL tietokantaan
-        try {
+                    }
+                } else if (uusiArvo.toString() == "Himos") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 4;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluHimos.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluHimos);
+                        lause.close();
+                        tulokset.close();
 
-            //Sql yhteyden määrittäminen
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
 
-            //Sql lause asiakkaiden luomiselle
-            String query1 = "insert into mokki (mokki_id, toimintaalue_id, postinro,mokkinimi,katuosoite, kuvaus ,henkilomaara, varustelu, hinta, alv)values(?,?,?,?,?,?,?,?,?,?)";
 
-            //Preparedstatement määrittää sql lauseen
-            PreparedStatement sqlmokki = connectDB.prepareStatement(query1);
+                    }catch (SQLException ex){
 
-            //Noudetaan tiedot textfieldistä
-            sqlmokki.setInt(1,Integer.parseInt(txtfMokkienhallintaMokkiID.getText()));
-            sqlmokki.setInt(2,Integer.parseInt(txtfMokkienhallintaTAid.getText()));
-            sqlmokki.setString(3,txtfMokkienhallintaPostinumero.getText());
-            sqlmokki.setString(4,txtfMokkienhallintaMokkinimi.getText());
-            sqlmokki.setString(5,txtfMokkienhallintaKatuosoite.getText());
-            sqlmokki.setString(6,txtfMokkienhallintaKuvaus.getText());
-            sqlmokki.setInt(7,Integer.parseInt(txtfMokkienhallintaHlomaara.getText()));
-            sqlmokki.setString(8,txtfMokkienhallintaVarustelu.getText());
-            sqlmokki.setDouble(9,Double.parseDouble(txtfMokkienhallintaHinta.getText()));
-            sqlmokki.setDouble(10,Double.parseDouble(txtfMokkienhallintaAlv.getText()));
+                    }
+                } else if (uusiArvo.toString() == "Levi") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 5;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluLevi.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluLevi);
+                        lause.close();
+                        tulokset.close();
 
-            //Suoritetaan SQL komennot
-            sqlmokki.executeUpdate();
 
-            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
-            PaivitaMokki();
 
-        } catch(Exception e) {
-            System.err.println("vahinko");
-            System.err.println(e.getMessage());
+                    }catch (SQLException ex){
 
-        }
+                    }
+                } else if (uusiArvo.toString() == "Koli") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 6;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluKoli.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluKoli);
+                        lause.close();
+                        tulokset.close();
 
-        Mokki mokki3 = new Mokki();
-        if (mokki3.listaaMokit() != null) {
-            lataaMokkiTaulu();
-        }
-    }
 
-    public void lataaMokkiTaulu() {
-        //toimii
-        tbvMokkienhallintaMokit.getItems().clear();
-        Mokki mokkienhallinta = new Mokki();
-        List<Mokki>  mokitlista = mokkienhallinta.listaaMokit();
-        ObservableList<Mokki> taulunmokit = FXCollections.observableArrayList(mokitlista);
 
-        CmokkienhallintaNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
-        CmokkienhallintaOsoite.setCellValueFactory(new PropertyValueFactory<Mokki, String>("katuosoite"));
-        CmokkienhallintaKuvaus.setCellValueFactory(new PropertyValueFactory<Mokki, String>("kuvaus"));
-        CmokkienhallintaHlomaara.setCellValueFactory(new PropertyValueFactory<Mokki, String>("henkilomaara"));
-        CmokkienhallintaVarustelu.setCellValueFactory(new PropertyValueFactory<Mokki, String>("varustelu"));
-        CmokkienhallintaPostinro.setCellValueFactory(new PropertyValueFactory<Mokki, String>("postinro"));
-        CmokkienhallintaHinta.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("hinta"));
-        CmokkienhallintaAlv.setCellValueFactory(new PropertyValueFactory<Mokki, Double>("alv"));
-        CmokkienhallintaID.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokkiID"));
-        tbvMokkienhallintaMokit.setItems(taulunmokit);
-    }
-    public void BtMokkiPoista() throws SQLException {
+                    }catch (SQLException ex){
 
-        Mokki poistamokki = new Mokki();
-        Mokki valittumokki = (Mokki) tbvMokkienhallintaMokit.getSelectionModel().getSelectedItem();
-        Mokki mokki3 = new Mokki();
-        mokki3.setMokkiID(valittumokki.getMokkiID());
-        poistamokki.PoistaMokki(mokki3.getMokkiID());
-        tyhjennaTekstiKentat_mokki();
-        lataaMokkiTaulu();
-    }
-    public void tyhjennaTekstiKentat_mokki() {
+                    }
+                } else if (uusiArvo.toString() == "Vuokatti") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 7;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluVuokatti.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluVuokatti);
+                        lause.close();
+                        tulokset.close();
 
-        //toimii
-        txtfMokkienhallintaMokkiID.setText("");
-        txtfMokkienhallintaTAid.setText("");
-        txtfMokkienhallintaPostinumero.setText("");
-        txtfMokkienhallintaMokkinimi.setText("");
-        txtfMokkienhallintaKatuosoite.setText("");
-        txtfMokkienhallintaKuvaus.setText("");
-        txtfMokkienhallintaHlomaara.setText("");
-        txtfMokkienhallintaVarustelu.setText("");
-        txtfMokkienhallintaHinta.setText("");
-        txtfMokkienhallintaAlv.setText("");
-    }
 
-    // ASIAKASHALLINTA SQL
-    // Asiakastaulu
 
-    // Tämä lähinnä testin vuoksi -> vaaditaan kuitenkin yhteyden muodostamiseen
-    public void PaivitaAsiakas() {
+                    }catch (SQLException ex){
 
-        try {
+                    }
+                } else if (uusiArvo.toString() == "Pallas") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 8;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluPallas.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluPallas);
+                        lause.close();
+                        tulokset.close();
 
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
 
-            String query = "UPDATE asiakas SET postinro = ?, etunimi= ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?";
 
-            PreparedStatement pst = connectDB.prepareStatement(query);
-        } catch (Exception e) {
-        }
-        return;
-    }
+                    }catch (SQLException ex){
 
-    ObservableList<Asiakas> asiakasobslist = FXCollections.observableArrayList();
-
-    //Asiakkaiden lisääminen sql asiakas tauluun
-    public void BtTallennaAsiakas() {
-
-        try {
-
-            //Sql yhteyden määrittäminen
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            //Sql lause asiakkaiden luomiselle
-            String query = "insert into asiakas (postinro,etunimi,sukunimi,lahiosoite,email,puhelinnro)values(?,?,?,?,?,?)";
-
-            //Preparedstatement määrittää sql lauseen
-            PreparedStatement sqlasiakas = connectDB.prepareStatement(query);
-
-            //Noudetaan tiedot textfieldistä
-            sqlasiakas.setString(1,tfPostinro.getText());
-            sqlasiakas.setString(2,tfEtunimi.getText());
-            sqlasiakas.setString(3,tfSukunimi.getText());
-            sqlasiakas.setString(4,tfLahiosoite.getText());
-            sqlasiakas.setString(5,tfEmail.getText());
-            sqlasiakas.setString(6,tfPuhelinnro.getText());
-
-            //Suoritetaan SQL komennot
-            sqlasiakas.executeUpdate();
-
-            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
-            PaivitaAsiakas();
-
-            //Päivitetään tableview
-            Asiakas asiakas = new Asiakas();
-            if (asiakas.listaaAsiakkaat() != null) {
-                lataaAsiakasTaulu();
+                    }
+                }
+                removeDuplicatesPalvelu();
             }
-
-            //Päivitetään Asiakas ID combobox
-            String query1 = "select etunimi from asiakas";
-            PreparedStatement lause = connectDB.prepareStatement(query1);
-            ResultSet tulokset = lause.executeQuery();
-            while(tulokset.next()){
-                options.add(tulokset.getString("etunimi"));
-
-            }
-            cboxAsiakkaat.setItems(options);
-            lause.close();
-            tulokset.close();
-            removeDuplicates();
-
-        } catch(Exception e) {
-        }
+        });
     }
 
+
+    //Comboboxien sisällön kaksoisesiintymien poisto
     //Poistaa asiakas_id duplikaatit
     public void removeDuplicates() {
 
@@ -1243,86 +1279,130 @@ public class Controller {
         }
     }
 
+    /**
+     * Laskujen hallinta
+     */
 
-    public void BtAsiakasPoista() throws SQLException {
+    public void lataaLaskuTaulu() {
+        tvLasku.getItems().clear();
+        Lasku laskuhallinta = new Lasku();
+        List<Lasku> laskulista = laskuhallinta.listaaLaskut();
+        ObservableList<Lasku> taulunlaskut = FXCollections.observableArrayList(laskulista);
 
-        Asiakas poistaasiakas = new Asiakas();
-        Asiakas valittuasiakas = (Asiakas) tbvAsiakas.getSelectionModel().getSelectedItem();
-        Asiakas asiakas = new Asiakas();
-        asiakas.setAsiakas_id(valittuasiakas.getAsiakas_id());
-        poistaasiakas.PoistaAsiakas(asiakas.getAsiakas_id());
-        tyhjennaTekstiKentat_asiakas();
-        lataaAsiakasTaulu();
+        tcLaskuID.setCellValueFactory(
+                new PropertyValueFactory<Lasku, Integer>("lasku_id"));
+        tcToimintaalue_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("toimintaalue"));
+        tcTulopaiva_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("tulopaiva"));
+        tcLahtopaiva_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("lahtopaiva"));
+        tcHlomaara_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
+        tcAsiakas_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("asiakas"));
+        tcPalvelut_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("palvelut"));
+        tcMokki_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("mokki"));
+        tcSposti_Lasku.setCellValueFactory(
+                new PropertyValueFactory<Lasku, String>("sposti"));
+        tvLasku.setItems(taulunlaskut);
     }
 
-  /*  public void BtMuokkaaAsiakas() throws SQLException{
-        Asiakas asiakashallinta = new Asiakas();
-        Asiakas asiakas = new Asiakas();
-        Asiakas valittuasiakas = (Asiakas) tbvAsiakas.getSelectionModel().getSelectedItem();
-        asiakas.setAsiakas_id(valittuasiakas.getAsiakas_id());
-        Asiakas asiakas1 = asiakas.MuokkaaAsiakas(tfEtunimi.getText());
-        asiakas1.setEtunimi(tfEtunimi.getText());
-        asiakas1.setSukunimi(tfSukunimi.getText());
-        asiakas1.setLahiosoite(tfLahiosoite.getText());
-        asiakas1.setEmail(tfEmail.getText());
-        asiakas1.setPostinro(tfPostinro.getText());
-        asiakas1.setPuhelinnro(tfPuhelinnro.getText());
+    public void PaivitaLasku() {
 
+        try {
 
-        asiakashallinta.PaivitaAsiakas(asiakas1);
-        lataaAsiakasTaulu();
-    }*/
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
 
-    public void tyhjennaTekstiKentat_asiakas() {
+            String laskuquery1 = "UPDATE lasku SET toiminta_alue = ?, tulopaiva = ?, lahtopaiva = ?, henkilomaara = ?, asiakas = ?, palvelut = ?, mokki = ?, sposti = ? WHERE varaus_id = ?";
 
-        //toimii
-        tfEtunimi.setText("");
-        tfSukunimi.setText("");
-        tfPuhelinnro.setText("");
-        tfEmail.setText("");
-        tfLahiosoite.setText("");
-        tfPostinro.setText("");
+            PreparedStatement preparedStatementl = connectDB.prepareStatement(laskuquery1);
+        } catch (Exception e) {
+        }
+        return;
     }
 
-    public ComboBox cboxAsiakkaat;
+    ObservableList<Lasku> laskut = FXCollections.observableArrayList();
 
-  /*  public void VarausAsiakas(){
+    public void LisaaLasku(){
+        //muuttujat teksikenttien sisällöstä
+        String toimintaalue = cboxToimintaalue.getSelectionModel().getSelectedItem().toString();
+        String tulopaiva = dptulopaiva.getValue().toString();
+        String lahtopaiva = dplahtopaiva.getValue().toString();
+        Integer hlomaara = Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem()));
+        String asiakas = cboxAsiakkaat.getValue().toString();
+        Object mokki = cboxMokki.getSelectionModel().getSelectedItem();
+        Object palvelut = cboxVarausPalvelut.getSelectionModel().getSelectedItem();
+        String sposti = tfSposti.getCharacters().toString();
 
-        cboxAsiakkaat.getItems().clear();
-        Asiakas asiakas = new Asiakas();
-        List<Asiakas>asiakasList = asiakas.listaaCombobox();
-        ObservableList<Asiakas> comboboxasiakkaat = FXCollections.observableArrayList(asiakasList);
-       // cboxAsiakkaat.setValue(new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
-        cboxAsiakkaat.setItems(comboboxasiakkaat);
+        //lisätään taulun sarakkeisiin
+        tcToimintaalue_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("toimintaalue"));
+        tcTulopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("tulopaiva"));
+        tcLahtopaiva_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("lahtopaiva"));
+        tcHlomaara_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("henkilomaara"));
+        tcAsiakas_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("asiakas"));
+        tcMokki_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("mokki"));
+        tcPalvelut_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("palvelut"));
+        tcSposti_Lasku.setCellValueFactory(new PropertyValueFactory<Lasku, String>("sposti"));
 
-    }*/
+        // lisätään Varaus olio, joka lisäätän mökkilistalle
+        laskut.add(new Lasku(toimintaalue, tulopaiva, lahtopaiva, hlomaara, asiakas, palvelut, mokki, sposti));
 
+        //lisätään mökkilista taululle
+        tvLasku.setItems(laskut);
 
+        //Lisätään tiedot SQL tietokantaan
+        try {
 
-    public void lataaAsiakasTaulu() {
-        //toimii
-        tbvAsiakas.getItems().clear();
-        Asiakas asiakashallinta = new Asiakas();
-        List<Asiakas> asiakaslista = asiakashallinta.listaaAsiakkaat();
-        ObservableList<Asiakas> taulunasiakkaat = FXCollections.observableArrayList(asiakaslista);
+            //Sql yhteyden määrittäminen
+            SQLYhteys connectNow = new SQLYhteys();
+            Connection connectDB = connectNow.getYhteys();
 
-        tbcAsiakas_id.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
-        tbcEtunimi.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("etunimi"));
-        tbcSukunimi.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("sukunimi"));
-        tbcPuhelinnro.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("puhelinnro"));
-        tbcEmail.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("email"));
-        tbcLahiosoite.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("lahiosoite"));
-        tbcPostinro.setCellValueFactory(
-                new PropertyValueFactory<Asiakas, String>("postinro"));
-        tbvAsiakas.setItems(taulunasiakkaat);
+            //Sql lause asiakkaiden luomiselle
+            String laskuquery = "insert into lasku (toiminta_alue, tulopaiva, lahtopaiva, henkilomaara, asiakas, palvelut, mokki, sposti )values(?,?,?,?,?,?,?,?)";
+
+            //Preparedstatement määrittää sql lauseen
+            PreparedStatement sqllasku = connectDB.prepareStatement(laskuquery);
+
+            //Noudetaan tiedot textfieldistä
+            sqllasku.setString(1, cboxToimintaalue.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(2, dptulopaiva.getValue().toString());
+            sqllasku.setString(3, dplahtopaiva.getValue().toString());
+            sqllasku.setInt(4, Integer.parseInt(String.valueOf(cboxHenkilomaara.getSelectionModel().getSelectedItem())));
+            sqllasku.setString(5, cboxAsiakkaat.getValue().toString());
+            sqllasku.setString(6, cboxVarausPalvelut.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(7, cboxMokki.getSelectionModel().getSelectedItem().toString());
+            sqllasku.setString(8, tfSposti.getCharacters().toString());
+
+            //Suoritetaan SQL komennot
+            sqllasku.executeUpdate();
+
+            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
+            PaivitaLasku();
+
+        } catch(Exception e) {
+            System.err.println("vahinko");
+            System.err.println(e.getMessage());
+
+        }
+
+        Lasku lasku1 = new Lasku();
+        if (lasku1.listaaLaskut() != null) {
+            lataaLaskuTaulu();
+        }
     }
 
+    public void btPoistaLasku(ActionEvent actionEvent) throws SQLException {
+        Lasku poistalasku = new Lasku();
+        Lasku valittulasku = (Lasku) tvLasku.getSelectionModel().getSelectedItem();
+        Lasku lasku4 = new Lasku();
+        lasku4.setLasku_id(valittulasku.getLasku_id());
+        poistalasku.PoistaLasku(lasku4.getLasku_id());
+        lataaLaskuTaulu();
+    }
 
     /**
      * Laskunhallintanäkymä
@@ -1410,352 +1490,6 @@ public class Controller {
         lahetaEmail(tvLasku.getSelectionModel().getSelectedItem().sposti);
 
     }
-    public void PoistaVaraus(ActionEvent actionEvent) {
-
-    }
-
-    public void Poistamokki(ActionEvent actionEvent) {
-    }
-
-    /**
-     * Palveluhallinta
-     */
-
-    // Antaa valittavaksi palvelut siltä toimialueelta, joka näytöllä on valittuna
-    public void NaytaPalvelu() {
-        SQLYhteys yhteys = new SQLYhteys();
-        Connection connectDB = yhteys.getYhteys();
-        cboxToimintaalue.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object vanhaArvo, Object uusiArvo) {
-                if (uusiArvo.toString() == "Tahko") {
-
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 1;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluTahko.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluTahko);
-                        lause.close();
-                        tulokset.close();
-                        removeDuplicatesPalvelu();
-
-
-                    }catch (SQLException ex){
-
-                    }
-
-                } else if (uusiArvo.toString() == "Ruka") {
-
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 2;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluRuka.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluRuka);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-
-                } else if (uusiArvo.toString() == "Ylläs") {
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 3;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluYllas.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluYllas);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-                } else if (uusiArvo.toString() == "Himos") {
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 4;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluHimos.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluHimos);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-                } else if (uusiArvo.toString() == "Levi") {
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 5;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluLevi.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluLevi);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-                } else if (uusiArvo.toString() == "Koli") {
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 6;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluKoli.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluKoli);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-                } else if (uusiArvo.toString() == "Vuokatti") {
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 7;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluVuokatti.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluVuokatti);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-                } else if (uusiArvo.toString() == "Pallas") {
-                    try{
-                        String query = "select nimi from palvelu where toimintaalue_id = 8;";
-                        PreparedStatement lause = connectDB.prepareStatement(query);
-                        ResultSet tulokset = lause.executeQuery();
-                        while(tulokset.next()){
-                            listaPalveluPallas.add(tulokset.getString("nimi"));
-                        }
-                        cboxVarausPalvelut.setItems(listaPalveluPallas);
-                        lause.close();
-                        tulokset.close();
-
-
-
-                    }catch (SQLException ex){
-
-                    }
-                }
-                removeDuplicatesPalvelu();
-            }
-        });
-    }
-
-
-    public void CboxPalveluToimintaalue(){
-        cboxPalvelutoimintaalue.setItems(listaPalvelutoimintaalue);
-    }
-
-    public void PaivitaPalvelu() {
-
-        try {
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-            String query = "UPDATE palvelu SET toimintaalue_id = ?, nimi = ?, kuvaus = ?, hinta = ?, alv = ? WHERE palvelu_id = ?";
-
-            PreparedStatement pst = connectDB.prepareStatement(query);
-        } catch (Exception e) {
-        }
-        return;
-    }
-
-    //palveluiden lisääminen tauluun
-    public void btPalveluLisaa() {
-
-        try {
-            //SQL yhteys määritetään
-
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            String query = "INSERT INTO palvelu (toimintaalue_id, nimi, kuvaus, hinta, alv)values(?,?,?,?,?)";
-
-            PreparedStatement sqlpalvelu = connectDB.prepareStatement(query);
-
-            sqlpalvelu.setInt(1, Integer.parseInt(String.valueOf(cboxPalvelutoimintaalue.getValue())));
-            sqlpalvelu.setString(2, tfPalveluNimi.getText());
-            sqlpalvelu.setString(3, tfPalveluKuvaus.getText());
-            sqlpalvelu.setDouble(4, Double.parseDouble(tfPalveluHinta.getText()));
-            sqlpalvelu.setDouble(5, Double.parseDouble(tfPalveluAlv.getText()));
-
-            sqlpalvelu.executeUpdate();
-
-            PaivitaPalvelu();
-
-            /*try{
-                String query1 = "select nimi from palvelu";
-                PreparedStatement lause = connectDB.prepareStatement(query1);
-                ResultSet tulokset = lause.executeQuery();
-                while(tulokset.next()){
-                    listavarauspalvelu.add(tulokset.getString("nimi"));
-                }
-                cboxVarausPalvelut.setItems(listavarauspalvelu);
-                lause.close();
-                tulokset.close();
-                removeDuplicatesPalvelu();
-
-
-            }catch (SQLException ex){
-
-            }*/
-
-            Palvelut palvelu = new Palvelut();
-            if (palvelu.listaaPalvelut() != null) {
-                lataaPalvelutaulu();
-            }
-
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void lataaPalvelutaulu() {
-        tbvPalvelu.getItems().clear();
-        Palvelut palveluhallinta = new Palvelut();
-        List<Palvelut> palvelulista = palveluhallinta.listaaPalvelut();
-        ObservableList<Palvelut> taulunpalvelut = FXCollections.observableArrayList(palvelulista);
-
-        tbcPalvelupalvelu_id.setCellValueFactory(
-                new PropertyValueFactory<Palvelut, Integer>("palvelu_id"));
-        tbcPalveluToimintaalue_id.setCellValueFactory(
-                new PropertyValueFactory<Palvelut, Integer>("toimintaalue_id"));
-        tbcPalveluNimi.setCellValueFactory(
-                new PropertyValueFactory<Palvelut, String>("nimi"));
-        tbcPalveluKuvaus.setCellValueFactory(
-                new PropertyValueFactory<Palvelut, String>("kuvaus"));
-        tbcPalveluHinta.setCellValueFactory(
-                new PropertyValueFactory<Palvelut, Double>("hinta"));
-        tbcPalveluAlv.setCellValueFactory(
-                new PropertyValueFactory<Palvelut, Double>("alv"));
-        tbvPalvelu.setItems(taulunpalvelut);
-    }
-
-    public void BtPalveluPoista() throws SQLException {
-
-        Palvelut poistapalvelu = new Palvelut();
-        Palvelut valittupalvelu = (Palvelut) tbvPalvelu.getSelectionModel().getSelectedItem();
-        Palvelut palvelu = new Palvelut();
-        palvelu.setPalvelu_id(valittupalvelu.getPalvelu_id());
-        poistapalvelu.poistaPalvelu(palvelu.getPalvelu_id());
-        //tyhjennaTekstiKentat_palvelu();
-        lataaPalvelutaulu();
-    }
-
-/*
-    public void btMuokkaa() {
-        try {
-            //Sql yhteyden määrittäminen
-            SQLYhteys connectNow = new SQLYhteys();
-            Connection connectDB = connectNow.getYhteys();
-
-            //Metodi, jolla pystytään suorittamaan sql komennot
-            PreparedStatement pst;
-            //Tietojen näyttäminen textfieldeissä
-
-           /* //SQL lause jolla päivitellään tietoja
-
-            String query = "UPDATE palvelu SET toimintaalue_id=?, nimi=?, tyyppi=?, kuvaus=?, hinta=?, alv=? " +
-                    "WHERE palvelu_id = " + Integer.getInteger(String.valueOf(tbcpalvelu_id));
-
-            PreparedStatement preparedStmt = connectDB.prepareStatement(query);
-            preparedStmt.setInt(1, Integer.parseInt(String.valueOf(((tfToimintaalue_id)))));
-            preparedStmt.setString(2, String.valueOf(txtnimi));
-            preparedStmt.setInt(3, Integer.parseInt(String.valueOf(tftyyppi)));
-            preparedStmt.setString(4, String.valueOf(txtkuvaus));
-            preparedStmt.setDouble(5, Double.parseDouble(String.valueOf(txthinta)));
-            preparedStmt.setDouble(6, Double.parseDouble(String.valueOf(txtalv)));
-
-            // Suoritetaan tietokantaan lisäys.
-            int rowsInserted = preparedStmt.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Palvelu lisättiin tietokantaan!");
-            }
-            preparedStmt.close(); */
-
-           /* int rivi1 = Integer.valueOf(tfToimintaalue_id.getText());
-            String rivi2 = txtnimi.getText();
-            int rivi3 = Integer.valueOf(tftyyppi.getText());
-            String rivi4 = txtkuvaus.getText();
-            double rivi5 = Double.parseDouble(txthinta.getText());
-            double rivi6 = Double.parseDouble(txtalv.getText());
-            int rivi7 = Integer.valueOf(tbcpalvelu_id.getText());
-
-
-
-            //Sql lause, jolla päivitetään palvelun tietoja taulussa
-            String query = "UPDATE palvelu SET toimintaalue_id= '"+rivi1+"',nimi='"+rivi2+"',tyyppi='"+rivi3+"',kuvaus='"+rivi4+"',hinta='"+rivi5+"',alv='"
-                    +rivi6+"' WHERE palvelu_id='"+rivi7+"'";*/
-
-
-            /*String query = "UPDATE palvelu SET toimintaalue_id=?, nimi=?, tyyppi=?, kuvaus=?, hinta=?, alv=? " +
-                    "WHERE palvelu_id = " + Integer.getInteger(String.valueOf(tbcpalvelu_id));
-
-
-
-
-            //Lause, jolla suoritetaan komennot sql:ssa
-            pst = connectDB.prepareStatement(query);
-            pst.execute();
-
-            //Kutsutaan metodia, jolla päivitetään tiedot automaattisesti
-            naytaTiedotPalvelu();
-            PaivitaPalvelu();
-
-
-        } catch (Exception e) {
-        }
-    }*/
-
-    /*public void naytaTiedotPalvelu(){
-        tvpalvelu.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Palvelu palvelu = (Palvelu) tvpalvelu.getItems().get(tvpalvelu.getSelectionModel().getSelectedIndex());
-
-                tfToimintaalue_id.setText(String.valueOf(palvelu.getToimintaalue_id()));
-                txtnimi.setText(palvelu.getNimi());
-                tftyyppi.setText(String.valueOf(palvelu.getTyyppi()));
-                txtkuvaus.setText(palvelu.getKuvaus());
-                txthinta.setText(String.valueOf(palvelu.getHinta()));
-                txtalv.setText(String.valueOf(palvelu.getAlv()));
-            }
-        });
-
-    }*/
-
 
 }
 

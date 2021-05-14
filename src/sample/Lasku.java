@@ -56,14 +56,10 @@ public class Lasku {
 
         ResultSet tulokset = lause.executeQuery();
 
-        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
-        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
         if (!tulokset.next()) return null;
 
         List<Lasku> laskut = new ArrayList<>();
 
-        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
-        // tulokset.next()-metodikutsua!
         do {
             Lasku lasku = luoLaskuTuloksista(tulokset);
             laskut.add(lasku);
@@ -71,8 +67,6 @@ public class Lasku {
 
         tulokset.close();
         lause.close();
-        //yhteys.close();
-
         return laskut;
     }
 

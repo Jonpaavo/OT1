@@ -47,14 +47,11 @@ public class Mokki {
 
         ResultSet tulokset1 = lause1.executeQuery();
 
-        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
-        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
+
         if (!tulokset1.next()) return null;
 
         List<Mokki> mokitlista = new ArrayList<>();
 
-        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
-        // tulokset.next()-metodikutsua!
         do {
             Mokki mokki1 = luoMokkiTuloksista(tulokset1);
             mokitlista.add(mokki1);
@@ -62,7 +59,7 @@ public class Mokki {
 
         tulokset1.close();
         lause1.close();
-        //yhteys.close();
+
 
         return mokitlista;
     }

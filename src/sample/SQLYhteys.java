@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 public class SQLYhteys {
 
     public Connection yhteys;
-
+    // Muodostaa SQL-yhteyden
     public Connection getYhteys() {
 
 

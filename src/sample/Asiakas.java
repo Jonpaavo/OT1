@@ -32,49 +32,6 @@ public class Asiakas {
         this.puhelinnro = puhelinnro;
     }
 
-
-    /*public void paivita(Asiakas asiakas) throws SQLException {
-
-        SQLYhteys yhteys = new SQLYhteys();
-        Connection connectDB = yhteys.getYhteys();
-
-        PreparedStatement lause = AsiakasPaivitysLause(connectDB, asiakas);
-
-        lause.executeUpdate();
-
-        lause.close();
-        //yhteys.close();
-    }
-
-    private PreparedStatement AsiakasPaivitysLause(Connection yhteys, Asiakas asiakas) throws SQLException {
-        PreparedStatement lause = yhteys.prepareStatement("UPDATE asiakas SET postinro = ?, etunimi = ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?");
-        lause.setString(1, asiakas.getPostinro());
-        lause.setString(2, asiakas.getEtunimi());
-        lause.setString(3, asiakas.getSukunimi());
-        lause.setString(4, asiakas.getLahiosoite());
-        lause.setString(5, asiakas.getEmail());
-        lause.setString(6, asiakas.getPuhelinnro());
-        //Id on sql-lauseessa viimeisenä (WHERE rajoitteen jälkeen)
-        lause.setInt(7, asiakas.getAsiakas_id());
-
-        return lause;
-    }
-
-    public void PaivitaAsiakas(Asiakas asiakas) {
-        try {
-            if (asiakas != null) asiakas.paivita(asiakas);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-
-    /**
-     * Palauttaa listan kaikista tietokannassa olevista Asiakas-olioista.
-     *
-     * @return Lista kaikista Asiakas-olioista.
-     * @throws SQLException Heitetään, jos tietokannan kanssa kommunikoinnissa ilmenee ongelmia.
-     */
     public List<Asiakas> listaa() throws SQLException {
         SQLYhteys yhteys = new SQLYhteys();
         Connection connectDB = yhteys.getYhteys();
@@ -85,14 +42,10 @@ public class Asiakas {
 
         ResultSet tulokset = lause.executeQuery();
 
-        // Jos kysely ei tuottanut tuloksia, palautetaan tyhjää.
-        // Samalla siirrytään ResultSet-olion ensimmäiselle riville.
         if (!tulokset.next()) return null;
 
         List<Asiakas> asiakkaat = new ArrayList<>();
 
-        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
-        // tulokset.next()-metodikutsua!
         do {
             Asiakas asiakas = luoAsiakasTuloksista(tulokset);
             asiakkaat.add(asiakas);
@@ -100,7 +53,7 @@ public class Asiakas {
 
         tulokset.close();
         lause.close();
-        //yhteys.close();
+
 
         return asiakkaat;
     }
@@ -118,8 +71,6 @@ public class Asiakas {
 
         List<Asiakas> asiakkaat = new ArrayList<>();
 
-        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
-        // tulokset.next()-metodikutsua!
         do {
             Asiakas asiakas = luoComboboxTuloksista(tulokset);
             asiakkaat.add(asiakas);
@@ -127,7 +78,7 @@ public class Asiakas {
 
         tulokset.close();
         lause.close();
-        //yhteys.close();
+
 
         return asiakkaat;
     }
@@ -186,29 +137,6 @@ public class Asiakas {
         lause.close();
 
     }
-
-    /*public Asiakas MuokkaaAsiakas(String nimi) throws SQLException {
-
-        SQLYhteys yhteys = new SQLYhteys();
-        Connection connectDB = yhteys.getYhteys();
-
-        String query = "SELECT * FROM asiakas WHERE etunimi = ?";
-
-        PreparedStatement lause = connectDB.prepareStatement(query);
-        lause.setString(1, nimi);
-        ResultSet tulokset = lause.executeQuery();
-
-        //Jos tuloksissa ei ole yhtäkään riviä, palauta tyhjää.
-        if (!tulokset.next()) return null;
-
-        Asiakas asiakas = luoAsiakasTuloksista(tulokset);
-
-        tulokset.close();
-        lause.close();
-        //yhteys.close();
-
-        return asiakas;
-    }*/
 
     public int getAsiakas_id() {
         return asiakas_id;

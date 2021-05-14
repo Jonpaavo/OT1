@@ -21,8 +21,6 @@ public class Palvelut {
         return palvelu_id;
     }
 
-
-
     public Palvelut() {
     }
 
@@ -44,17 +42,9 @@ public class Palvelut {
         PreparedStatement lause = connectDB.prepareStatement(query);
 
         ResultSet tulokset = lause.executeQuery();
-
-        // Jos kysely ei tuota tuloksia, palautetaan tyhjä
-        // Samalla siirrytään ResultSet-olion ensimmäiselle riville
-
         if (!tulokset.next()) return null;
 
         List<Palvelut> palvelut = new ArrayList<>();
-
-        // Ollaan jo ResultSet-olion ensimmäisellä rivillä. Rivin lukeminen täytyy tapahtua ennen seuraavaa
-        // tulokset.next()-metodikutsua!
-
         do {
             Palvelut palvelu = luoPalveluTuloksista(tulokset);
             palvelut.add(palvelu);
@@ -62,7 +52,6 @@ public class Palvelut {
 
         tulokset.close();
         lause.close();
-        //yhteys.close();
 
         return palvelut;
 
