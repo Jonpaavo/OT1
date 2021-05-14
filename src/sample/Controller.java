@@ -22,7 +22,7 @@ import java.util.Properties;
 public class Controller {
 
 
-    // MÖKIN VARAUS alustukset
+    //MÖKIN VARAUS alustukset
     public ComboBox cboxToimintaalue;
     public ComboBox cboxHenkilomaara;
     public ComboBox cboxVarausPalvelut;

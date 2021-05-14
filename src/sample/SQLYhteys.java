@@ -22,7 +22,6 @@ public class SQLYhteys {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return yhteys;
     }
 }

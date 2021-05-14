@@ -27,7 +27,6 @@ public class Lasku {
         this.mokki = mokki;
         this.sposti = sposti;
     }
-
     public Lasku() {
     }
 

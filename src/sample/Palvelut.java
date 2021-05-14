@@ -10,7 +10,6 @@ import java.util.List;
 public class Palvelut {
 
     private String nimi;
-
     private double hinta;
     private double alv;
     private String kuvaus;

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Asiakas {
 
-
     private String postinro;
     private String etunimi;
     private String sukunimi;

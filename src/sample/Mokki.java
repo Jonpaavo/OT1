@@ -32,7 +32,6 @@ public class Mokki {
         this.toimintaAlueId = toimintaAlueId;
         this.alv= alv;
     }
-
     public Mokki() {
 
     }

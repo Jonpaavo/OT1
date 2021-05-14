@@ -27,7 +27,6 @@ public class Varaus {
         this.mokki = mokki;
         this.sposti = sposti;
     }
-
     public Varaus() {
 
     }
