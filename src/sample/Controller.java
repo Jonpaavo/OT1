@@ -138,6 +138,15 @@ public class Controller {
     final ObservableList listavuokatti = FXCollections.observableArrayList();
     final ObservableList listapallas = FXCollections.observableArrayList();
 
+    final ObservableList listaPalveluTahko = FXCollections.observableArrayList();
+    final ObservableList listaPalveluRuka = FXCollections.observableArrayList();
+    final ObservableList listaPalveluYllas = FXCollections.observableArrayList();
+    final ObservableList listaPalveluHimos = FXCollections.observableArrayList();
+    final ObservableList listaPalveluLevi = FXCollections.observableArrayList();
+    final ObservableList listaPalveluKoli = FXCollections.observableArrayList();
+    final ObservableList listaPalveluVuokatti = FXCollections.observableArrayList();
+    final ObservableList listaPalveluPallas = FXCollections.observableArrayList();
+
     final ObservableList listavarauspalvelu = FXCollections.observableArrayList();
 
 
@@ -201,6 +210,7 @@ public class Controller {
         naytaLaskuTiedot();
         CboxPalveluToimintaalue();
         //VarausAsiakas();
+        NaytaPalvelu();
 
         SQLYhteys yhteys = new SQLYhteys();
         Connection connectDB = yhteys.getYhteys();
@@ -221,7 +231,7 @@ public class Controller {
 
         }
 
-        try{
+       /* try{
             String query = "select nimi from palvelu";
             PreparedStatement lause = connectDB.prepareStatement(query);
             ResultSet tulokset = lause.executeQuery();
@@ -236,7 +246,7 @@ public class Controller {
 
         }catch (SQLException ex){
 
-        }
+        }*/
 
 
 
@@ -981,21 +991,127 @@ public class Controller {
     //poistaa palvelu duplikaatit
     public void removeDuplicatesPalvelu() {
 
-        int size = listavarauspalvelu.size();
+        int tahko = listaPalveluTahko.size();
+        int ruka = listaPalveluRuka.size();
+        int yllas = listaPalveluYllas.size();
+        int himos = listaPalveluHimos.size();
+        int levi = listaPalveluLevi.size();
+        int koli = listaPalveluKoli.size();
+        int vuokatti = listaPalveluVuokatti.size();
+        int pallas = listaPalveluPallas.size();
+
         int duplicates = 0;
 
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < tahko - 1; i++) {
 
-            for (int j = i + 1; j < size; j++) {
+            for (int j = i + 1; j < tahko; j++) {
 
-                if (!listavarauspalvelu.get(j).equals(listavarauspalvelu.get(i)))
+                if (!listaPalveluTahko.get(j).equals(listaPalveluTahko.get(i)))
                     continue;
                 duplicates++;
-                listavarauspalvelu.remove(j);
+                listaPalveluTahko.remove(j);
 
                 j--;
 
-                size--;
+                tahko--;
+            }
+        }
+        for (int i = 0; i < ruka - 1; i++) {
+
+            for (int j = i + 1; j < ruka; j++) {
+
+                if (!listaPalveluRuka.get(j).equals(listaPalveluRuka.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluRuka.remove(j);
+
+                j--;
+
+                ruka--;
+            }
+        }
+        for (int i = 0; i < yllas - 1; i++) {
+
+            for (int j = i + 1; j < yllas; j++) {
+
+                if (!listaPalveluYllas.get(j).equals(listaPalveluYllas.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluYllas.remove(j);
+
+                j--;
+
+                yllas--;
+            }
+        }
+        for (int i = 0; i < himos - 1; i++) {
+
+            for (int j = i + 1; j < himos; j++) {
+
+                if (!listaPalveluHimos.get(j).equals(listaPalveluHimos.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluHimos.remove(j);
+
+                j--;
+
+                himos--;
+            }
+        }
+        for (int i = 0; i < levi - 1; i++) {
+
+            for (int j = i + 1; j < levi; j++) {
+
+                if (!listaPalveluLevi.get(j).equals(listaPalveluLevi.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluLevi.remove(j);
+
+                j--;
+
+                levi--;
+            }
+        }
+        for (int i = 0; i < koli - 1; i++) {
+
+            for (int j = i + 1; j < koli; j++) {
+
+                if (!listaPalveluKoli.get(j).equals(listaPalveluKoli.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluKoli.remove(j);
+
+                j--;
+
+                koli--;
+            }
+        }
+        for (int i = 0; i < vuokatti - 1; i++) {
+
+            for (int j = i + 1; j < vuokatti; j++) {
+
+                if (!listaPalveluVuokatti.get(j).equals(listaPalveluVuokatti.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluVuokatti.remove(j);
+
+                j--;
+
+                vuokatti--;
+            }
+        }
+        for (int i = 0; i < pallas - 1; i++) {
+
+            for (int j = i + 1; j < pallas; j++) {
+
+                if (!listaPalveluPallas.get(j).equals(listaPalveluPallas.get(i)))
+                    continue;
+                duplicates++;
+                listaPalveluPallas.remove(j);
+
+                j--;
+
+                pallas--;
             }
         }
     }
@@ -1305,6 +1421,160 @@ public class Controller {
      * Palveluhallinta
      */
 
+    // Antaa valittavaksi palvelut siltä toimialueelta, joka näytöllä on valittuna
+    public void NaytaPalvelu() {
+        SQLYhteys yhteys = new SQLYhteys();
+        Connection connectDB = yhteys.getYhteys();
+        cboxToimintaalue.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object vanhaArvo, Object uusiArvo) {
+                if (uusiArvo.toString() == "Tahko") {
+
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 1;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluTahko.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluTahko);
+                        lause.close();
+                        tulokset.close();
+                        removeDuplicatesPalvelu();
+
+
+                    }catch (SQLException ex){
+
+                    }
+
+                } else if (uusiArvo.toString() == "Ruka") {
+
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 2;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluRuka.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluRuka);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+
+                } else if (uusiArvo.toString() == "Ylläs") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 3;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluYllas.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluYllas);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+                } else if (uusiArvo.toString() == "Himos") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 4;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluHimos.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluHimos);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+                } else if (uusiArvo.toString() == "Levi") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 5;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluLevi.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluLevi);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+                } else if (uusiArvo.toString() == "Koli") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 6;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluKoli.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluKoli);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+                } else if (uusiArvo.toString() == "Vuokatti") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 7;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluVuokatti.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluVuokatti);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+                } else if (uusiArvo.toString() == "Pallas") {
+                    try{
+                        String query = "select nimi from palvelu where toimintaalue_id = 8;";
+                        PreparedStatement lause = connectDB.prepareStatement(query);
+                        ResultSet tulokset = lause.executeQuery();
+                        while(tulokset.next()){
+                            listaPalveluPallas.add(tulokset.getString("nimi"));
+                        }
+                        cboxVarausPalvelut.setItems(listaPalveluPallas);
+                        lause.close();
+                        tulokset.close();
+
+
+
+                    }catch (SQLException ex){
+
+                    }
+                }
+                removeDuplicatesPalvelu();
+            }
+        });
+    }
+
+
     public void CboxPalveluToimintaalue(){
         cboxPalvelutoimintaalue.setItems(listaPalvelutoimintaalue);
     }
@@ -1345,7 +1615,7 @@ public class Controller {
 
             PaivitaPalvelu();
 
-            try{
+            /*try{
                 String query1 = "select nimi from palvelu";
                 PreparedStatement lause = connectDB.prepareStatement(query1);
                 ResultSet tulokset = lause.executeQuery();
@@ -1360,7 +1630,7 @@ public class Controller {
 
             }catch (SQLException ex){
 
-            }
+            }*/
 
             Palvelut palvelu = new Palvelut();
             if (palvelu.listaaPalvelut() != null) {
@@ -1386,7 +1656,7 @@ public class Controller {
                 new PropertyValueFactory<Palvelut, String>("nimi"));
         tbcPalveluKuvaus.setCellValueFactory(
                 new PropertyValueFactory<Palvelut, String>("kuvaus"));
-        tbcPalveluKuvaus.setCellValueFactory(
+        tbcPalveluHinta.setCellValueFactory(
                 new PropertyValueFactory<Palvelut, Double>("hinta"));
         tbcPalveluAlv.setCellValueFactory(
                 new PropertyValueFactory<Palvelut, Double>("alv"));
